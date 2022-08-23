@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Introduction</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MultiStatM)</span></code></pre></div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>The package MultiStatM provides general formulae for set partitions,
+multivariate moments and cumulants, vector Hermite polynomials. It
+provides theoretical formulae for some important symmetric and
+asymmetric multivariate distributions and well as estimation functions
+for multivariate moments and cumulants and connected measures of
+multivariate skewness and kurtosis.</p>
+<p>The formulae implemented in the package can be found in the book
+“Multivariate Statistical Methods - Going Beyond the Linear”, Springer
+2021 by Gy.Terdik and are fully general. For example, in the conversion
+formulae from multivariate moment to multivariate cumulants, given any
+list of (numerical) multivariate moments up to order <span class="math inline">\(k\)</span>, the conversion formula provides all
+multivariate cumulants up to order <span class="math inline">\(k\)</span>; this differs to a large degree from
+the formulae provided in the package <code>kStatistics</code> (Di Nardo
+and Guarino, 2022) which calculates one by one (individually) the
+cumulants of order <span class="math inline">\(r\)</span> which are the
+entries of our cumulant vectors.</p>
+<p>The packages <code>MaxSkew</code> and <code>MultiSkew</code>
+(Franceschini and Loperfido (2017a,b)) for detecting, measuring and
+removing multivariate skewness, computes the third multivariate cumulant
+of either the raw, centered or standardized data; s the main measures of
+multivariate skewness, together with their bootstrap distributions and
+provides orthogonal data projections with maximal skewness.</p>
+<p>The package <code>matrixcalc</code> (Novomestky (2021)) provides the
+Commutation matrix, Elimination matrix, Duplication matrix for Cartesian
+tensor products of two vectors, which are particular cases of those
+provided in the package <code>MultiStatM</code>.</p>
+<p>The package <code>sn</code> ( Azzalini (2022)) discusses for the
+skew-normal and the skew-t distributions, statistical methods are
+provided for data fitting and model diagnostics, in the univariate and
+the multivariate case. Random numbers generator for multivariate skew
+distributions are provided. In the package <code>MultiStatM</code>
+complete formulae for theoretical multivariate moments and cumulants of
+any order are implemented.</p>
+<p>The package <code>moments</code> (Komsta and Novomestky (2022)) deals
+with functions to calculate moments, cumulants, Pearson’s kurtosis,
+Geary’s kurtosis and skewness; tests related to them from univariate
+data.</p>
+<p>A careful study of the cumulants is a necessary and typical part of
+nonlinear statistics. Such a study of cumulants for multivariate
+distributions is made complicated by the index notations. One solution
+to this problem is the usage of tensor analysis. In this package (and
+the connected book) we offer an alternate method, which we believe is
+simpler to follow. The higher-order cumulants with the same degree for a
+multivariate vector can be collected together and kept as a vector. To
+be able to do so, we introduce a particular differential operator on a
+multivariate function, called the T -derivative, and use it to obtain
+cumulants and provide results which are somewhat analogous to well-known
+results in the univariate case.</p>
+<p>More specifically, with the symbol <span class="math inline">\(\otimes\)</span> denoting the Cartesian tensor
+product, consider the operator <span class="math inline">\(D_{\boldsymbol{\lambda}}^{\otimes}\)</span>, which
+we refer to as the <span class="math inline">\(\operatorname{T}\)</span>-derivative; see
+Jammalamadaka et al. (2006) for details. For any function <span class="math inline">\(\boldsymbol{\phi}(\boldsymbol{\lambda})\)</span>,
+the~<span class="math inline">\(\operatorname{T}\)</span>-derivative is
+defined as <span class="math display">\[\begin{equation}\label{Tderiv}
+D_{\boldsymbol{\lambda}}^{\otimes}\boldsymbol{\boldsymbol{\phi}}%
+(\boldsymbol{\lambda})=\operatorname{vec}\left(\left(  \frac{\partial\boldsymbol{\phi
+}(\boldsymbol{\lambda})}{\partial\boldsymbol{\lambda}^{\top}}\right)  ^{\top
+}\right)=\boldsymbol{\phi}(\boldsymbol{\lambda})\otimes\frac{\partial}{\partial
+\boldsymbol{\lambda}}.%
+\end{equation}\]</span> <span class="math inline">\({\boldsymbol{\phi}}\)</span> is <span class="math inline">\(k\)</span>-times differentiable, with~its <span class="math inline">\(k\)</span>-th <span class="math inline">\(\operatorname{T}\)</span>-derivative <span class="math inline">\(D_{\boldsymbol{\lambda}}^{\otimes
+k}\boldsymbol{\boldsymbol{\phi}
+}(\boldsymbol{\lambda})=D_{\boldsymbol{\lambda}}^{\otimes}\left(
+D_{\boldsymbol{\lambda}}^{\otimes k-1}\boldsymbol{\boldsymbol{\phi}
+}(\boldsymbol{\lambda})\right)\)</span>.</p>
+<p>In the following we demonstrate the use of this technique through the
+characterization of several multivariate distributions via their
+cumulants and by extending the discussion to statistical inference for
+multivariate skewness and kurtosis.</p>
+<p>We note that Kollo (2006) provides formulae for cumulants in terms of
+matrices; however, retaining a matrix structure for all higher-order
+cumulants leads to high-dimensional matrices with special symmetric
+structures which are quite hard to follow notionally and
+computationally. McCullagh (2018) provides quite an elegant approach
+using tensor methods; however, tensor methods are not very well known
+and computationally not so~simple.</p>
+<p>The method discussed here is based on relatively simple calculus.
+Although the tensor product of Euclidean vectors is not commutative, it
+has the advantage of permutation equivalence and allows one to obtain
+general results for cumulants and moments of any order, as it will be
+demonstrated in this paper, where general formulae, suitable for
+algorithmic implementation through a computer software, will be
+provided.</p>
+<p>Methods based on a matrix approach do not provide this type of
+result; see also (Ould-Baba (2015), which goes as far as the sixth-order
+moment matrices, whereas there is no such limitation in our derivations
+and our results. For further discussion, one can see also Kolda (2009)
+and Qi (2006).</p>
+</div>
+<div id="set-partitions" class="section level2">
+<h2>Set Partitions</h2>
+<p>The package <code>MultiStatM</code> provides several functions
+dealing with set partitions. Such functions provide some basic tools
+used to built the multivariate formulae for moments and cumulants in the
+following sections.</p>
+<p>Generally a set of <span class="math inline">\(N\)</span> elements
+can be split into a set of disjoint subsets, i.e. it can be partitioned.
+The set of <span class="math inline">\(N\)</span> elements will
+correspond to set <span class="math inline">\(1 : N = \{1, 2, \dots
+,N\}\)</span>. If <span class="math inline">\(\cal{K} = \{b_1, b_2,
+\dots , b_r \}\)</span> where each <span class="math inline">\(b_j
+\subset 1 : N\)</span>, then <span class="math inline">\(\cal{K}\)</span> is a partition provided <span class="math inline">\(\cup b_j = 1 : n\)</span>, each <span class="math inline">\(b_j\)</span> is non-empty and <span class="math inline">\(b_j \cap b_i = \emptyset\)</span> (the empty set)
+is disjoint whenever <span class="math inline">\(j \neq i\)</span>. The
+subsets <span class="math inline">\(b_j\)</span>, <span class="math inline">\(j = 1, 2, \dots, r\)</span> are called the blocks
+of <span class="math inline">\(\cal{K}\)</span>. We will call <span class="math inline">\(r\)</span> (the number of the blocks in partition
+<span class="math inline">\(\cal{K}\)</span>), the size of <span class="math inline">\(\cal{K}\)</span>, and denote it by <span class="math inline">\(|\cal{K}| = r\)</span>, and a partition with size
+<span class="math inline">\(r\)</span> will be denoted by <span class="math inline">\(\cal{K}_{\{r\}}\)</span>. Let us denote the set of
+all partitions of the numbers <span class="math inline">\(1 : N\)</span>
+by <span class="math inline">\(\cal{P}_N\)</span>.</p>
+<p>Consider next a partition <span class="math inline">\(\cal{K}_{\{r\}}
+= \{b_1, b_2, \dots , b_r \} \in \cal{P}_N\)</span>, with size <span class="math inline">\(r\)</span>. Denote the cardinality <span class="math inline">\(k_j\)</span> of a block in the partition <span class="math inline">\(\cal{K}_{\{r\}}\)</span>, i.e. <span class="math inline">\(k_j =|b_j|\)</span>. The <strong>type of a
+partition</strong> <span class="math inline">\(\cal{K}_{\{r\}}\)</span>
+is <span class="math inline">\(l = [ l_1, \dots , l_N]\)</span>, if
+<span class="math inline">\(\cal{K}_{\{r\}}\)</span> contains exactly
+<span class="math inline">\(l_j\)</span> blocks with cardinality <span class="math inline">\(j\)</span>. A partition with size <span class="math inline">\(r\)</span> and type <span class="math inline">\(l\)</span> will be denoted by <span class="math inline">\(\cal{K}_{\{r|l\}}\)</span>. It is clear that <span class="math inline">\(l_j ≥ 0\)</span>, and <span class="math inline">\(\sum_j jl_j=N\)</span>, and <span class="math inline">\(\sum_j l_j=r\)</span>. Naturally, some <span class="math inline">\(l_j\)</span> ’s are zero.</p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Partition_Type_All</td>
+<td align="left">Type and number of partitions</td>
+</tr>
+<tr class="even">
+<td align="left">Partition_Indecomposable</td>
+<td align="left">Building indecomposable partitions</td>
+</tr>
+<tr class="odd">
+<td align="left">Partition_Pairs</td>
+<td align="left">Partition into pairs of the set 1:N</td>
+</tr>
+<tr class="even">
+<td align="left">Permutation_Inverse</td>
+<td align="left">Inverse of a Permutation</td>
+</tr>
+<tr class="odd">
+<td align="left">Partition_DiagramsClosedNoLoops</td>
+<td align="left">Closed Diagrams without Loops</td>
+</tr>
+</tbody>
+</table>
+<p>The basic function is <code>Partition_Type_All</code> which provides
+complete information on the partition of a set of <code>N</code>
+elements, namely</p>
+<ul>
+<li><p><code>Part.class</code>: the list of all possible partitions
+given as partition matrices</p></li>
+<li><p><code>S_N_r</code>: a vector with the number of partitions of
+size r=1, r=2, etc. (Stirling numbers of second kind )</p></li>
+<li><p><code>eL_r</code>: a list of partition types with respect to
+partitions of size r=1, r=2, etc.</p></li>
+<li><p><code>S_r_j</code>: vectors of number of partitions with given
+types grouped by partitions of size r=1, r=2, etc.</p></li>
+</ul>
+<p><strong>Example 1</strong>. Consider the case where <code>N=4</code>
+and run the following</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>PTA<span class="ot">&lt;-</span><span class="fu">Partition_Type_All</span>(<span class="dv">4</span>)</span></code></pre></div>
+<p>All the partition matrices are listed in <code>Part.class</code>. See
+the first three below</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>PTA<span class="sc">$</span>Part.class[[<span class="dv">1</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 1 1 1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>PTA<span class="sc">$</span>Part.class[[<span class="dv">2</span>]]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4]</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    1    1    1    0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    0    0    0    1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>PTA<span class="sc">$</span>Part.class[[<span class="dv">3</span>]] </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4]</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    1    1    0    1</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    0    0    1    0</span></span></code></pre></div>
+<p>The lists <code>S_N_r</code> and <code>eL_r</code> contain
+respectively the number of partitions with <code>r=1</code> blocks,
+<code>r=2</code> blocks, etc. and the types of partitions for each
+partition of size <code>r</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>PTA<span class="sc">$</span>S_N_r </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 7 6 1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>PTA<span class="sc">$</span>eL_r</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0 0 0 1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4]</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    1    0    1    0</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    0    2    0    0</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2 1 0 0</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 0 0 0</span></span></code></pre></div>
+<p>From the results above we see that there are 1 partition of 1 block
+(<code>r=1</code>), 7 partitions of two blocks (<code>r=2</code>), 6
+partitions of 3 blocks and 1 partition of 4 blocks. From
+<code>PTA$eL_r[[2]]</code> we see that there are two types of partition
+with <code>r=2</code>: the first is of type <span class="math inline">\((l_1=1,l_3=1)\)</span> and the second is of type
+<span class="math inline">\((l_2=2)\)</span>.</p>
+<p>If one needs to know how many partitions of type <span class="math inline">\((l_1,l_3)\)</span> are there for <code>r=2</code>
+then consider the list <code>S_r_j</code>, i.e.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>PTA<span class="sc">$</span>S_r_j[[<span class="dv">2</span>]] <span class="do">## Partitions with size r=2, includes two types (above) each with number</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 3</span></span></code></pre></div>
+<p>That is, for partitions with <code>r=2</code> blocks, 4 are of type
+<span class="math inline">\((l_1=1,l_3=1)\)</span> and 3 are of type
+<span class="math inline">\((l_2=2)\)</span>.</p>
+<p>Other available partition functions are:</p>
+<ul>
+<li><p><code>Partition_2perm</code> which provides the permutation of N
+elements according to a partition matrix <span class="math inline">\(pU\)</span>;</p></li>
+<li><p><code>Partition_Indecomposable</code>, which provides the list of
+all indecomposable partitions with respect to a partition matrix
+L</p></li>
+<li><p><code>Partition_Pairs</code>, which provides the list of
+partitions dividing into pairs the set of N elements.</p></li>
+<li><p><code>Partition_DiagramsClosedNoLoops</code> Closed Diagrams
+without Loops</p></li>
+<li><p><code>Permutation_Inverse</code> which provides the inverse of a
+permutation</p></li>
+</ul>
+<p>For further details see Terdik (2021, chapter 1).</p>
+</div>
+<div id="commutators-symmetrizer-and-selection-matrices" class="section level2">
+<h2>Commutators, symmetrizer and selection matrices</h2>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">matr_Commutator_Kmn</td>
+<td align="left">Commutation matrix</td>
+</tr>
+<tr class="even">
+<td align="left">matr_Commutator_Kperm</td>
+<td align="left">Commutator for T-products of vectors</td>
+</tr>
+<tr class="odd">
+<td align="left">matr_Commutator_Mixing</td>
+<td align="left">Mixing commutator</td>
+</tr>
+<tr class="even">
+<td align="left">matr_Elimination</td>
+<td align="left">Elimination matrix</td>
+</tr>
+<tr class="odd">
+<td align="left">matr_Qplication</td>
+<td align="left">Qplication matrix</td>
+</tr>
+<tr class="even">
+<td align="left">matr_Symmetry</td>
+<td align="left">Symmetrizer matrix</td>
+</tr>
+<tr class="odd">
+<td align="left">indx_Commutator_Kmn</td>
+<td align="left">Index vector for commutation of T-products of two
+vectors</td>
+</tr>
+<tr class="even">
+<td align="left">indx_Commutator_Kperm</td>
+<td align="left">Index vector for commutation of T-products of any
+number of vectors</td>
+</tr>
+<tr class="odd">
+<td align="left">indx_Elimination</td>
+<td align="left">Distinct values selection vector</td>
+</tr>
+<tr class="even">
+<td align="left">indx_Qplication</td>
+<td align="left">Qplication vector</td>
+</tr>
+<tr class="odd">
+<td align="left">indx_Symmetry</td>
+<td align="left">Symmetrizing vector</td>
+</tr>
+<tr class="even">
+<td align="left">indx_UnivMomCum</td>
+<td align="left">Univariate moments and cumulants from T-vectors</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>matr</code> group of functions produce commutators and
+selection matrices. The use of matrices allows represent as linear
+combinations problems of permutation and powers of T-products. On the
+other side, the size of these matrix can quickly become quite important.
+To deal with this issues and option for sparse matrices is always
+provided; also a corresponding <code>indx</code> group of functions is
+provided; these function provide selection vectors which give equivalent
+results ans the corresponding functions in the group
+<code>matr</code>.</p>
+<p>The function <code>matr_Commutator_Kmn</code> produces a commutation
+matrix, <span class="math inline">\(\mathbf{K}_{m \cdot n}\)</span> of
+dimension <span class="math inline">\(mn \times mn\)</span> such that,
+given a matrix <span class="math inline">\(\mathbf{A}\)</span> <span class="math inline">\(m\times n\)</span>, <span class="math inline">\(\mathbf{K}_{m \cdot n}
+\operatorname{vec}\mathbf{A}=\operatorname{vec}\mathbf{A}&#39;\)</span>
+(see Terdik (2021, p.8,(1.12)) ). The same result can be obtained using
+<code>indx_Commutator_Kmn</code></p>
+<p><code>matr_Commutator_Kperm</code> and
+<code>indx_Commutator_Kperm</code> produce any permutation of kronecker
+products of vectors of any length.</p>
+<p><strong>Example 2</strong>. For the product of vectors <span class="math inline">\(\mathbf{a}_1 \otimes \mathbf{a}_2
+\otimes\mathbf{a}_3\)</span> of dimensions <span class="math inline">\(d_1\)</span> to <span class="math inline">\(d_3\)</span> respectively.
+<code>matr_Commutator_Kperm(c(3,1,2),c(d1,d2,d3))</code> produces <span class="math inline">\(\mathbf{a}_3 \otimes \mathbf{a}_1
+\otimes\mathbf{a}_2\)</span>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>a2<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>a3<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span>a1<span class="sc">%x%</span>a2<span class="sc">%x%</span>a3</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(<span class="fu">matr_Commutator_Kperm</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>))<span class="sc">%*%</span>p1) <span class="do">## same result as below</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>a3<span class="sc">%x%</span>a1<span class="sc">%x%</span>a2   </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span></code></pre></div>
+<p>The same result can be obtained by using
+<code>indx_Commutator_Kperm</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p1[<span class="fu">indx_Commutator_Kperm</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>))]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span></code></pre></div>
+<p>The <code>matr_Commutator_Mixing</code> is exploited for deriving the
+covariance matrix of Hermite polynomials; see Terdik (2021, 4.6).</p>
+<p>The Elimination and Qplication matrices- related functions
+respectively eliminate and restore duplicated or q-plicated elements in
+powers of T-products.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>a3<span class="ot">&lt;-</span>a<span class="sc">%x%</span>a<span class="sc">%x%</span>a</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>a3</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 2 4 2 4 4 8</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(<span class="fu">matr_Elimination</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>a3)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 4 8</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(<span class="fu">matr_Qplication</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span><span class="fu">matr_Elimination</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>a3)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 2 4 2 4 4 8</span></span></code></pre></div>
+<p>Closely connected to the above matrices are the functions
+<code>indx_UnivMomCum</code> and <code>indx_Elimination</code>. The
+former provides a vector of indexes to select univariate moments or
+cumulants of the single elements of a d-vector X from available vector
+of T-moments and T-cumulants. The latter eliminates the
+duplicated/q-plicated elements in a T-vector of multivariate moments and
+cumulants. The function <code>indx_Elimination</code> produces the same
+results as <code>matr_Elimination</code> and it is less demanding in
+terms of memory. The use of <code>matr_Elimination</code> can be
+preferable is one wishes to deal with linear combination of matrices.
+See examples 4 and 6 below for the use of <code>indx_UnivMomCum</code>
+and <code>indx_Elimination</code>.</p>
+<p>The symmetrizer matrix, a <span class="math inline">\(d^n \times
+d^n\)</span> matrix for the symmetrization of a T-product of <span class="math inline">\(n\)</span> vectors with the same dimension <span class="math inline">\(d\)</span> which overcomes the difficulties
+arising from the non commutative property of the Kronecker product, and
+simplifies considerably the computation formulae for multivariate
+polynomials and their derivatives (see Holmquist (1996) for details).
+The symmetrizer for a T-product of <span class="math inline">\(q\)</span> vectors of dimension <span class="math inline">\(d\)</span> is defined as <span class="math display">\[
+\mathbf{S}_{d \mathbf{1}q}=\frac{1}{q} \sum_{p \in \cal{P}_q}
+\mathbf{K}_p
+\]</span> where <span class="math inline">\(\cal{P}_q\)</span> is the
+set of all permutations of the numbers <span class="math inline">\(1:q\)</span> and <span class="math inline">\(\mathbf{K}_p\)</span> is the commutator matrix of
+for the permutation <span class="math inline">\(p \in
+\cal{P}_q\)</span>, (i.e. the <code>matr_Commutator_Kperm</code> of the
+package). Note that, by definition, computing the symmetrizer requires
+<span class="math inline">\(q!\)</span> operations; in the package, the
+computational complexity is overcome by exploiting the Chacon and Duong
+(2015) efficient recursive algorithms for functionals based on higher
+order derivatives.</p>
+</div>
+<div id="multivariate-t-hermite-polynomials" class="section level2">
+<h2>Multivariate T-Hermite Polynomials</h2>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hermite_Poly_HN</td>
+<td align="left">Univariate Hermite polynomials</td>
+</tr>
+<tr class="even">
+<td align="left">Hermite_Poly_HN_Multi</td>
+<td align="left">Multivariate T-Hermite polynomials</td>
+</tr>
+<tr class="odd">
+<td align="left">Hermite_Poly_NH_Inv</td>
+<td align="left">Inverse univariate Hermite polynomial</td>
+</tr>
+<tr class="even">
+<td align="left">Hermite_Poly_NH_Multi_Inv</td>
+<td align="left">Inverse of d-variate T-Hermite Polynomial</td>
+</tr>
+<tr class="odd">
+<td align="left">Hermite_N_Cov_X1_X2</td>
+<td align="left">Computation of the covariance matrix between <span class="math inline">\(d\)</span>-variate T-Hermite polynomials <span class="math inline">\(H_N(X_1)\)</span> and <span class="math inline">\(H_N(X_2)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Consider a Gaussian vector <span class="math inline">\(\mathbf{X}\)</span> of dimension <span class="math inline">\(d\)</span> with <span class="math inline">\(\operatorname{E}\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{\Sigma}=\operatorname{Cov}(\mathbf{X})=\operatorname{E}\mathbf{X
+X}&#39;\)</span> and define the generator function <span class="math display">\[\begin{split}
+\Psi(\mathbf{X}; \mathbf{a})&amp;=\exp \left(\mathbf{a}&#39;\mathbf{X} -
+\frac{1}{2} \mathbf{a}&#39; \mathbf{\Sigma} \mathbf{a}\right) \\
+&amp;=\exp \left(\mathbf{a}&#39;\mathbf{X}  - \frac{1}{2}
+\boldsymbol{\kappa}_2^{\otimes\prime}  \mathbf{a}^{\otimes 2} \right) \\
+\end{split}
+\]</span> where <span class="math inline">\(\mathbf{a}\)</span> is a
+<span class="math inline">\(d\)</span>-vector of constants and <span class="math inline">\(\boldsymbol{\kappa}_2^{\otimes}=\operatorname{vec}\mathbf{\Sigma}\)</span>.
+The vector Hermite polynomials is defined via the T-derivative of the
+generator function, viz. <span class="math display">\[
+\mathbf{H}_n(\mathbf{X}) = D_\mathbf{a}^{\otimes
+n}\Psi(\mathbf{X};\mathbf{a})\big|_{\mathbf{a}=0}
+\]</span> For example one has <span class="math display">\[
+\mathbf{H}_1(\mathbf{X})=\mathbf{X},    \quad
+\mathbf{H}_2(\mathbf{X})=\mathbf{X}^{\otimes 2} -
+\boldsymbol{\kappa}_2^{\otimes}
+\]</span> Note that the multivariate T-Hermite polynomial <span class="math inline">\(\mathbf{H}_n(\mathbf{X})\)</span> is a vector of
+dimension <span class="math inline">\(d^n\)</span> which contains the
+<span class="math inline">\(n\)</span>-th order polynomials of the
+vector <span class="math inline">\(\mathbf{X}^{\otimes n}\)</span>. For
+example the entries of <span class="math inline">\(\mathbf{H}_2(\mathbf{X})\)</span> are the second
+order Hermite polynomials <span class="math inline">\(H_2(X_i,X_j)\)</span>, <span class="math inline">\(i,j=1,2, \dots d\)</span>; for <span class="math inline">\(d=2\)</span> <span class="math display">\[
+\mathbf{H}_2(\mathbf{X}) = \left( (X_1^2 - \sigma_{11}), (X_1 X_2 -
+\sigma_{12}), (X_2 X_1 - \sigma_{21}), (X_2^2 -
+\sigma_{22})\right)^\prime.
+\]</span> Note that <span class="math inline">\(\mathbf{H}_n(\mathbf{X})\)</span> is <span class="math inline">\(n\)</span>-symmetric, i.e. <span class="math inline">\(\mathbf{H}_2(\mathbf{X}) = \mathbf{S}_{d
+\mathbf{1}_n} \mathbf{H}_2(\mathbf{X})\)</span> where <span class="math inline">\(\mathbf{S}_{d \mathbf{1}_n}\)</span> is the
+symmetrizer defined in […]. From this one can get useful recursion
+formulae <span class="math display">\[
+\mathbf{H}_n(\mathbf{X})=\mathbf{S}_{d
+\mathbf{1}_n}\left(  \mathbf{H}_{n-1}(\mathbf{X}) \otimes \mathbf{X}-
+(n-1) \mathbf{H}_{n-2}(\mathbf{X}) \otimes
+\boldsymbol{\kappa}_2^{\otimes} \right).
+\]</span></p>
+<p>For further details, consult Terdik (2021, 4.5).</p>
+<p>The definition of the <span class="math inline">\(d\)</span>-variate
+Hermite polynomial requires the covariance matrix <span class="math inline">\(\mathbf{\Sigma}\)</span> of the vector <span class="math inline">\(\mathbf{X}\)</span>. The
+<code>Hermite_Poly_HN</code> and <code>Hermite_Poly_HN_multi</code>
+functions compute the univariate and <code>d</code>-variate Hermite
+polynomials and their inverses up to a given order <code>N</code>
+evaluated at <span class="math inline">\(x\)</span> for a given
+covariance matrix <code>Sig2</code>. By default <code>Sig2</code>=<span class="math inline">\(I_\mathbf{d}\)</span>.</p>
+<p><strong>Example 3</strong> The first and the second <span class="math inline">\(3\)</span>-variate Hermite polynomials evaluated
+at <code>x&lt;-c(1,2,3)</code> where <span class="math inline">\(x\)</span> is the realization of <span class="math inline">\(\mathbf{X} \sim N(\mathbf{0},
+I_{\mathbf{3}})\)</span> is</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>H2<span class="ot">&lt;-</span><span class="fu">Hermite_Poly_HN_Multi</span>(x,<span class="at">N=</span><span class="dv">2</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>H2[[<span class="dv">1</span>]]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>H2[[<span class="dv">2</span>]]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0 2 3 2 3 6 3 6 8</span></span></code></pre></div>
+<p>If <code>x</code> is the realization of <span class="math inline">\(\mathbf{X} \sim N(\mathbf{0},
+4I_\mathbf{2})\)</span></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>H2<span class="ot">&lt;-</span><span class="fu">Hermite_Poly_HN_Multi</span>(x,<span class="at">Sig2=</span><span class="dv">4</span><span class="sc">*</span><span class="fu">diag</span>(<span class="dv">3</span>),<span class="at">N=</span><span class="dv">2</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>H2[[<span class="dv">1</span>]]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>H2[[<span class="dv">2</span>]]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -3  2  3  2  0  6  3  6  5</span></span></code></pre></div>
+<p>One can recover the vector x from H2 with the inverse function:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Hermite_Poly_NH_Multi_Inv</span>(H2,<span class="at">N=</span><span class="dv">2</span>,<span class="at">Sig2=</span><span class="dv">4</span><span class="sc">*</span><span class="fu">diag</span>(<span class="dv">3</span>))[[<span class="dv">1</span>]] </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span></code></pre></div>
+<p>The function <code>Hermite_N_Cov_X1_X2</code> can be exploited to
+obtain the covariance matrix of <span class="math inline">\(H_N(\mathbf{X}_1)\)</span> and <span class="math inline">\(H_N(\mathbf{X}_2)\)</span> for vectors <span class="math inline">\(\mathbf{X}_1\)</span> and <span class="math inline">\(\mathbf{X}_2\)</span> having covariance matrix
+<span class="math inline">\(\mathbf{\Sigma_{12}}\)</span>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Covmat<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.8</span>,<span class="fl">0.3</span>,<span class="fl">0.8</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Cov_X1_X2 <span class="ot">&lt;-</span> <span class="fu">Hermite_N_Cov_X1_X2</span>(<span class="at">SigX12=</span>Covmat,<span class="at">N=</span><span class="dv">3</span>)</span></code></pre></div>
+</div>
+<div id="multivariate-t-moments-and-t-cumulants" class="section level2">
+<h2>Multivariate T-moments and T-cumulants</h2>
+<p>Multivariate moments and cumulants of all orders of a random vector
+<span class="math inline">\(\mathbf{X}\)</span> in <span class="math inline">\(d\)</span>-dimensions, with mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> and covariance matrix
+<span class="math inline">\(\mathbf{\Sigma}\)</span> can be obtained by
+applying the T-derivative respectively to the characteristic function
+and the log of the CF.</p>
+<p>More formally, let <span class="math inline">\(\boldsymbol{\lambda}\)</span> a <span class="math inline">\(d\)</span>-vector of real constants; <span class="math inline">\(\phi_{\mathbf{X}}(\boldsymbol{\lambda})\)</span>
+and <span class="math inline">\(\psi_{\mathbf{X}}(\boldsymbol{\lambda})=\log\phi_{\mathbf{X}}(\boldsymbol{\lambda})\)</span>
+denote, respectively, the characteristic function and the cumulant-
+function of <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<p>Then the <span class="math inline">\(k\)</span>-th order moments and
+cumulants of the vector <span class="math inline">\(\mathbf{X}\)</span>
+are obtained as <span class="math display">\[
+\boldsymbol{\mu}^\otimes_{\mathbf{X},k} =   (-\mathbf{i})^k
+D_{\boldsymbol{\lambda}}^{\otimes k}\boldsymbol{\boldsymbol{\phi}%
+}_{\mathbf{X}}(\boldsymbol{\lambda}) \big|_{\boldsymbol{\lambda}=0}.
+\]</span> <span class="math display">\[
+\boldsymbol{\kappa}^\otimes_{\mathbf{X},k}
+=   \underline{\operatorname{Cum}}_k(\mathbf{X})= (-\mathbf{i})^k
+D_{\boldsymbol{\lambda}}^{\otimes k}\boldsymbol{\boldsymbol{\psi}%
+}_{\mathbf{X}}(\boldsymbol{\lambda}) \big|_{\boldsymbol{\lambda}=0}.
+\]</span> Note that <span class="math inline">\(\boldsymbol{\mu}_{\mathbf{X},k} =
+\operatorname{E}\mathbf{X}^{\otimes k}\)</span> that is a vector of
+dimension <span class="math inline">\(d^k\)</span> that contains all
+possible moments of order order <span class="math inline">\(k\)</span>
+formed by <span class="math inline">\(X_1, \dots, X_d\)</span>. This
+approach has the advantage of being straightforwardly extendable to any
+<span class="math inline">\(k\)</span>-th order moment. An analogous
+discussion can be done for cumulants.</p>
+<p>Note that one has <span class="math inline">\(\boldsymbol{\kappa}_{\mathbf{X},2}
+=\operatorname{vec} \mathbf{\Sigma}\)</span>.</p>
+<p>The package <code>MultiStatM</code> contains functions which obtains
+moments from cumulants and vice-versa as well as function which provide
+theoretical moments and cumulants for some important multivariate
+distributions.</p>
+<p>The <code>conv_Cum2Mom</code> and <code>conv_Mom2Cum</code> either
+for the univariate and multivariate cases provide conversion formulae
+for cumlants from moments and viceversa given any list of (theoretical)
+moments (or cumulants).</p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">conv_Cum2Mom</td>
+<td align="left">Convert cumulants to moments (univariate)</td>
+</tr>
+<tr class="even">
+<td align="left">conv_Cum2MomMulti</td>
+<td align="left">Convert T-cumulants to T-moments (multivariate)</td>
+</tr>
+<tr class="odd">
+<td align="left">conv_Mom2Cum</td>
+<td align="left">Convert moments to cumulants (univariate)</td>
+</tr>
+<tr class="even">
+<td align="left">conv_Mom2CumMulti</td>
+<td align="left">Convert T-moments to T-cumulants (multivariate)</td>
+</tr>
+</tbody>
+</table>
+<p>The conversion formula from moments to cumulants (see Terdik (2001,
+3.4)) is given by <span class="math display">\[\begin{split}
+\boldsymbol{\mu}_{n}^\otimes &amp;= \sum_{\cal{K} \in \cal{P}_n}
+\mathbf{K}^{-1}_{p(\cal{K})} \prod^\otimes_{b_j \in \cal{K}}
+\kappa^\otimes_{|b_j|}\\
+  &amp;= \mathbf{S}_{d \mathbf{1}_n}\left( \sum_{r=1}^n \sum_{\sum l_j
+=r, \sum j l_j = n} \frac{n!}{\prod_{j=1}^n l_j! (j!)^{l_j}}
+\prod_{j=1:n-r+1}^\otimes \kappa^{\otimes l_j}_j\right)
+\end{split}
+\]</span> where the summation is over all partitions <span class="math inline">\(\cal{K} = \{b_1, b_2,\dots, b_k\}\)</span> of
+<span class="math inline">\(1 : n\)</span>; <span class="math inline">\(|b_j|\)</span> denotes the cardinality of block
+<span class="math inline">\(b_j\)</span>. The simpler second formula,
+exploiting the symmetrizer matrix, derives from symmetry of <span class="math inline">\(\boldsymbol{\mu}_{n}^\otimes\)</span>.</p>
+<p>As far as the formula from cumulants to moments (Terdik (2021, 3.4))
+is concerned, <span class="math display">\[
+\boldsymbol{\kappa}_{n}^\otimes  
+  = \mathbf{S}_{d \mathbf{1}_n}\left( \sum_{r=1}^n (-1)^{r-1}
+(r-1)!\sum_{\sum l_j =r, \sum j l_j = n}  \prod_{j=1:n-r+1}^\otimes
+\frac{1}{{l_j}!}\left(
+\frac{1}{j!}\boldsymbol{\mu}^{\otimes}_j\right)^{l_j}\right)
+\]</span></p>
+<p><strong>Example 4</strong>. Consider the case of the 2-variate
+standard normal distribution with null mean vector and covariance matrix
+with unit elements on the main diagonal and off-diagonal elements equal
+to 0.5; in this case the the first four moments are given in the vector
+<code>mu</code> below</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">&lt;-</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">1.5</span>,<span class="fl">1.5</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">10</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>cum<span class="ot">&lt;-</span><span class="fu">conv_Mom2CumMulti</span>(mu)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>cum</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 1</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.0 0.5 0.5 1.0</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0 0 0 0 0 0 0 0</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span></code></pre></div>
+<p>Getting back to moments</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conv_Cum2MomMulti</span>(cum)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 1</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.0 1.5 1.5 2.0</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 10.0  7.0  7.0  6.5  7.0  6.5  6.5  7.0  7.0  6.5  6.5  7.0  6.5  7.0  7.0</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] 10.0</span></span></code></pre></div>
+<p>I one wishes to select only the distinct moments from the vector of
+third moments, then</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mu[[<span class="dv">3</span>]][<span class="fu">indx_Elimination</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 4</span></span></code></pre></div>
+<p>Alternatively one can also use the elimination matrix</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>r.mu<span class="ot">&lt;-</span><span class="fu">matr_Elimination</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span> mu[[<span class="dv">3</span>]]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(r.mu)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 4</span></span></code></pre></div>
+<p>Note that <code>matr_Elimination</code> does not correspond the the
+function <code>unique</code>, rather it individuates the duplicated
+elements from the symmetry of the Kronecker product. This allow to
+recover the whole vector when needed.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(<span class="fu">matr_Qplication</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>r.mu)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span></code></pre></div>
+<p>The same result by using <code>indx_Qplication</code></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">indx_Qplication</span>(r.mu,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span></code></pre></div>
+<p>The <code>MomCum</code> functions provide theoretical moments and
+cumulants for some common multivariate distributions: Skew-normal.
+Canonical Fundamental Skew-normal (CFUSN), Uniform distribution on the
+sphere, central folded Normal distribution (univariate and
+multivariate); for detail on the multivariate formulae used see
+(Jammalamadaka et al., 2021).</p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">distr_CFUSN_MomCum_Th</td>
+<td align="left">Moments and cumulants CFUSN</td>
+</tr>
+<tr class="even">
+<td align="left">distr_ZabsM_MomCum_Th</td>
+<td align="left">Moments and cumulants multivariate central folded
+Normal distribution</td>
+</tr>
+<tr class="odd">
+<td align="left">distr_SkewNorm_MomCum_Th</td>
+<td align="left">Moments and cumulants d-variate Skew Normal</td>
+</tr>
+<tr class="even">
+<td align="left">distr_Uni_MomCum_Th</td>
+<td align="left">Moments and cumulants Uniform Distribution on the
+Sphere</td>
+</tr>
+<tr class="odd">
+<td align="left">distr_Zabs_MomCum_Th</td>
+<td align="left">Moments and cumulants Central folded Normal
+distribution</td>
+</tr>
+<tr class="even">
+<td align="left">distr_SkewNorm_EVSK_Th</td>
+<td align="left">EVSK multivariate Skew Normal</td>
+</tr>
+<tr class="odd">
+<td align="left">distr_UniAbs_EVSK_Th</td>
+<td align="left">Moments of the modulus of the Uniform distribution on
+the sphere</td>
+</tr>
+<tr class="even">
+<td align="left">distr_Uni_EVSK_Th</td>
+<td align="left">EVSK Uniform on the sphere</td>
+</tr>
+</tbody>
+</table>
+<p>Expressions for theoretical moments and cumulants are provided by the
+<code>distr_NAME_MomCum_Th</code> functions. In particular</p>
+<ul>
+<li><p>A <span class="math inline">\(d\)</span>-vector <span class="math inline">\(\mathbf{U}\)</span> having uniform distribution on
+the sphere <span class="math inline">\(\mathbb{S}_{d-1}\)</span>.
+Moments and cumulants of all orders are provided for <span class="math inline">\(\mathbf{U}\)</span> (<code>NAME=Uni</code>) and
+its modulus (<code>NAME=UniAbs</code>). Recall that any <span class="math inline">\(d\)</span>-vector, say <span class="math inline">\(\mathbf{W}\)</span> has a spherically symmetric
+distribution if that distribution is invariant under the group of
+rotations in <span class="math inline">\(\mathbb{R}^{d}\)</span>. This
+is equivalent to saying that <span class="math inline">\(\mathbf{W}\)</span> has the stochastic
+representation <span class="math inline">\(\mathbf{W}=R\mathbf{U}\)</span> where <span class="math inline">\(R\)</span> is a non negative random variable.
+Moments and cumulants of <span class="math inline">\(\mathbf{W}\)</span>
+can be obtained by its stochastic representation as discussed in
+Jammalamadaka et al.(2021a, Theorem 1) and Jammalamadaka et al. (2021c,
+Lemma 1). Furthermore a <span class="math inline">\(d\)</span>-vector
+<span class="math inline">\(\mathbf{X}\)</span> has an elliptically
+symmetric distribution if it has the representation <span class="math display">\[
+\mathbf{X}=\boldsymbol{\mu}+\boldsymbol{\Sigma}^{1/2}\mathbf{W}%
+\]</span> where <span class="math inline">\(\boldsymbol{\mu}\in\mathbb{R}^{d}\)</span>, <span class="math inline">\(\boldsymbol{\Sigma}\)</span> is a
+variance-covariance matrix and <span class="math inline">\(\mathbf{W}\)</span> is spherically distributed.
+Hence the cumulants of <span class="math inline">\(\mathbf{X}\)</span>
+are just constant times the cumulants of <span class="math inline">\(\mathbf{W}\)</span> except for the mean i.e. <span class="math display">\[
+\underline{\operatorname*{Cum}}_{m}\left(  \mathbf{X}\right)  =\left(
+\boldsymbol{\Sigma}^{1/2}\right)  ^{\otimes
+m}\underline{\operatorname*{Cum}%
+}_{m}\left(  \mathbf{W}\right)  ,
+\]</span></p></li>
+<li><p>If <span class="math inline">\(\mathbf{Z}\)</span> denotes a
+<span class="math inline">\(d\)</span>-vector with <span class="math inline">\(d\)</span>-variate Normal distribution, the
+functions with <code>NAME=Zabs</code> and <code>NAME=ZabsM</code>
+provide the moments and cumulants of <span class="math inline">\(|\mathbf{Z}|\)</span> respectively in the
+univariate (<span class="math inline">\(d=1\)</span>) and multivariate
+case.</p></li>
+<li><p>The Multivariate Skew Normal distribution introduced by Azzalini
+and Dalla Valle (1996), whose marginal densities are scalar
+skew-normals. A <span class="math inline">\(d\)</span>-dimensional
+random vector <span class="math inline">\(\mathbf{X}\)</span> is said to
+have a multivariate skew-normal distribution, <span class="math inline">\(\text{SN}_{d}\left(\boldsymbol{\mu},\boldsymbol{\Omega},\boldsymbol{\alpha}\right)\)</span>
+with shape parameter <span class="math inline">\(\boldsymbol{\alpha}\)</span> if it has the density
+function <span class="math display">\[
+2\varphi\left(  \mathbf{X};\boldsymbol{\mu},\boldsymbol{\Omega}\right)
+\Phi\left(  \boldsymbol{\alpha}^{\top}\left(  \mathbf{X}-\boldsymbol{\mu
+}\right)  \right)  , \quad\mathbf{X} \in\mathbb{R}^{d}.
+\]</span> where <span class="math inline">\(\varphi\left(\mathbf{X};\boldsymbol{\mu},\boldsymbol{\Omega}\right)\)</span>
+is the <span class="math inline">\(d\)</span>-dimensional normal density
+with mean <span class="math inline">\(\boldsymbol{\mu}\)</span> and
+correlation matrix <span class="math inline">\(\boldsymbol{\Omega}\)</span>; here <span class="math inline">\(\varphi\)</span> and <span class="math inline">\(\Phi\)</span> denote the univariate standard
+normal density and the cdf. For a general formula for cumulants, see
+Jammalamadaka et al. (2021a, Lemma 4).</p></li>
+<li><p>Arellano-Valle and Genton (2005) introduced the CFUSN
+distribution (cf. their Proposition 2.3), to include all existing
+definitions of SN distributions. The marginal stochastic representation
+of <span class="math inline">\(\mathbf{X}\)</span> with distribution
+<span class="math inline">\(\text{CFUSN}_{d,m}\left(\boldsymbol{\Delta}\right)\)</span>
+is given by <span class="math display">\[
+  \mathbf{X}=\boldsymbol{\Delta}\left\vert \mathbf{Z}_{1}\right\vert
+  +\left(  \mathbf{I}_{d}-\boldsymbol{\Delta\Delta}^{\top}\right)
+  ^{1/2}\mathbf{Z}_{2}
+\]</span> where <span class="math inline">\(\boldsymbol{\Delta}\)</span>, is the <span class="math inline">\(d\times m\)</span> skewness matrix such that <span class="math inline">\(\left\Vert
+\boldsymbol{\Delta}\underline{a}\right\Vert &lt;1\)</span>, for all
+<span class="math inline">\(\left\Vert \underline{a}\right\Vert
+=1\)</span>, and <span class="math inline">\(\mathbf{Z}_{1}\in\mathcal{N}\left(
+0,\mathbf{I}_{m}\right)\)</span> and <span class="math inline">\(\mathbf{Z}_{2}\in\mathcal{N}\left(
+0,\mathbf{I}_{d}\right)\)</span> are independent (Proposition 2.2.
+Arellano-Valle and Genton (2005)). A simple construction of <span class="math inline">\(\boldsymbol{\Delta}\)</span> is <span class="math inline">\(\boldsymbol{\Delta}=\boldsymbol{\Lambda}\left(\mathbf{I}_{m}\mathbf{+}\boldsymbol{\Lambda}^{\top}\boldsymbol{\Lambda}\right)^{-1/2}\)</span>
+with some real matrix <span class="math inline">\(\boldsymbol{\Lambda}\)</span> with <span class="math inline">\(d\times m\)</span>. The <span class="math inline">\(\text{CFUSN}_{d,m}\left(\boldsymbol{\mu},\boldsymbol{\Sigma},\boldsymbol{\Delta}\right)\)</span>
+can be defined via the linear transformation <span class="math inline">\(\boldsymbol{\mu}+\boldsymbol{\Sigma}^{1/2}\mathbf{X}\)</span>.
+For a general formula for cumulants, see Jammalamadaka et al. (2021a,
+Lemma 5).</p></li>
+</ul>
+<p>The <code>Rand</code> functions provide random number generators for
+multivariate distributions.</p>
+<p>The <code>EVSK</code> functions compute the theoretical values of the
+mean vector, covariance, skewness vector, total skenwness, kurtosis
+vector and total kurtosis for given multivariate distributions: Uniform
+on the sphere, modulus of the Uniform distribution on the sphere,
+Skew-normal distribution.</p>
+<p><strong>Example 5</strong>. For a skew-normal distribution with <span class="math inline">\(\alpha=(10,5,0)\)</span> and correlation function
+<span class="math inline">\(\Omega= \text{diag} (1,1,1)\)</span> we have
+the third moments and cumulants are</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">0</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>omega<span class="ot">&lt;-</span><span class="fu">diag</span>(<span class="dv">3</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>MSN<span class="ot">&lt;-</span><span class="fu">distr_SkewNorm_MomCum_Th</span>(<span class="at">r=</span><span class="dv">3</span>,omega,alpha,<span class="at">nMu=</span><span class="cn">TRUE</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(MSN<span class="sc">$</span>Mu[[<span class="dv">3</span>]],<span class="dv">3</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 1.568 0.073 0.000 0.073 0.570 0.000 0.000 0.000 0.711 0.073 0.570 0.000</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] 0.570 0.996 0.000 0.000 0.000 0.355 0.000 0.000 0.711 0.000 0.000 0.355</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] 0.711 0.355 0.000</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(MSN<span class="sc">$</span>CumX[[<span class="dv">3</span>]],<span class="dv">3</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.154 0.077 0.000 0.077 0.039 0.000 0.000 0.000 0.000 0.077 0.039 0.000</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] 0.039 0.019 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] 0.000 0.000 0.000</span></span></code></pre></div>
+<p>As another example, for the modulus of the Uniform distribution on
+the sphere, the fourth cumulant is:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">distr_Uni_EVSK_Th</span>(<span class="dv">3</span>, <span class="at">nCum =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>Kurt.U</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] -1.2  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0 -0.4  0.0  0.0</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16]  0.0  0.0  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [31] -0.4  0.0  0.0  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -1.2  0.0  0.0  0.0 -0.4</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [46]  0.0  0.0  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0  0.0  0.0</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [61] -0.4  0.0  0.0  0.0  0.0  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0 -0.4  0.0  0.0</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [76]  0.0 -0.4  0.0  0.0  0.0 -1.2</span></span></code></pre></div>
+</div>
+<div id="estimation" class="section level2">
+<h2>Estimation</h2>
+<p>Estimating functions starting from a vector of multivariate data are
+available: multivariate moments and cumulants, skewness and kurtosis
+vectors Mardia’s skewness and kurtosis indexes, Mori, Rohatgi, Szekely
+(MRSz’s) skewness vector and kurtosis matrices.</p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Esti_Hermite_Poly_HN_Multi</td>
+<td align="left">Estimation of the N-th d-variate polynomial</td>
+</tr>
+<tr class="even">
+<td align="left">Esti_EVSK</td>
+<td align="left">Estimation of multivariate Mean, Variance, T-Skewness
+and T-Kurtosis vectors</td>
+</tr>
+<tr class="odd">
+<td align="left">Esti_Kurt_CMRSz</td>
+<td align="left">Estimation of Cardoso, Mori,Rohatgi , Szekely (CMRSz’s)
+kurtosis matrix</td>
+</tr>
+<tr class="even">
+<td align="left">Esti_Kurt_Mardia</td>
+<td align="left">Estimation of Mardia’s Kurtosis Index</td>
+</tr>
+<tr class="odd">
+<td align="left">Esti_Kurt_Total</td>
+<td align="left">Estimation of the Total Kurtosis Index</td>
+</tr>
+<tr class="even">
+<td align="left">Esti_MMom_MCum</td>
+<td align="left">Estimation of multivariate T-Moments and
+T-Cumulants</td>
+</tr>
+<tr class="odd">
+<td align="left">Esti_Skew_Mardia</td>
+<td align="left">Estimation of Mardia’s Skewness index</td>
+</tr>
+<tr class="even">
+<td align="left">Esti_Skew_MRSz</td>
+<td align="left">Estimation for Mori, Rohatgi, Szekely (MRSz’s) skewness
+vector</td>
+</tr>
+<tr class="odd">
+<td align="left">Esti_Variance_Skew_Kurt</td>
+<td align="left">Estimated Variance of skewness and kurtosis
+vectors</td>
+</tr>
+</tbody>
+</table>
+<p>A complete picture of skewness is provided by the third-order
+T-cumulant (skewness vector) of a standardized <span class="math inline">\(\mathbf{X}\)</span>; set <span class="math inline">\(\mathbf{Y}=\mathbf{\Sigma}^{-1/2}(\mathbf{X}-\boldsymbol{\mu})\)</span>,
+then the skewness vector is <span class="math display">\[
+\boldsymbol{\kappa}_{\mathbf{Y},3}^\otimes
+=\underline{\operatorname{Cum}}_3 \left(
+\mathbf{Y}\right)=\left(\mathbf{\Sigma}^{-1/2}\right)^{\otimes 3}
+\boldsymbol{\kappa}_{\mathbf{X},3}^\otimes.
+\]</span> The total skewness of <span class="math inline">\(\mathbf{X}\)</span> is defined by the square norm
+of the skewness vector: <span class="math inline">\(\gamma_{1,d}=\|\boldsymbol{\kappa}_{\mathbf{Y},3}^\otimes\|^2\)</span>.
+This definition guarantees that skewness is invariant under the shifting
+and orthogonal transformations, in other words it is affine
+invariant.</p>
+<p>We note that Mardia’s multivariate skewness index (Mardia (1970)),
+denote it by <span class="math inline">\(\beta_{1,d}\)</span>, coincides
+with the total skewness <span class="math inline">\(\gamma_{1,d}\)</span> since the third-order
+central moments and third-order cumulants are equal.</p>
+<p>Mori, Rohatgi, Szekely (MRSz’s) skewness vector (Mori et al. (1994))
+can also be recovered from the skewness vector as <span class="math display">\[
+\mathbf{b}(\mathbf{Y})= \left( \operatorname{vec}&#39; \mathbf{I}_d
+\otimes  \mathbf{I}_d \right)\boldsymbol{\kappa}_{\mathbf{Y},3}^\otimes
+\]</span> Note that <span class="math inline">\(\operatorname{vec}&#39;
+\mathbf{I}_d \otimes \mathbf{I}_d\)</span> is a matrix of dimension
+<span class="math inline">\(d \times d^3\)</span>, which contains <span class="math inline">\(d\)</span> unit values per-row, whereas all the
+others are 0; as a consequence, this measure does not take into account
+the contribution of cumulants of the type <span class="math inline">\(\operatorname{Cum}_3 (X_j,X_k,X_l)\)</span>, where
+all the three indices <span class="math inline">\(j\)</span>, <span class="math inline">\(k\)</span>, <span class="math inline">\(l\)</span>
+are different from each other. The corresponding scalar measure of
+multivariate skewness is <span class="math inline">\(b(\mathbf{Y}) = \|
+\mathbf{b}(\mathbf{Y}) \|^2\)</span>.</p>
+<p>The fourth-order T-cumulant of the standardized <span class="math inline">\(\mathbf{X}\)</span>, i.e. <span class="math inline">\(\boldsymbol{\kappa}_{\mathbf{Y},4}^\otimes\)</span>,
+will be called <strong>kurtosis vector</strong> of <span class="math inline">\(\mathbf{X}\)</span>; its square norm will be
+called the total kurtosis of <span class="math inline">\(\mathbf{X}\)</span> <span class="math display">\[
+\gamma_{2,d}=\| \boldsymbol{\kappa}_{\mathbf{Y},4}^\otimes \|^2
+\]</span> Mardia’s kurtosis index <span class="math inline">\(\beta_{2,d}= \operatorname{E}\left(
+\mathbf{Y}&#39;\mathbf{Y} \right)^2\)</span> is related to the kurtosis
+vector by the formula <span class="math display">\[
+\beta_{2,d}= \left( \operatorname{vec}&#39; \mathbf{I}_{d^2}
+\right)\boldsymbol{\kappa}_{\mathbf{Y},4}^\otimes +d(d+2)
+\]</span> A consequence of this is that Mardia’s measure does not depend
+on all the entries of <span class="math inline">\(\boldsymbol{\kappa}_{\mathbf{Y},4}^\otimes\)</span>
+which has <span class="math inline">\(d(d +1)(d +2)(d +3)/24\)</span>
+distinct elements, while <span class="math inline">\(\beta_{2,d}\)</span> includes only <span class="math inline">\(d^2\)</span> elements among them. We note that if
+<span class="math inline">\(\mathbf{X}\)</span> is Gaussian, then <span class="math inline">\(\boldsymbol{\kappa}_{\mathbf{Y},4}^\otimes=\mathbf{0}\)</span>.</p>
+<p>Cardoso, Mori, Szekely, Rothagi define what we will call the CMRS
+kurtosis matrix <span class="math display">\[
+\mathbf{B}(Y) =\operatorname{E}\left( \mathbf{Y}\mathbf{Y}&#39;
+\mathbf{Y}\mathbf{Y}&#39; \right) -(d+2)\mathbf{I}_d
+\]</span> which can be expressed in terms of the kurtosis vector as
+<span class="math display">\[
+\operatorname{vec}\mathbf{B}(Y)\left( \mathbf{I}_{d^2}\otimes
+\operatorname{vec}&#39;
+\mathbf{I}_d   \right)\boldsymbol{\kappa}_{\mathbf{Y},4}^\otimes
+\]</span> Note also that <span class="math inline">\(\operatorname{tr}
+\mathbf{B}(Y) = \beta_{2,d}\)</span>.</p>
+<p>For further discussion on the above indexes and further multivariate
+indexes of skewness and kurtosis, as well as their asymptotic theory one
+can consult Terdik (2021, section 6) and Jammalamadaka et
+al. (2021a,b).</p>
+<p>The function <code>Esti_Variance_Skew_Kurt</code> provides estimates
+of the covariance matrix of the data-estimated skewness and kurtosis
+vectors (Terdik (2021), formulae 6.13 and 6.22).</p>
+<p><strong>Example 6</strong>. Consider a multivariate data vector of
+dimension <span class="math inline">\(d=3\)</span> and <span class="math inline">\(n=250\)</span> from the multivariate skew-normal
+distribution of Example 5. The estimated first four cumulants are listed
+in the object <code>EsMSN</code> obtained by the <code>Esti_EVSK</code>
+function; the corresponding theoretical values are in the object
+<code>ThMSN</code> obtained by the <code>istr_SkewNorm_EVSK_Th</code>
+function.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">distr_SkewNorm_Rand</span>(<span class="dv">1000</span>,omega,alpha)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>EsMSN<span class="ot">&lt;-</span><span class="fu">Esti_EVSK</span>(data)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ThMSN<span class="ot">&lt;-</span><span class="fu">distr_SkewNorm_EVSK_Th</span>(omega,alpha)</span></code></pre></div>
+<p>Compare the distinct elements of the estimated skewness vector and
+the theoretical ones using <code>indx_Elimination</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>EsMSN<span class="sc">$</span>estSkew[<span class="fu">indx_Elimination</span>(<span class="dv">3</span>,<span class="dv">3</span>)]   </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  0.55146965  0.37564103  0.05982354  0.20275976  0.03764258  0.04127893</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7]  0.09830014  0.03208461 -0.06483243  0.12021715</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>ThMSN<span class="sc">$</span>SkewX[<span class="fu">indx_Elimination</span>(<span class="dv">3</span>,<span class="dv">3</span>)]   </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 0.68927167 0.34463583 0.00000000 0.17231792 0.00000000 0.00000000</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] 0.08615896 0.00000000 0.00000000 0.00000000</span></span></code></pre></div>
+<p>If one wishes to recover the estimated univariate skewness and
+kurtosis of the components <span class="math inline">\(X1\)</span>,
+<span class="math inline">\(X2\)</span> and <span class="math inline">\(X3\)</span> of <span class="math inline">\(X\)</span>, then, using
+<code>indx_UnivMomCum</code>,</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>EsMSN<span class="sc">$</span>estSkew[<span class="fu">indx_UnivMomCum</span>(<span class="dv">3</span>,<span class="dv">3</span>)]  <span class="do">## Get univariate skewness for X1,X2,X3</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.55146965 0.09830014 0.12021715</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>EsMSN<span class="sc">$</span>estKurt[<span class="fu">indx_UnivMomCum</span>(<span class="dv">3</span>,<span class="dv">4</span>)]  <span class="do">## Get univariate kurtosis for X1,X2,X3</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]  0.23230281 -0.01456662  0.01875074</span></span></code></pre></div>
+<p>An estimate of Mardia’s skewness index is provided together with the
+p-value under the null hypothesis of normality. The theoretical value of
+Mardia’s skewness can be recovered from the element
+<code>SkewX.tot</code> in the object <code>ThMSN</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Esti_Skew_Mardia</span>(data)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Mardia.Skewness</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9149352</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $p.value</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.145771e-27</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>ThMSN<span class="sc">$</span>SkewX.tot</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.9279208</span></span></code></pre></div>
+<p>The MRS skewness vector and index are provided together with the
+p-value for the skewness index under the null hypothesis of normality,
+The theoretical value, for the distribution at hand, can be computed
+using formula […]</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Esti_Skew_MRSz</span>(data)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $MRSz.Skewness.Vector</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.7955083 0.4091087 0.2121253</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $MRSz.Skewness.Index</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.8452006</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $p.value</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.28982e-18</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">c</span>(<span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%x%</span><span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%*%</span>ThMSN<span class="sc">$</span>SkewX)  <span class="do">## Theoretical MRS skewness vector</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.8615896 0.4307948 0.0000000</span></span></code></pre></div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Arellano-Valle, R.B., Genton, M.G. (2005) On fundamental skew
+distributions. Journal of Multivariate Analysis 96(1), 93–116.</p>
+<p>Azzalini, A. (2022). The R package ‘sn’: The Skew-Normal and Related
+Distributions such as the Skew-t and the SUN (version 2.0.2). URL <a href="http://azzalini.stat.unipd.it/SN/" class="uri">http://azzalini.stat.unipd.it/SN/</a>, <a href="https://cran.r-project.org/package=sn" class="uri">https://cran.r-project.org/package=sn</a></p>
+<p>Azzalini, A,, Dalla Valle, A. (1996) The multivariate skew-normal
+distribution. Biometrika 83(4), 715–726</p>
+<p>Chacón, J. E., &amp; Duong, T. (2015). Efficient recursive algorithms
+for functionals based on higher order derivatives of the multivariate
+Gaussian density. Statistics and Computing, 25(5), 959-974.</p>
+<p>Di Nardo, E. and Guarino, G. (2022). kStatistics: Unbiased Estimators
+for Cumulant Products and Faa Di Bruno’s Formula. R package version
+2.1.1. <a href="https://CRAN.R-project.org/package=kStatistics" class="uri">https://CRAN.R-project.org/package=kStatistics</a></p>
+<p>Franceschini, C. and Loperfido, N. (2017a). MultiSkew: Measures,
+Tests and Removes Multivariate Skewness. R package version 1.1.1. <a href="https://CRAN.R-project.org/package=MultiSkew" class="uri">https://CRAN.R-project.org/package=MultiSkew</a></p>
+<p>Franceschini, C. and Loperfido, N. (2017b). MaxSkew: Orthogonal Data
+Projections with Maximal Skewness. R package version 1.1. <a href="https://CRAN.R-project.org/package=MaxSkew" class="uri">https://CRAN.R-project.org/package=MaxSkew</a></p>
+<p>Holmquist, B. (1996). The d-variate vector Hermite polynomial of
+order. Linear Algebra and Its Applications, 237/238, 155–190.</p>
+<p>Jammalamadaka, S. R., Subba Rao, T. and Terdik, Gy. (2006). Higher
+order cumulants of random vectors and applications to statistical
+inference and time series. Sankhya (Ser A, Methodology) 68, 326–356.</p>
+<p>Jammalamadaka, S. R., Taufer, E. &amp; Terdik, Gy. H. (2021a). On
+multivariate skewness and kurtosis. <em>Sankhya</em> A, 83(2),
+607-644.</p>
+<p>Jammalamadaka, S. R., Taufer, E. &amp; Terdik, Gy. H. (2021b).
+Asymptotic theory for statistics based on cumulant vectors with
+applications. <em>Scandinavian Journal of Statistics</em>, 48(2),
+708-728.</p>
+<p>Jammalamadaka,S.R. , Taufer,E. &amp; Terdik, Gy. (2021c). Cumulants
+of Multivariate Symmetric and Skew Symmetric Distributions., Symmetry
+13, 1383.</p>
+<p>Kolda, T.G.; Bader, B.W. (2009). Tensor decompositions and
+applications. SIAM Rev. 51, 455–500.</p>
+<p>Kollo, T. (2008). Multivariate skewness and kurtosis measures with an
+application in ICA. Journal of Multivariate Analysis 99, 10,
+2328–2338.</p>
+<p>Komsta, L. and Novomestky F. (2022). moments: Moments, Cumulants,
+Skewness, Kurtosis and Related Tests. R package version 0.14.1. <a href="https://CRAN.R-project.org/package=moments" class="uri">https://CRAN.R-project.org/package=moments</a></p>
+<p>Novomestky, F. (2021). matrixcalc: Collection of Functions for Matrix
+Calculations. R package version 1.0-5. <a href="https://CRAN.R-project.org/package=matrixcalc" class="uri">https://CRAN.R-project.org/package=matrixcalc</a></p>
+<p>Qi, L. (2006). Rank and eigenvalues of a supersymmetric tensor, the
+multivariate homogeneous polynomial and the algebraic hypersurface it
+defines. J. Symb. Comput. 41, 1309–1327.</p>
+<p>Mardia, K. V. (1970). Measures of multivariate skewness and kurtosis
+with applications. Biometrika, 57, 519–530.</p>
+<p>McCullagh, P. (2018). Tensor methods in statistics. Chapman and
+Hall/CRC.</p>
+<p>Móri, T. F., Rohatgi, V. K., &amp; Székely, G. J. (1994). On
+multivariate skewness and kurtosis. Theory of Probability &amp; Its
+Applications, 38(3), 547–551.</p>
+<p>Ould-Baba, H.; Robin, V.; Antoni, J. (2015). Concise formulae for the
+cumulant matrices of a random vector. Linear Algebra Appl. 485,
+392–416.</p>
+<p>Terdik, Gy. (2021). <em>Multivariate statistical methods - going
+beyond the linear</em>. Springer.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
