@@ -23,7 +23,7 @@ Springer 2021.  Example 6.1
 }
 \seealso{
 Other Indexes: 
-\code{\link{Esti_Kurt_CMRSz}()},
+\code{\link{Esti_Kurt_MRSz}()},
 \code{\link{Esti_Kurt_Mardia}()},
 \code{\link{Esti_Skew_MRSz}()},
 \code{\link{Esti_Skew_Mardia}()}

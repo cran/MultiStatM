@@ -29,7 +29,7 @@ skewness and kurtosis. Sankhya A, 83(2), 607-644
 }
 \seealso{
 Other Indexes: 
-\code{\link{Esti_Kurt_CMRSz}()},
+\code{\link{Esti_Kurt_MRSz}()},
 \code{\link{Esti_Kurt_Mardia}()},
 \code{\link{Esti_Kurt_Total}()},
 \code{\link{Esti_Skew_Mardia}()}

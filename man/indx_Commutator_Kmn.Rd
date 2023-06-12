@@ -31,6 +31,8 @@ Springer 2021 (p.8, (1.12)).
 \seealso{
 Other Matrices and commutators: 
 \code{\link{indx_Commutator_Kperm}()},
+\code{\link{indx_Commutator_Mixing}()},
+\code{\link{indx_Commutator_Moment}()},
 \code{\link{indx_Elimination}()},
 \code{\link{indx_Qplication}()},
 \code{\link{indx_Symmetry}()},

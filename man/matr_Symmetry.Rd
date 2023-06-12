@@ -43,6 +43,8 @@ Springer 2021.Section 1.3.1 Symmetrization, p.14. (1.29)
 Other Matrices and commutators: 
 \code{\link{indx_Commutator_Kmn}()},
 \code{\link{indx_Commutator_Kperm}()},
+\code{\link{indx_Commutator_Mixing}()},
+\code{\link{indx_Commutator_Moment}()},
 \code{\link{indx_Elimination}()},
 \code{\link{indx_Qplication}()},
 \code{\link{indx_Symmetry}()},

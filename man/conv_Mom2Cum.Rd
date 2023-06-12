@@ -18,7 +18,7 @@ Obtains a vector of univariate cumulants from a vector of
 univariate moments
 }
 \examples{
-mu_x<- c(1,2,3,4,5,6,7,8)
+mu_x<- c(1,2,3,4)
 conv_Mom2Cum(mu_x)
 
 }

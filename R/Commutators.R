@@ -257,6 +257,62 @@ matr_Commutator_Mixing <- function( d1,d2,useSparse=FALSE) {
 }
 
 
+#'
+#' Index commutator mixing
+#'
+#' Provides the product Kx where K is the moment commutator as produced by 
+#' \code{matr_Commutator_Mixing} and x is a vector. It avoids the construction of large
+#' commutators matrices working much faster with respect to \code{matr_Commutator_Moment}.
+#'
+#' @param x a vector of dimension \code{prod(d1)*prod(d2)}
+#' @param d1 dimension of the first group of vectors
+#' @param d2 dimension of the second group of vectors
+#' 
+#' @return  A vector Kx.
+#' 
+#' @references Gy.Terdik, Multivariate statistical methods - going beyond the linear,
+#' Springer 2021. Formula (4.58) p. 218.
+#'
+#' @examples
+#' d1 <- c(2, 3, 2)
+#' d2<-  c(3 ,2, 2)
+#' x<-1:(prod(d1)*prod(d2))
+#' indx_Commutator_Mixing(x,d1,d2)
+#' # Same as
+#' MCM<-matr_Commutator_Mixing(d1,d2)
+#' as.vector(MCM%*%x)
+#' @family Matrices and commutators
+#' @export
+indx_Commutator_Mixing <- function(x, d1,d2) {
+  if (length(x)!= prod(d1)*prod(d2)) (stop("x must have dimension prod(d1)*prod(d2)"))
+  # permutations
+  # dim(d1)<-dim(d2)
+  n <- length(d2)
+  
+  i1<- matrix(data =c(1:n,(1:n)+n) , nrow = 2, ncol = n, byrow =TRUE)
+  fact_n<-factorial(n)  # number of permutations
+  B <- matrix(data = rep(c(1:n),fact_n), nrow = fact_n, ncol = n, byrow =TRUE)
+  Permut <- arrangements::permutations(1:n)#perm(c(1:n))
+  q<-cbind(B, (Permut+n))
+  indUj<- c(i1) # reorder q
+  q<-q[,indUj] # permutations
+  # dimensions
+  d1B <- matrix(rep(d1,fact_n), nrow = fact_n, ncol = n, byrow =TRUE)
+  d2q<- matrix(rep(0,fact_n*n),nrow = fact_n, ncol = n) # zeros(fact_n,n);
+  for (k in c(1:fact_n)) {
+    d2q[k,] <- d2[Permut[k,]]
+  }
+  Bd <- cbind(d1B, d2q)
+  Bdq <- Bd[,indUj] # dimensions with respect to permutations
+  # Commutator
+  lcx<-0
+  for  (kk in c(1:fact_n)) {
+    lcx<- lcx + x[indx_Commutator_Kperm(q[kk,],Bdq[kk,])]
+  }
+  return(lcx)
+}
+
+
 
 
 
@@ -348,7 +404,9 @@ matr_Symmetry<-function(d,n,useSparse=FALSE){
 
 indx_Symmetry  <-  function(x,d,n){
   x.sym <- rep(0,d^n)
-  xp<- primes::generate_n_primes(d)
+  if (d>100)  (stop("d must NOT be greater than 100"))
+  xp<- .primnum(545)
+  xp<- xp[1:d]
   y <- xp
   for (k in 1:(n-1)){ y <- kronecker(xp,y)}
 
@@ -388,7 +446,9 @@ indx_Symmetry  <-  function(x,d,n){
 #' @family Matrices and commutators
 #' @export
 matr_Elimination<-function(d,q,useSparse=FALSE){
-  x<- primes::generate_n_primes(d)
+  if (d>100)  (stop("d must NOT be greater than 100"))
+  x<- .primnum(545)
+  x<- x[1:d]
   y <- x
   for (k in 1:(q-1)){ y <- kronecker(x,y)}
   int<-match(unique(y), y)
@@ -431,7 +491,9 @@ matr_Elimination<-function(d,q,useSparse=FALSE){
 #' @family Matrices and commutators
 #' @export
 matr_Qplication<-function(d,q,useSparse=FALSE){
-  x<- primes::generate_n_primes(d)
+  if (d>100)  (stop("d must NOT be greater than 100"))
+  x<- .primnum(545)
+  x<- x[1:d]
   y <- x
   for (k in 1:(q-1)){ y <- kronecker(x,y)}
   int<-match(unique(y), y)
@@ -458,11 +520,9 @@ matr_Qplication<-function(d,q,useSparse=FALSE){
 #' It produces the same results as matr_Qplication.
 #'
 #'
-#'
 #' @references Gy. Terdik, Multivariate statistical methods - going beyond the linear,
 #' Springer 2021, p.21, (1.31)
 #'
-#' @param xelim the T-product vector with distinct elements
 #' @param d dimension of the vectors in the T-product
 #' @param q  power of the Kronecker product
 #'
@@ -472,21 +532,21 @@ matr_Qplication<-function(d,q,useSparse=FALSE){
 #' ## Distinct elements of y
 #' z<-y[indx_Elimination(3,3)]
 #' ## Restore eliminated elements in z
-#' indx_Qplication(z,3,3)
+#' z[indx_Qplication(3,3)]
 #'
 #' @return A vector (T-vector) with all elements previously eliminated by indx_Elimination
 #'
 #' @family Matrices and commutators
 #' @export
-indx_Qplication <-function(xelim,d,q){
-
-  xp<- primes::generate_n_primes(d)
+indx_Qplication <-function(d,q){
+  if (d>100)  (stop("d must NOT be greater than 100"))
+  xp<- .primnum(545)
+  xp<- xp[1:d]
   y <- xp
   for (k in 1:(q-1)){ y <- kronecker(xp,y)}
+  ind.q <- match(y, unique(y))
 
-  qpl.x <- xelim[match(y, unique(y))]
-
-  return(qpl.x)
+  return(ind.q)
 
 }
 
@@ -516,7 +576,9 @@ indx_Qplication <-function(xelim,d,q){
 #' @family Matrices and commutators
 #' @export
 indx_UnivMomCum<-function(d,q){
-  x<- primes::generate_n_primes(d)
+  if (d>100)  (stop("d must NOT be greater than 100"))
+  x<- .primnum(545)
+  x<- x[1:d]
   y <- x
   for (k in 1:(q-1)){ y <- kronecker(x,y)}
   ind<-match(x^q, y)  # unique(y)
@@ -548,8 +610,9 @@ indx_UnivMomCum<-function(d,q){
 #' @family Matrices and commutators
 #' @export
 indx_Elimination<-function(d,q){
-
-  x<- primes::generate_n_primes(d)
+  if (d>100)  (stop("d must NOT be greater than 100"))
+  x<- .primnum(545)
+  x<- x[1:d]
   y <- x
   for (k in 1:(q-1)){ y <- kronecker(x,y)}
   ind<-match(unique(y), y)  #
@@ -774,9 +837,88 @@ matr_Commutator_Moment<-function(el_rm,d,useSparse=FALSE) {
       L_eL<-L_eL + matr_Commutator_Kperm(perm_Urk1[ss,],d,useSparse = TRUE)
     }
   }
-
+  
+  if (useSparse==TRUE) {
+    L_eL<-as.matrix(L_eL)
+    L_eL<-t(L_eL)
+    L_eL<- Matrix::Matrix(L_eL,sparse=TRUE)
+    return("L_eL"= L_eL)}
+  
+  L_eL<-t(L_eL)
 
   return("L_eL"= L_eL)
 }
 
+
+
+#' Linear combination of moments 
+#' 
+#' For a d-variate distribution it provides the product Kx where K is the moment commutator as 
+#' produced by \code{matr_Commutator_Moment} and x is a vector of appropriate dimension. 
+#' It avoids the construction of large commutators matrices working much faster 
+#' with respect to \code{matr_Commutator_Moment}.
+#'
+#' @param x a vector of length d^n where n is length of (el_rm)
+#' @param el_rm  type of a partition
+#' @param d   dimensionality of the underlying multivariate distribution
+#' @return A vector K x
+#' @examples
+#' n=4;  r=2 ;  m=1 ;  d=2;
+#' PTA<-Partition_Type_All(n)
+#' el_r<-PTA$eL_r[[r]][m,]
+#' ## el_r is a given type (always a vector)
+#' x<-1:d^n
+#' indx_Commutator_Moment(x,el_r,d)
+#' # Same as
+#' MC<- matr_Commutator_Moment(el_r,d)
+#' as.vector(MC%*%x)
+#' @references Gy., Terdik, Multivariate statistical methods - going beyond the linear,
+#' Springer 2021, Section 2.4.3, p.100, Sect. A.2.1, p. 353.,
+#' Corollary 2.6., p.95
+#'
+#' @family Matrices and commutators
+#' @export
+#'
+indx_Commutator_Moment<-function(x,el_rm,d) {
+  N<-length(el_rm)
+  PTB<-Partition_Type_All(N)
+  loc_type_el <- .Partition_Type_eL_Location(el_rm)
+  r <- loc_type_el[1]
+  m <- loc_type_el[2]
+  
+  part_class<-PTB$Part.class
+  S_N_r<-PTB$S_N_r
+  S_m_j<-PTB$S_r_j
+  
+  sepL<-cumsum(S_N_r)
+  sepS_r<-cumsum(S_m_j[[r]])
+  
+  
+  if (r==1) {perm_Urk1<- 1:N
+  px<-0
+  ## L_eL<-L_eL+matr_Commutator_Kperm(perm_Urk1,d)
+  px<-px+ x[indx_Commutator_Kperm(perm_Urk1,d)]
+  
+  return("px"=px)
+  }
+  else {
+    if (m==1) {l_ind<-sepL[r-1]+1} else {l_ind<-sepL[r-1]+sepS_r[m-1]+1}
+    if (.is.scalar(S_m_j[r])) {u_ind<-l_ind+S_m_j[[r]]-1}
+    else {u_ind<-l_ind+S_m_j[[r]][m]-1}
+    perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
+    sz<- 1
+    for (k in l_ind:u_ind){
+      perm_Urk1[sz,]<-Partition_2Perm(part_class[[k]])
+      sz<-sz+1
+    }
+  }
+  px<-0
+  for (ss in 1:dim(perm_Urk1)[1]) {
+    uu<-Permutation_Inverse(perm_Urk1[ss,])
+    px<-px+ x[indx_Commutator_Kperm(uu,d)]
+  }
+  
+  
+  return("px"= px)
+}
 

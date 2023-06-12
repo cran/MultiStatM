@@ -47,6 +47,8 @@ Springer 2021, 1.2.4 Commuting T-Products of Vectors.
 Other Matrices and commutators: 
 \code{\link{indx_Commutator_Kmn}()},
 \code{\link{indx_Commutator_Kperm}()},
+\code{\link{indx_Commutator_Mixing}()},
+\code{\link{indx_Commutator_Moment}()},
 \code{\link{indx_Elimination}()},
 \code{\link{indx_Qplication}()},
 \code{\link{indx_Symmetry}()},

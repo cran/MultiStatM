@@ -10,7 +10,7 @@ conv_Stand_Multi(x)
 \item{x}{a multivariate data matrix, sample size is the number of rows}
 }
 \value{
-a matrix of multivarate data with null mean vector and
+a matrix of multivariate data with null mean vector and
 identity sample covariance matrix
 }
 \description{

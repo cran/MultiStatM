@@ -27,7 +27,7 @@
 ##################
 
 # Centering a sample of vector variates,
-#  @param x matrix of  sample, rows are observations of a d variate,
+#  @param x matrix of  sample, rows are observations of a d variate random vector,
 #  sample size is the number of rows
 #  @return data matrix with rows centered by the sample means of columns
 #  @family Standard
@@ -46,7 +46,7 @@
 #' \eqn{z=S^{-1/2}(x-M)}
 #'
 #' @param x a multivariate data matrix, sample size is the number of rows
-#' @return a matrix of multivarate data with null mean vector and
+#' @return a matrix of multivariate data with null mean vector and
 #' identity sample covariance matrix
 #' @examples
 #' x<-MASS::mvrnorm(1000,c(0,0,1,3),diag(4))
@@ -260,10 +260,10 @@ Esti_Skew_MRSz<-function(x){
   return(list("MRSz.Skewness.Vector"=MSv,"MRSz.Skewness.Index"=MS,"p.value"=pval))
 }
 
-#' Estimation of Cardoso, Mori,  Rohatgi, Szekely (CMRSz's) kurtosis matrix
+#' Estimation of  Mori,  Rohatgi, Szekely (CMRSz's) kurtosis matrix
 #'
 #' @param x A matrix of multivariate data
-#' @return \code{CMRSz.Kurtosis} The kurtosis matrix
+#' @return \code{MRSz.Kurtosis} The kurtosis matrix
 #' @return \code{p.value} The p-value for the hypothesis of symmetry under the
 #' Gaussian assumption
 #' @family Indexes
@@ -272,23 +272,51 @@ Esti_Skew_MRSz<-function(x){
 #' Springer 2021.  Example 6.9
 #'
 #' @export
-Esti_Kurt_CMRSz <- function(x){
-   n=dim(x)[1]
+Esti_Kurt_MRSz <- function(x){
+  n=dim(x)[1]
   d<-dim(x)[2]
-
   Id <- diag(d)
   Id2 <- diag(d^2)
+  i_ind <- NULL 
+  j_ind <-  NULL 
+  col_ind <-  NULL
+  for (k in 0: (d-2)){
+    col_ind <- c(col_ind, (ceiling(c((k*(d+1)+2):((k+1)*(d+1)))/d)-1)*d + 
+                   ((k*(d+1)+2):((k+1)*(d+1)) %% d)  + 
+                   ((c((k*(d+1)+2):((k+1)*(d+1))) %% d)==0)*d)
+    i_ind <- c(i_ind, (ceiling(c((k*(d+1)+2):((k+1)*(d+1)))/d)))
+    j_ind <- c(j_ind, ((k*(d+1)+2):((k+1)*(d+1)) %% d)  + 
+                 ((c((k*(d+1)+2):((k+1)*(d+1))) %% d)==0)*d)
+  }
+  Matr <- matrix(rep(0,d^4),nrow = d^2)
+  Sz_all <- c(Id)
+  for (i in c(0:(d-1))){
+    Matr[ ,i*(d+1)+1] <- (4*(d-1)+24)*kronecker(Id[ ,i+1],Id[ ,i+1])+
+      4*(Sz_all-kronecker(Id[ ,i+1],Id[ ,i+1]));
+  }
+  sz <- 1
+  for (kk in col_ind){
+    
+    Matr[ ,kk] <- (2*(d-2)+12)*(kronecker(Id[ ,i_ind[sz]],Id[ ,j_ind[sz]])+
+                                  kronecker(Id[,j_ind[sz]],Id[,i_ind[sz]]))
+    sz <- sz+1
+  }
+  
   szor <- kronecker(Id2,as.vector(Id))
   szort <- kronecker(Id2,t(as.vector(Id)))
-  V4 <- szort %*%matr_Symmetry(d, 4)%*% szor
+  V4 <- Matr #/24
   V4.svd <- svd(V4)
-  Pinv.V4.svdd<- c(1/V4.svd$d[1:(d*(d+1)/2) ], rep(0,d*(d-1)/2))
-  P.inv <- V4.svd$u%*%diag(Pinv.V4.svdd)%*% t(V4.svd$v)/24
+  si <- sqrt( 1/V4.svd$d[1:(d*(d+1)/2) ])
+  Vi <- V4.svd$v[,1:(d*(d+1)/2)]
+  #  Pinv.V4.svdd<- c(, rep(0,d*(d-1)/2))
+  #  P.inv <- V4.svd$u%*%diag(Pinv.V4.svdd)%*% t(V4.svd$v)/24
   evsk <- Esti_EVSK(x)
   M.Kurt <- as.vector (szort %*% evsk$estKurt)
-  M.KurtInd <- t(M.Kurt)%*%P.inv%*%M.Kurt
+  M.Kurti <- diag(si)%*%t(Vi)%*%M.Kurt
+  M.KurtInd <- t(M.Kurti)%*%M.Kurti  #/24
+  #t(M.Kurt)%*%P.inv%*%M.Kurt
   pval<-stats::pchisq(n*M.KurtInd,d*(d+1)/2,lower.tail = FALSE)
- return(list("CMRSz.Kurtosis"= matrix(M.Kurt,nrow = d),"p.value"=pval))
+  return(list("MRSz.Kurtosis"= matrix(M.Kurt,nrow = d),"pval"=pval))
 }
 
 
@@ -310,40 +338,37 @@ Esti_Kurt_CMRSz <- function(x){
 #'
 Esti_Skew_Variance_Th <- function(cum){
   if (length(cum) < 6) (stop("cum  has  not large enough order"))
-  #%%%%%%%%%%%%%%%%%%%%  Commutator  L_2j3
   d <- length(cum[[1]])
   type_2j3 <- c(0,0,2,0,0,0)
-  # loc_type_2j3  <-  Partition_Type_eL_Location(type_2j3)
-  L_2j3 <- .Commutator_Moment_eL(type_2j3,d)
-  # %%%%%%%%%%%%%%%%%%%%%%%  Commutator  L_1j2_1j1
-  # type_1j2_1j1  <- [1,1,0];%
-  # loc_type_1j2_1j1   <-  PartitionType_eL_Location(type_1j2_1j1 );
-  # L_1j2_1j1   <-  MomentCommutators_L(type_1j2_1j1 ,loc_type_1j2_1j1 (1),loc_type_1j2_1j1 (2),d);
-  Id3 <-diag(d^3)
-  K2 <-  kronecker( matr_Commutator_Kmn(d,d),diag(d)) #
-  K3  <- matr_Commutator_Kmn(d,d^2);# L1_2_1_1 X van elõl
-  Sym22 <-  Id3+K2+K3; #  Sym22 - L_1j2_1j1'
-  #%%%%%%%%%%%%%%%% Commutator L2_H4
-
-  L2_H4i  <-  kronecker(t(Sym22),t(Sym22))%*%matr_Commutator_Kperm(c(1,3,4,2,5,6 ),d)
-  #L2_H4i  <-  kronecker(t(Sym22),t(Sym22))[indx_Commutator_Kperm(c(1,3,4,2,5,6 ),d)]
-
-  #%%%%%%%%%%%%%%%5  Commutator M_3 inverse already!!!!
-  d1 <- c(d,d,d)
-  M3_m_ni  <- t(matr_Commutator_Mixing( d1,d1))
-  #%%%%%%%%%%%%%%%%%%%%%
   Id <- diag(d)
-  vec_Var_Skew  <- as.matrix(cum[[ 6]]) + t(L_2j3)%*%kronecker(as.matrix(cum[[ 3]]),as.matrix(cum[[ 3]])) +
-    L2_H4i%*%kronecker(as.vector(Id),as.matrix(cum [[4]]))+
-    M3_m_ni%*%kronecker(as.vector(Id), kronecker(as.vector(Id),as.vector(Id)))-
-    kronecker(as.matrix(cum[[ 3]]),as.matrix(cum[[ 3]]))
+  perm1 <- c(2,1,3)
+  perm2 <- c(2,3,1) # inverse
+  D <- d^(2*length(perm1))
+  
+  ########  FIRST TERM ###########
+  B1<-as.vector(.indx_Commutator_Moment_t(kronecker(cum[[ 3]],cum[[ 3]]),type_2j3,d)) 
+  
+  #### SECOND TERM###############
+  Y <- kronecker(as.vector(diag(d)),as.vector(cum [[4]]))[indx_Commutator_Kperm(c(1,3,4,2,5,6 ),d)]
+  B2 <- rep(0,D)
+  permM <- matrix(c(1:3,perm1,perm2),nrow=3,byrow=TRUE)
+  for(k in 1:3){
+    for (m in 1:3) {
+      B2 <- B2 + Y[.indx_kron2(permM[k,],permM[m,],d)] 
+    }
+  }
+  
+  ########################### THIRD TERM #############
+  d1 <- c(d,d,d)
+  xp<-kronecker(as.vector(Id), kronecker(as.vector(Id),as.vector(Id)))
+  B3<-xp[indx_Commutator_Kperm(c(1,3,5,2,4,6 ),d)]+xp[indx_Commutator_Kperm(c(1,3,5,2,6,4 ),d)]+xp[indx_Commutator_Kperm(c(1,3,5,4,2,6 ),d)]+
+    xp[indx_Commutator_Kperm(c(1,3,5,6,2,4 ),d)]+xp[indx_Commutator_Kperm(c(1,3,5,4,6,2 ),d)]+xp[indx_Commutator_Kperm(c(1,3,5,6,4,2 ),d)]
+  
+  #### Variance formula 6.13
+  vec_Var_Skew  <- cum[[6]] + B1 + B2 + B3 - kronecker(cum[[ 3]],cum[[ 3]])
   Var_Skew  <-  matrix(vec_Var_Skew, nrow=d^3)
   return(Var_Skew)
 }
-
-
-
-
 
 
 
@@ -389,7 +414,9 @@ Esti_Variance_Skew_Kurt<- function(X){
 ###################
 
 #' Asymptotic Variance of the estimated  kurtosis vector
-#'
+#' 
+#' Warning: the function requires 8! computations, for d>3, the timing required maybe large.  
+#' 
 #' @param cum The theoretical/estimated cumulants up to the 8th order in vector form
 #' @return The matrix of theoretical/estimated variance
 #' @references Gy.Terdik, Multivariate statistical methods - going beyond the linear,
@@ -399,56 +426,67 @@ Esti_Variance_Skew_Kurt<- function(X){
 
 Esti_Kurt_Variance_Th <- function(cum){
   if (length(cum) < 8) (stop("cum  has  not large enough order"))
-  #%%%%%%%%%%%%%%%%%%%%  Commutator  L_1j3_1j5
   d <- length(cum[[1]])
-  # kron2 <- function(Mm) kronecker(Mm,Mm)
+  D <- d^(2*4)
   Id <- diag(d)
   vId <- as.vector(Id)
-  #%%%%%%%%%%%%%%%%%%%%  Commutator  L_2j3
-  type_2j3 <- c(0,0,2,0,0,0)
- # loc_type_2j3  <-  Partition_Type_eL_Location(type_2j3)
-  L_2j3 <- .Commutator_Moment_eL(type_2j3,d)
-  ###########L_1j3_1j5
+  krId2 <- kronecker(vId,vId)
+  
+  ########################### First term
+  B1 <- cum[[ 8]] 
+  
+  #%%%%%%%%%%%%%%%%%%%% Second  Commutator  L_1j3_1j5
   type_1j3_1j5 <- c(0,0,1,0,1,0,0,0)
- # loc_type_1j3_1j5  <-  Partition_Type_eL_Location(type_1j3_1j5)
-  L_1j3_1j5 <- .Commutator_Moment_eL(type_1j3_1j5,d)
-  # %%%%%%%%%%%%%%%%%%%%%%%  Commutator  L_2j4
+  B2 <- indx_Commutator_Moment(kronecker(cum[[5]],cum[[3]]),
+                               type_1j3_1j5,d)
+  
+  # %%%%%%%%%%%%%%%%%%%%%%% Third  Commutator  L_2j4 
   type_2j4 <- c(0,0,0,2,0,0,0,0)
-  # loc_type_2j4  <-  Partition_Type_eL_Location(type_2j4)
-  L_2j4 <- .Commutator_Moment_eL(type_2j4,d)
-  #######
-  ############## L2_H6i
-
-  L_1j1_1j3 <-  diag(d^4) + matr_Commutator_Kperm(c(2, 1, 3, 4),d)+
-    matr_Commutator_Kperm(c(3, 1, 2, 4) ,d)+
-    matr_Commutator_Kperm(c( 4, 1, 2, 3),d)
-  Legy <- kronecker(L_1j1_1j3,L_1j1_1j3)
-
- L2_H6i=Legy*matr_Commutator_Kperm(c(1, 3, 4,  5, 2, 6, 7, 8),d)
-   # L2_H6i=Legy[indx_Commutator_Kperm(c(1, 3, 4,  5, 2, 6, 7, 8),d)]
-
-  #%%%%%%%%%%%%%%%5  Commutator M_4_m_n
+  B3 <- .indx_Commutator_Moment_t(kronecker(cum[[4]],cum[[4]]),
+                                  type_2j4,d)
+  
+  #%%%%%%%####################### Fourth  Commutator  L_2j3, L2_H6i
+  type_2j3 <- c(0,0,2,0,0,0)
+  x0 <- cum[[6]] + .indx_Commutator_Moment_t(kronecker(cum[[3]],cum[[3]]),
+                                             type_2j3,d)
+  x1 <- kronecker(vId,x0)
+  x <- x1[indx_Commutator_Kperm(c(1, 3, 4,  5, 2, 6, 7, 8),d)]
+  # see (A.13) for L_2H6
+  permM <- matrix(c(1:4,c(2, 1, 3, 4),c(3, 1, 2, 4),c( 4, 1, 2, 3)),
+                  nrow=4,byrow=TRUE)
+  B4 <- rep(0,D)
+  for(k in 1:4){
+    for (m in 1:4) {
+      B4 <- B4 + x[.indx_kron2(permM[k,],permM[m,],d)] 
+    }
+  }
+  ############## Fifth
+  x <-  kronecker(krId2,cum[[4]])
+  B5 <-  .indx.L22_H4_t(x,d)
+  
+  #%%%%%%%%%%%%%%%########### Sixth   Commutator M_4_m_n
   d1 <- rep(d,4)
-  M4_m_ni  <- t(matr_Commutator_Mixing( d1,d1))
-  #%%%%%%%%%%%%%%%%%%%%% L_1j3_1j1
+  x <- kronecker(krId2,krId2)
+  B6  <-.indx_Commutator_Mixing_t(x,d1,d1)
+  
+  #%%%%%%%%%%%%%####### Seven 
+  B7  <- - kronecker(cum[[4]],cum[[4]])
+  
+  ###################################### Eith  %% L_1j3_1j1
   type_1j3_1j1=c(1,0,1,0)
-  # loc_type_1j3_1j1  <- Partition_Type_eL_Location(type_1j3_1j1)
-  L_1j3_1j1=.Commutator_Moment_eL(type_1j3_1j1,d)
+  x <- kronecker(kronecker(cum[[3]],cum[[3]]),vId)
+  permM <- matrix(c(1:4,c(1,2,4,3),c(1,4,2,3),c(4,1,2,3)),
+                  nrow=4,byrow=TRUE) # inverse
+  B8 <- rep(0,D)
+  for(k in 1:4){
+    for (m in 1:4) {
+      B8 <- B8 + x[.indx_kron2(permM[k,],permM[m,],d)]
+    }
+  }
   ################
-  L22_H4m<- .L22_H4(d)
-
-  krId2 <- .kron2(vId)
   # %% kurtosis (6.26)
-  vec_Var_Kurt =cum[[ 8]] +
-    t(L_1j3_1j5)%*%kronecker(cum[[5]],cum[[3]])+
-    t(L_2j4)%*%.kron2(cum[[4]]) - as.vector(.kron2(cum[[4]])) +
-    L2_H6i%*%kronecker(vId,cum[[ 6]]+
-                         t(L_2j3)%*%.kron2(cum[[3]]))+
-    t(L22_H4m)%*%kronecker(krId2,cum[[4]])+
-    M4_m_ni%*%.kron2(krId2)+
-    .kron2(t(L_1j3_1j1))%*%kronecker(.kron2(cum[[3]]),vId)
-
-  Var_Kurt=matrix(vec_Var_Kurt, nrow= d^4);
+  vec_Var_Kurt  <-  B1+B2+B3+B4+B5+B6+B7+B8 
+  Var_Kurt <- matrix(vec_Var_Kurt, nrow= d^4);
   return(Var_Kurt)
 }
 
@@ -468,3 +506,78 @@ Esti_Hermite_Poly_HN_Multi<-function(x,N){
   HN<-apply(apply(z,1,Hermite_Nth, N=N),1,mean)
   return(HN)
 }
+
+#' Gram-Charlier approximation to a multivariate density
+#' 
+#' Provides the truncated Gram-Charlier approximation to a multivariate density. Approximation can
+#' be up to the first k=8 cumulants. 
+#' 
+#' @param X A matrix of d-variate data
+#' @param k the order of the approximation, by default set to 4; 
+#' (k must not be smaller than 3 or greater than 8)
+#' @param cum if NULL (default) the cumulant vector is estimated from X. 
+#' If \code{cum} is provided no estimation of cumulants is performed.
+#' @return The vector of the Gram-Charlier density evaluated at X
+#' 
+#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
+#' Springer 2021. Section 4.7.
+#' 
+#' @examples
+#' # Gram-Charlier density approximation (k=4) of data generated from 
+#' # a bivariate skew-gaussian distribution
+#' n<-50
+#' alpha<-c(10,0)
+#' omega<-diag(2)
+#' X<-distr_SkewNorm_Rand(n,omega,alpha)
+#' EC<-Esti_EVSK(X)
+#' fy4<-Esti_Gram_Charlier(X[1:5,],cum=EC)
+#' @export
+Esti_Gram_Charlier<-function(X,k=4,cum=NULL){
+  if (!is.null(cum)) {k=length(cum)}
+  if (k<3) stop("k must be greater than 2")
+  if (k>8) stop("k cannot be greater than 8")
+  if (is.vector(X)) stop(" X must be a data matrix")
+  
+  d<-dim(X)[[2]]
+  
+  if (!is.null(cum)) {EC<-cum
+  z1<-t(apply(X,1, function(x) x-as.vector(EC[[1]]))) 
+  if (is.vector(EC[[2]])) {cx<-matrix(EC[[2]],nrow=d)} else {cx<-EC[[2]]}
+  svdx<-svd(cx)
+  sm12<-svdx$u%*%diag(1/sqrt(svdx$d))%*%t(svdx$u)
+  if (is.vector(z1)) {as.matrix(z1);Z<-t(sm12%*%z1) }  else {Z<-t(sm12%*%t(z1))}
+  } 
+  else {EC<-Esti_MMom_MCum(X,k)$estCum.r
+  Z<-conv_Stand_Multi(X)
+  } 
+  
+  gy<-1
+  for (j in 3:min(k,5)){
+    HN<-apply(Z,1,Hermite_Nth, N=j)
+    gy<-gy+EC[[j]]%*%HN/factorial(j)
+  }
+  phi<-mvtnorm::dmvnorm(Z,rep(0,d),diag(d))
+  
+  if (k>5){
+    if (k==6) {B6<-indx_Symmetry(EC[[6]]+10*kronecker(EC[[3]],EC[[3]]),d,6)
+    Bell<-list(B6)
+    }
+    if (k==7) {B6<-indx_Symmetry(EC[[6]]+10*kronecker(EC[[3]],EC[[3]]),d,6)
+    B7<-indx_Symmetry(EC[[7]]+35*kronecker(EC[[3]],EC[[4]]),d,7)
+    Bell<-list(B6,B7)
+    }
+    if (k==8) {B6<-indx_Symmetry(EC[[6]]+10*kronecker(EC[[3]],EC[[3]]),d,6)
+    B7<-indx_Symmetry(EC[[7]]+35*kronecker(EC[[3]],EC[[4]]),d,7)
+    B8<-indx_Symmetry(EC[[8]]+56*kronecker(EC[[3]],EC[[5]])+35*kronecker(EC[[4]],EC[[4]]),d,8)
+    Bell<-list(B6,B7,B8)
+    }
+    for (j in 6:min(k,8)){
+      HN<-apply(Z,1,Hermite_Nth, N=j)
+      gy<-gy+Bell[[j-5]]%*%HN/factorial(j)
+    }
+  }
+  
+  GC<-as.vector(gy*phi)
+  return(GC)
+}
+

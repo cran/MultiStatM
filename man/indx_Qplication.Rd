@@ -4,11 +4,9 @@
 \alias{indx_Qplication}
 \title{Qplication vector}
 \usage{
-indx_Qplication(xelim, d, q)
+indx_Qplication(d, q)
 }
 \arguments{
-\item{xelim}{the T-product vector with distinct elements}
-
 \item{d}{dimension of the vectors in the T-product}
 
 \item{q}{power of the Kronecker product}
@@ -27,7 +25,7 @@ y<-kronecker(kronecker(x,x),x)
 ## Distinct elements of y
 z<-y[indx_Elimination(3,3)]
 ## Restore eliminated elements in z
-indx_Qplication(z,3,3)
+z[indx_Qplication(3,3)]
 
 }
 \references{
@@ -38,6 +36,8 @@ Springer 2021, p.21, (1.31)
 Other Matrices and commutators: 
 \code{\link{indx_Commutator_Kmn}()},
 \code{\link{indx_Commutator_Kperm}()},
+\code{\link{indx_Commutator_Mixing}()},
+\code{\link{indx_Commutator_Moment}()},
 \code{\link{indx_Elimination}()},
 \code{\link{indx_Symmetry}()},
 \code{\link{indx_UnivMomCum}()},

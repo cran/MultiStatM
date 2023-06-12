@@ -17,7 +17,7 @@
 #' @return \code{cum_x} the vector of univariate cumulants
 #'
 #' @examples
-#' mu_x<- c(1,2,3,4,5,6,7,8)
+#' mu_x<- c(1,2,3,4)
 #' conv_Mom2Cum(mu_x)
 #'
 #' @references Gy. Terdik, Multivariate statistical methods - going beyond the linear,
@@ -63,7 +63,7 @@ return("Cum"=cum_x)
 #' @return \code{mu_x} the vector of univariate moments
 #'
 #' @examples
-#' cum_x<- c(1,2,3,4,5,6,7,8)
+#' cum_x<- c(1,2,3,4)
 #' conv_Cum2Mom(cum_x)
 #'
 #' @references Gy. Terdik, Multivariate statistical methods - going beyond the linear,
@@ -159,19 +159,16 @@ conv_Mom2CumMulti = function(mu){
           el_j <- el[el!=0]
           Kr_1 <- vector(mode = "list", length = length(j_el))
           for(k in 1:length(j_el)){
-            # Mc1 <- mu[array(j_el[k], c(el_j[k],el_j[k]))]
-            Mc1 <-array(mu[j_el[k]], c(el_j[k],el_j[k])) #new version
+            Mc1 <-array(mu[j_el[k]], c(el_j[k],el_j[k])) 
             Kr_1[[length(j_el)-k+1]] <- .KronProd(Mc1[1,])
           }
           Kr_m <- S_r_j[[r]][m]* .KronProd(Kr_1)
-          # L_el <- t(Commutator_Moment_eL(el, d))
           Prod_M_k[,m] <- as.matrix(Kr_m)# L_el%*%
         }
 
         L_szor_mu[,r]<-(-1)^(r-1)*factorial(r-1)*apply(Prod_M_k,1,sum)
       }
     }
-    #MSymm <- matr_Symmetry(d,n)
     McN <- mu[rep(1,n)]
     L_szor_mu[,n] <- (-1)^(n-1)*factorial(n-1)*as.matrix(.KronProd(McN))
     # S_r_j[[n]][1]=1  !!!
@@ -232,35 +229,30 @@ conv_Cum2MomMulti = function(cum){
       for(r in 2:(n-1)){
 
         if(is.null(dim(el_js[[r]]))){
-          el_jsr = t(as.matrix(el_js[[r]], c(1,length(el_js[[r]]))))### vettore riga ora
+          el_jsr = t(as.matrix(el_js[[r]], c(1,length(el_js[[r]]))))### row vector
         }else{
           el_jsr = el_js[[r]]
         }
         Prod_M_k = array(0, c(d^n, dim(el_jsr)[1]))
-        for(m in 1:dim(el_jsr)[1]){                   ### correggi dim ->ok!
+        for(m in 1:dim(el_jsr)[1]){                  
           el = el_jsr[m,]
           j_el = an[el!=0]
           el_j = el[el!=0]
           Kr_1 = vector(mode = "list", length = length(j_el))
           for(k in 1:length(j_el)){
-            # Mc1 = mu[array(j_el[k], c(el_j[k],el_j[k]))]
-            Mc1 <-array(cum[j_el[k]], c(el_j[k],el_j[k])) #nuova versione
+            Mc1 <-array(cum[j_el[k]], c(el_j[k],el_j[k])) 
             Kr_1[[length(j_el)-k+1]] = .KronProd(Mc1[1,])
           }
           Kr_m = .KronProd(Kr_1)
-          # L_el = t(Commutator_Moment_eL(el, d)) ## check order r,m
-          # Nota: probably as.matrix non fa quello che serve per cell2mat in matlab
-          Prod_M_k[,m] = S_r_j[[r]][m]*as.matrix(Kr_m) #L_el%*%
+              Prod_M_k[,m] = S_r_j[[r]][m]*as.matrix(Kr_m) #L_el%*%
         }
         L_szor_cum[,r]= apply(Prod_M_k,1,sum)
       }
     }
-    #MSymm <-matr_Symmetry(d,n)
     McN = cum[rep(1,n)]
 
     L_szor_cum[,n] = as.matrix(.KronProd(McN))
-    #mu[[n]] = as.vector(t(as.matrix(MSymm %*% apply(L_szor_cum,1,sum))))
-         xyz<-apply(L_szor_cum,1,sum)
+    xyz<-apply(L_szor_cum,1,sum)
     mu[[n]] = indx_Symmetry(xyz,d,n)
   }
   return("Mom"= mu)

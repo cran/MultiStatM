@@ -13,7 +13,7 @@ Esti_Kurt_Variance_Th(cum)
 The matrix of theoretical/estimated variance
 }
 \description{
-Asymptotic Variance of the estimated  kurtosis vector
+Warning: the function requires 8! computations, for d>3, the timing required maybe large.
 }
 \references{
 Gy.Terdik, Multivariate statistical methods - going beyond the linear,

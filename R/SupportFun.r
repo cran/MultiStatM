@@ -13,6 +13,13 @@
 ## 9. Partition_All
 ## 10. Commutator_Moment_eL; 2.4.3 Moment Commutators and A.2.1 Moment Commutators
 ##  -Use sparse matrices
+## 11. prime numbers
+## 12 indx_commutator moment
+## 13 indx_Commutator_moment_t ## same as before but both are used in functions
+## 14 indx_kron2
+## 15 indx.L22_H4_t
+## 16 Indx_Commutator_Mixing_t
+## 17 Partition_Type_eL_Location
 
 
 #####################
@@ -224,24 +231,7 @@
 
 
 
-# Commutator matrix  corresponding to a given  type.
-#
-# With an option for sparse matrices
-#
-# @param el_rm type of a partition
-# @param d dimension
-# @param useSparse T or F
-# @return A commutator matrix
-# @examples
-# n=4;  r=2 ;  m=1 ;  d=2
-# PTA<-Partition_Type_All(n)
-# el_r<-PTA$eL_r[[2]][1,]
-# el_r is a given type (always a vector)
-# MC<- Commutator_Moment_eL(el_r,d)
-# MC
-# @references Gy., Terdik, Multivariate statistical methods - going beyond the linear,
-# Springer 2021, Section 2.4.3, p.100, Sect. A.2.1, p. 353.,
-# Corollary 2.6., p.95
+
 
 ##############################
 ### Partition_Type_eL_Location
@@ -357,5 +347,200 @@
 
 
   return("L_eL"= L_eL)
+}
+
+
+###############
+
+.primnum <- function(n) {
+  if (n >= 2) {
+    x = seq(2, n)
+    prime_nums = c()
+    for (i in seq(2, n)) {
+      if (any(x == i)) {
+        prime_nums = c(prime_nums, i)
+        x = c(x[(x %% i) != 0], i)
+      }
+    }
+    return(prime_nums)
+  }
+  else 
+  {
+    stop("Input number should be at least 2.")
+  }
+} 
+
+
+## Use as internal function , produces the same result as .commutator_moment
+
+.indx_Commutator_Moment<-function(x,el_rm,d) {
+  N<-length(el_rm)
+  PTB<-Partition_Type_All(N)
+  loc_type_el <- .Partition_Type_eL_Location(el_rm)
+  r <- loc_type_el[1]
+  m <- loc_type_el[2]
+  
+  part_class<-PTB$Part.class
+  S_N_r<-PTB$S_N_r
+  S_m_j<-PTB$S_r_j
+  
+  sepL<-cumsum(S_N_r)
+  sepS_r<-cumsum(S_m_j[[r]])
+  
+  
+  if (r==1) {perm_Urk1<- 1:N
+  px<-0
+  px<-px+ x[indx_Commutator_Kperm(perm_Urk1,d)]
+  
+  return("px"=px)
+  }
+  else {
+    if (m==1) {l_ind<-sepL[r-1]+1} else {l_ind<-sepL[r-1]+sepS_r[m-1]+1}
+    if (.is.scalar(S_m_j[r])) {u_ind<-l_ind+S_m_j[[r]]-1}
+    else {u_ind<-l_ind+S_m_j[[r]][m]-1}
+    perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
+    sz<- 1
+    for (k in l_ind:u_ind){
+      perm_Urk1[sz,]<-Partition_2Perm(part_class[[k]])
+      sz<-sz+1
+    }
+  }
+  px<-0
+  for (ss in 1:dim(perm_Urk1)[1]) {
+    uu<-perm_Urk1[ss,]
+    px<-px+ x[indx_Commutator_Kperm(uu,d)]
+  }
+  
+  
+  return("px"= px)
+}
+
+.indx_Commutator_Mixing_t <- function(x, d1,d2) {
+  if (length(x)!= prod(d1)*prod(d2)) (stop("x must have dimension prod(d1)*prod(d2)"))
+  # permutations
+  # dim(d1)<-dim(d2)
+  n <- length(d2)
+  
+  i1<- matrix(data =c(1:n,(1:n)+n) , nrow = 2, ncol = n, byrow =TRUE)
+  fact_n<-factorial(n)  # number of permutations
+  B <- matrix(data = rep(c(1:n),fact_n), nrow = fact_n, ncol = n, byrow =TRUE)
+  Permut <- arrangements::permutations(1:n)#perm(c(1:n))
+  q<-cbind(B, (Permut+n))
+  indUj<- c(i1) # reorder q
+  q<-q[,indUj] # permutations
+  # dimensions
+  d1B <- matrix(rep(d1,fact_n), nrow = fact_n, ncol = n, byrow =TRUE)
+  d2q<- matrix(rep(0,fact_n*n),nrow = fact_n, ncol = n) # zeros(fact_n,n);
+  for (k in c(1:fact_n)) {
+    d2q[k,] <- d2[Permut[k,]]
+  }
+  Bd <- cbind(d1B, d2q)
+  Bdq <- Bd[,indUj] # dimensions with respect to permutations
+  # Commutator
+  lcx<-0
+  for  (kk in c(1:fact_n)) {
+    lcx<- lcx + x[indx_Commutator_Kperm(Permutation_Inverse(q[kk,]),Bdq[kk,])]
+  }
+  return(lcx)
+}
+
+.indx_Commutator_Moment_t<-function(x,el_rm,d) {
+  # transposed version!!!!!!!!!!!
+  N<-length(el_rm)
+  PTB<-Partition_Type_All(N)
+  loc_type_el <- .Partition_Type_eL_Location(el_rm)
+  r <- loc_type_el[1]
+  m <- loc_type_el[2]
+  
+  part_class<-PTB$Part.class
+  S_N_r<-PTB$S_N_r
+  S_m_j<-PTB$S_r_j
+  
+  sepL<-cumsum(S_N_r)
+  sepS_r<-cumsum(S_m_j[[r]])
+  
+  if (r==1) {perm_Urk1<- 1:N
+  px<-0
+  px<-px+ x[indx_Commutator_Kperm((perm_Urk1),d)]
+  # Permutation_Inverse
+  return("px"=px)
+  }
+  else {
+    if (m==1) {l_ind<-sepL[r-1]+1} else {l_ind<-sepL[r-1]+sepS_r[m-1]+1}
+    if (.is.scalar(S_m_j[r])) {u_ind<-l_ind+S_m_j[[r]]-1}
+    else {u_ind<-l_ind+S_m_j[[r]][m]-1}
+    perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
+    sz<- 1
+    for (k in l_ind:u_ind){
+      perm_Urk1[sz,]<-Partition_2Perm(part_class[[k]])
+      sz<-sz+1
+    }
+  }
+  px<-0
+  for (ss in 1:dim(perm_Urk1)[1]) {
+    uu<-perm_Urk1[ss,]
+    px<-px+ x[indx_Commutator_Kperm(uu,d)]
+  }
+  return("px"= px)
+}
+
+
+.indx_kron2 <- function(perm1,perm2,d){
+  # index provided by kronecker product of two commutator by permutation
+  D <- d^(2*length(perm1))
+  x <- 1:D
+  ind01 <- indx_Commutator_Kperm(perm1,d)
+  ind02 <- indx_Commutator_Kperm(perm2,d)
+  indx_K<- c(matrix(x,nrow= d^length(perm1))[ind02,ind01])
+}
+
+.indx.L22_H4_t <- function(x,d){
+  #  transposed version see (A.14)
+  sz <- 1
+  v1 <- 1:4
+  v2 <- 5:8
+  perm22_H4 <- matrix(rep(0,72*8),nrow = 72,ncol = 8)
+  Cperm1  <-  arrangements::combinations(4, 2)#(v1,2);
+  Cperm2  <-  arrangements::combinations(v2,2);
+  for (k in 1:6){
+    for (j in 1:6){
+      A <- c(setdiff(1:4,Cperm1[j,]), setdiff(5:8,Cperm2[k,]))
+      perm22_H4[sz,]  <-  c(A[1], A[3], A[2], A[4], Cperm1[j,], Cperm2[k,])
+      perm22_H4[sz+1,]  <- c(A[1], A[4], A[2], A[3], Cperm1[j,], Cperm2[k,])
+      sz <- sz+2;
+    }
+  }
+  
+  xL22_H4  <- rep(0,length(x)) #matrix(rep(0,d^16),nrow=d^8);
+  for (k in 1:72){
+    xL22_H4  <- xL22_H4 +
+      x[indx_Commutator_Kperm(Permutation_Inverse(perm22_H4[k,]),d )]
+  }
+  return(xL22_H4)
+}
+
+
+.Partition_Type_eL_Location <- function(eL){
+  N <- length(eL)
+  if (sum(eL*c(1:N)) != N ){
+    stop("eL is not a valid partition type")}
+  eL_j<-Partition_Type_All(N)$eL_r
+  loc_type_el=c(0,0)
+  for (r in 1:N){
+    if  (is.vector(eL_j[[r]])){
+      if (prod((eL==eL_j[[r]]))){
+        loc_type_el<- c(r,1)
+      }
+    }
+    else {
+      eL_jt<-eL_j[[r]]
+      for (mm in 1:dim(eL_jt)[[1]]){
+        if (prod((eL==eL_jt[mm,]))){
+          loc_type_el<- c(r,mm)
+        }
+      }
+    }
+  }
+  return(loc_type_el)
 }
 

@@ -31,28 +31,6 @@ Hermite_Coeff<- function(N){
     Hcoeff[k+1] <- (-1)^k*factorial(N)/factorial(N-2*k)/factorial(k)/2^k
   }
 
-  # PTA<-Partition_Type_All(N)
-  # el_j<-PTA$eL_r
-  # S_m_j<-PTA$S_r_j
-  # kk=0
-  #   for (k in 0:N) {
-  #       if (N%%2== k%%2) {
-  #         el=c(k,(N-k)/2,rep(0,N-2))
-  #         loc_type_el<-c(0,0)
-  #         for (m in 1:length(el_j)){
-  #           if (is.vector(el_j[[m]])){
-  #             if (prod((el==el_j[[m]]))) {loc_type_el<-c(m,1)}
-  #           }
-  #          else {
-  #            for (mm in 1:dim(el_j[[m]])[1])
-  #              if (prod((el==el_j[[m]][mm,]))) {loc_type_el<-c(m,mm)}
-  #          }
-  #         }
-  #       kk=kk+1;
-  #       Hcoeff[kk] = (-1)^((N-k)/2)*S_m_j[[loc_type_el[1]]][loc_type_el[2]]
-  #   }
-  #  }
-  # Hcoeff=Hcoeff[ceiling((N/2)+1-(N%%2)):1]
   return(Hcoeff)
 }
 
@@ -316,13 +294,13 @@ Hermite_N_Cov_X1_X2 <- function(SigX12,N){
   dimX <- dim(SigX12)
   d1 <- rep(dimX[1],N)
   d2 <- rep(dimX[2],N)
+  
   vSig2 <- as.vector(SigX12)
-  vSig2_ad_n <- .KronPower(vSig2,N);
-  vSig2_n <-  t(matr_Commutator_Mixing( d1,d2))%*%vSig2_ad_n;
-  # vSig2_n <-  matr_Commutator_Mixing( d1,d2)%*%vSig2_ad_n; Gy
-  CH_1_2_n  <-  matrix(vSig2_n,nrow=d1[1]^N )
-  return(CH_1_2_n)}
-
+  vSig22 <- .KronPower(vSig2,N);
+  vSig23 <-  .indx_Commutator_Mixing_t(vSig22,d1,d2)
+  CH_1_2_n  <-  matrix(vSig23,nrow=d1[1]^N )
+  return(CH_1_2_n)
+}
 
 #' T-Hermite polynomial with order N at standardized vector x
 #'

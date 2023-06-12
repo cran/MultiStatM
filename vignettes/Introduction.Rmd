@@ -384,7 +384,7 @@ as.vector(matr_Qplication(2,3)%*%r.mu)
 The same result by using `indx_Qplication`
 
 ```{r}
-indx_Qplication(r.mu,2,3)
+r.mu[indx_Qplication(2,3)]
 ```
 
 
@@ -573,6 +573,9 @@ Esti_Skew_MRSz(data)
 as.vector(t(c(diag(3))%x%diag(3))%*%ThMSN$SkewX)  ## Theoretical MRS skewness vector
 ```
 
+## Acknowledgement
+
+This work has been partially supported by the project TKP2021-NKTA of the University of Debrecen, Hungary.
 
 
 
@@ -610,19 +613,18 @@ Holmquist, B. (1996). The d-variate vector Hermite polynomial of order. Linear A
 237/238, 155–190.
 
 Jammalamadaka, S. R., Subba Rao, T. and Terdik, Gy. (2006). Higher order cumulants of
-random vectors and applications to statistical inference and time series. Sankhya (Ser
-A, Methodology) 68, 326–356.
+random vectors and applications to statistical inference and time series. Sankhya A,  68, 326–356.
 
-Jammalamadaka, S. R., Taufer, E. & Terdik, Gy. H. (2021a). On multivariate skewness and kurtosis. *Sankhya* A, 83(2), 607-644.
+Jammalamadaka, S. R., Taufer, E. & Terdik, Gy. H. (2021a). On multivariate skewness and kurtosis. Sankhya A, 83(2), 607-644.
 
-Jammalamadaka, S. R., Taufer, E. & Terdik, Gy. H. (2021b). Asymptotic theory for statistics based on cumulant vectors with applications. *Scandinavian Journal of Statistics*, 48(2), 708-728.
+Jammalamadaka, S. R., Taufer, E. & Terdik, Gy. H. (2021b). Asymptotic theory for statistics based on cumulant vectors with applications. Scandinavian Journal of Statistics, 48(2), 708-728.
 
-Jammalamadaka,S.R. ,   Taufer,E. &  Terdik, Gy. (2021c). Cumulants of Multivariate Symmetric and Skew Symmetric Distributions., Symmetry 13, 1383.
+Jammalamadaka,S.R. ,   Taufer,E. &  Terdik, Gy. (2021c). Cumulants of Multivariate Symmetric and Skew Symmetric Distributions, Symmetry 13, 1383.
 
 Kolda, T.G.; Bader, B.W.  (2009). Tensor decompositions and applications. SIAM Rev. 51, 455–500.
 
 Kollo, T. (2008). Multivariate skewness and kurtosis measures with an application in ICA.
-Journal of Multivariate Analysis 99, 10, 2328–2338.
+Journal of Multivariate Analysis 99(10), 2328–2338.
 
 Komsta, L. and Novomestky F. (2022). moments: Moments,
   Cumulants, Skewness, Kurtosis and Related Tests. R package version
@@ -643,4 +645,4 @@ Móri, T. F., Rohatgi, V. K., & Székely, G. J. (1994). On multivariate skewness
 
 Ould-Baba, H.; Robin, V.; Antoni, J. (2015). Concise formulae for the cumulant matrices of a random vector. Linear Algebra Appl.  485, 392–416.
 
-Terdik, Gy. (2021). *Multivariate statistical methods - going beyond the linear*. Springer.
+Terdik, Gy. (2021). Multivariate statistical methods - going beyond the linear. Springer.

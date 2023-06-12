@@ -164,7 +164,7 @@ distr_CFUSSD_Rand <- function(n,d,p,a,b,Delta){
   Delta2 <-  V2 %*% diag(sqrt(ieg2$values)) %*% t(V2)
   R <- stats::rgamma(n, shape= a, scale = b ) # a > 0 scale = 1/rate
   p1 <-  stats::rbeta(n,p/2,d/2,n)
-  # %% symmetric
+  
   U2 <-  distr_Uni_Rand(n,d)
   mU1 <- abs(distr_Uni_Rand(n,p));
   Z1 <-  mU1*matrix(kronecker(rep(1,p),R*p1),ncol = p)
@@ -200,15 +200,16 @@ distr_CFUSSD_Rand <- function(n,d,p,a,b,Delta){
 distr_Uni_EVSK_Th <- function(d,nCum = TRUE){
   eL <- c(0,2,0,0)
   # loc_type_el <- Partition_Type_eL_Location(eL)
-  L2 <- .Commutator_Moment_eL(eL,d)
+  #L2 <- .Commutator_Moment_eL(eL,d)
   Idv <- as.vector(diag(d))
   EU1 <- rep(0,d)
   EU2 <- 1/d*Idv
   varU<- matrix(1/d*Idv,nrow = d)
   EU3 <- rep(0,d^3)
-  EU4 <- as.vector(1/d/(d+2)*L2%*%kronecker(Idv,Idv))
+  x<- kronecker(Idv,Idv)
+  EU4 <- .indx_Commutator_Moment(x,eL,d)*1/d/(d+2)
   EU.k <- list(EU1,EU2,EU3,EU4)
-
+  
   UEVSK <- list(EU1,varU,EU.k)
   names(UEVSK) <- c("EU1","varU","EU.k")
   if (nCum == TRUE){
@@ -246,8 +247,8 @@ distr_Uni_EVSK_Th <- function(d,nCum = TRUE){
 
 distr_Uni_MomCum_Th <- function(r,d,nCum = FALSE)
 {
- # if (r%%2 !=0 )   return(EUM.k <- 0)# (4%%2)*2
-
+  # if (r%%2 !=0 )   return(EUM.k <- 0)# (4%%2)*2
+  
   m0 <- floor(r/2)
   # 1d moments
   EU.k0 <- c(rep(0,r))
@@ -260,16 +261,12 @@ distr_Uni_MomCum_Th <- function(r,d,nCum = FALSE)
   EUM.k[[2]] <- 1/d*Idv
   EUM.k[[3]] <- c(rep(0,d^3))
   varU<- matrix(1/d*Idv,nrow = d)
-  #,"varU","EU.k","cumU.k","kurtU")
-  # names(EUM.k[1] ) <- c("EU.1")
+  
   for (k in 2:m0) {
     # tic
     eL <- c(0,k,c(rep(0,2*k-2)))
-    # loc_type_el <- Partition_Type_eL_Location(eL)
-    # L2 <- Commutator_Moment_L(eL,loc_type_el[1],loc_type_el[2],d)
-    L2 <- .Commutator_Moment_eL(eL,d)
-     Idv.u <- kronecker(Idv.u,Idv)
-    EUM.k[[2*k]] <- as.vector(EU.k0[2*k] *L2%*% Idv.u /per[k])
+    Idv.u <- kronecker(Idv.u,Idv)
+    EUM.k[[2*k]] <- as.vector(EU.k0[2*k] *.indx_Commutator_Moment(Idv.u,eL,d)/per[k])
     EUM.k[[2*k+1]] <-c(rep(0,d^(2*k+1)))
     #   print( toc)
   }
@@ -280,7 +277,7 @@ distr_Uni_MomCum_Th <- function(r,d,nCum = FALSE)
     names(MomCumU) <- c("EUM" , "CumU")
     return(MomCumU)
   }
-
+  
   nev <- NULL
   for (k in 1:r) {
     nev[[k]] <- paste("EU.",as.character(k), sep='')
