@@ -1,3 +1,8 @@
+## Version 1.2.1
+
+Minor changes for code optimization
+
+
 ## Version 1.2.0
 
 The function \code{Esti_Gram_Charlier}, to compute a Gram-Charlier approximation for a multivariate density has been introduced. 

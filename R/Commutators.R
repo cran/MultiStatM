@@ -38,7 +38,8 @@
 #' @export
 matr_Commutator_Kmn <-  function(m,n,useSparse=FALSE){
   pp <- 1:(m*n)
-  p2 <- t(matrix(data=pp,nrow = m, ncol = n))
+  #p2 <- t(matrix(data=pp,nrow = m, ncol = n))
+  p2 <- matrix(data=pp,nrow = n, ncol = m,byrow=TRUE)
   pc <- as.vector(p2)
   if (useSparse==FALSE) {Ic <- diag(m*n)}
   else
@@ -642,7 +643,8 @@ indx_Elimination<-function(d,q){
 #' @export
 indx_Commutator_Kmn <-  function(m,n){
   pp <- 1:(m*n)
-  p2 <- t(matrix(data=pp,nrow = m, ncol = n))
+  #p2 <- t(matrix(data=pp,nrow = m, ncol = n))
+  p2<- matrix(data=pp,nrow = n, ncol = m,byrow=TRUE)
   return( as.vector(p2))
 }
 
