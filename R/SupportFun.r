@@ -96,7 +96,7 @@
   }
   L22_H4  <- matrix(rep(0,d^16),nrow=d^8);
   for (k in 1:72){
-    L22_H4  <- L22_H4 + matr_Commutator_Kperm(perm22_H4[k,],d )
+    L22_H4  <- L22_H4 + .matr_Commutator_Kperm(perm22_H4[k,],d )
   }
   return(L22_H4)
 }
@@ -106,7 +106,7 @@
 # #' @param x multivariate data of size d
 .Hermite_Third<-function(x){
   d=length(x)
-  H3<-Hermite_Poly_HN_Multi(x,3,diag(d))[[3]]
+  H3<-.Hermite_Poly_HN_Multi(x,3,diag(d))[[3]]
   return(as.vector(H3))
 }
 
@@ -114,7 +114,7 @@
 # @param x multivariate data of size d
 .Hermite_Fourth<-function(x){
   d=length(x)
-  H4<-Hermite_Poly_HN_Multi(x,4,diag(d))[[4]]
+  H4<-.Hermite_Poly_HN_Multi(x,4,diag(d))[[4]]
   return(as.vector(H4))
 }
 
@@ -260,7 +260,7 @@
   N <- length(eL)
   if (sum(eL*c(1:N)) != N ){
     stop("eL is not a valid partition type")}
-  eL_j<-Partition_Type_All(N)$eL_r
+  eL_j<-PartitionTypeAll(N)$eL_r
   loc_type_el=c(0,0)
   for (r in 1:N){
     if  (is.vector(eL_j[[r]])){
@@ -287,7 +287,7 @@
 ############################ new one!!!!!!!!!!!!!!!!
 .Commutator_Moment_eL<-function(el_rm,d,useSparse=FALSE) {
   N<-length(el_rm)
-  PTB<-Partition_Type_All(N)
+  PTB<-PartitionTypeAll(N)
   loc_type_el <- .Partition_Type_eL_Location(el_rm)
   r <- loc_type_el[1]
   m <- loc_type_el[2]
@@ -302,7 +302,7 @@
   if (useSparse==FALSE){
     if (r==1) {perm_Urk1<- 1:N
     L_eL<-rep(0,d^N)
-    L_eL<-L_eL+matr_Commutator_Kperm(perm_Urk1,d)
+    L_eL<-L_eL+.matr_Commutator_Kperm(perm_Urk1,d)
     return("LeL"=L_eL)
     }
     else {
@@ -312,20 +312,20 @@
       perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
       sz<- 1
       for (k in l_ind:u_ind){
-        perm_Urk1[sz,]<-Partition_2Perm(part_class[[k]])
+        perm_Urk1[sz,]<-.Partition_2Perm(part_class[[k]])
         sz<-sz+1
       }
     }
     L_eL<-rep(0,d^N)
     for (ss in 1:dim(perm_Urk1)[1]) {
-      L_eL<-L_eL + matr_Commutator_Kperm(perm_Urk1[ss,],d)
+      L_eL<-L_eL + .matr_Commutator_Kperm(perm_Urk1[ss,],d)
     }
   }
 
   if (useSparse==TRUE){
     if (r==1) {perm_Urk1<- 1:N
     L_eL<-rep(0,d^N)
-    L_eL<-L_eL+matr_Commutator_Kperm(perm_Urk1,d,useSparse = TRUE)
+    L_eL<-L_eL+.matr_Commutator_Kperm(perm_Urk1,d,useSparse = TRUE)
     return("LeL"=L_eL)
     }
     else {
@@ -335,13 +335,13 @@
       perm_Urk1<-Matrix::Matrix(0,S_m_j[[r]][m],N,sparse=TRUE)
       sz<- 1
       for (k in l_ind:u_ind){
-        perm_Urk1[sz,]<-Partition_2Perm(part_class[[k]])
+        perm_Urk1[sz,]<-.Partition_2Perm(part_class[[k]])
         sz<-sz+1
       }
     }
     L_eL<-rep(0,d^N)
     for (ss in 1:dim(perm_Urk1)[1]) {
-      L_eL<-L_eL + matr_Commutator_Kperm(perm_Urk1[ss,],d,useSparse = TRUE)
+      L_eL<-L_eL + .matr_Commutator_Kperm(perm_Urk1[ss,],d,useSparse = TRUE)
     }
   }
 
@@ -364,34 +364,34 @@
     }
     return(prime_nums)
   }
-  else 
+  else
   {
     stop("Input number should be at least 2.")
   }
-} 
+}
 
 
 ## Use as internal function , produces the same result as .commutator_moment
 
 .indx_Commutator_Moment<-function(x,el_rm,d) {
   N<-length(el_rm)
-  PTB<-Partition_Type_All(N)
+  PTB<-PartitionTypeAll(N)
   loc_type_el <- .Partition_Type_eL_Location(el_rm)
   r <- loc_type_el[1]
   m <- loc_type_el[2]
-  
+
   part_class<-PTB$Part.class
   S_N_r<-PTB$S_N_r
   S_m_j<-PTB$S_r_j
-  
+
   sepL<-cumsum(S_N_r)
   sepS_r<-cumsum(S_m_j[[r]])
-  
-  
+
+
   if (r==1) {perm_Urk1<- 1:N
   px<-0
-  px<-px+ x[indx_Commutator_Kperm(perm_Urk1,d)]
-  
+  px<-px+ x[.indx_Commutator_Kperm(perm_Urk1,d)]
+
   return("px"=px)
   }
   else {
@@ -401,17 +401,17 @@
     perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
     sz<- 1
     for (k in l_ind:u_ind){
-      perm_Urk1[sz,]<-Partition_2Perm(part_class[[k]])
+      perm_Urk1[sz,]<-.Partition_2Perm(part_class[[k]])
       sz<-sz+1
     }
   }
   px<-0
   for (ss in 1:dim(perm_Urk1)[1]) {
     uu<-perm_Urk1[ss,]
-    px<-px+ x[indx_Commutator_Kperm(uu,d)]
+    px<-px+ x[.indx_Commutator_Kperm(uu,d)]
   }
-  
-  
+
+
   return("px"= px)
 }
 
@@ -420,7 +420,7 @@
   # permutations
   # dim(d1)<-dim(d2)
   n <- length(d2)
-  
+
   i1<- matrix(data =c(1:n,(1:n)+n) , nrow = 2, ncol = n, byrow =TRUE)
   fact_n<-factorial(n)  # number of permutations
   B <- matrix(data = rep(c(1:n),fact_n), nrow = fact_n, ncol = n, byrow =TRUE)
@@ -439,7 +439,7 @@
   # Commutator
   lcx<-0
   for  (kk in c(1:fact_n)) {
-    lcx<- lcx + x[indx_Commutator_Kperm(Permutation_Inverse(q[kk,]),Bdq[kk,])]
+    lcx<- lcx + x[.indx_Commutator_Kperm(PermutationInv(q[kk,]),Bdq[kk,])]
   }
   return(lcx)
 }
@@ -447,22 +447,22 @@
 .indx_Commutator_Moment_t<-function(x,el_rm,d) {
   # transposed version!!!!!!!!!!!
   N<-length(el_rm)
-  PTB<-Partition_Type_All(N)
+  PTB<-PartitionTypeAll(N)
   loc_type_el <- .Partition_Type_eL_Location(el_rm)
   r <- loc_type_el[1]
   m <- loc_type_el[2]
-  
+
   part_class<-PTB$Part.class
   S_N_r<-PTB$S_N_r
   S_m_j<-PTB$S_r_j
-  
+
   sepL<-cumsum(S_N_r)
   sepS_r<-cumsum(S_m_j[[r]])
-  
+
   if (r==1) {perm_Urk1<- 1:N
   px<-0
-  px<-px+ x[indx_Commutator_Kperm((perm_Urk1),d)]
-  # Permutation_Inverse
+  px<-px+ x[.indx_Commutator_Kperm((perm_Urk1),d)]
+
   return("px"=px)
   }
   else {
@@ -472,14 +472,14 @@
     perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
     sz<- 1
     for (k in l_ind:u_ind){
-      perm_Urk1[sz,]<-Partition_2Perm(part_class[[k]])
+      perm_Urk1[sz,]<-.Partition_2Perm(part_class[[k]])
       sz<-sz+1
     }
   }
   px<-0
   for (ss in 1:dim(perm_Urk1)[1]) {
     uu<-perm_Urk1[ss,]
-    px<-px+ x[indx_Commutator_Kperm(uu,d)]
+    px<-px+ x[.indx_Commutator_Kperm(uu,d)]
   }
   return("px"= px)
 }
@@ -489,8 +489,8 @@
   # index provided by kronecker product of two commutator by permutation
   D <- d^(2*length(perm1))
   x <- 1:D
-  ind01 <- indx_Commutator_Kperm(perm1,d)
-  ind02 <- indx_Commutator_Kperm(perm2,d)
+  ind01 <- .indx_Commutator_Kperm(perm1,d)
+  ind02 <- .indx_Commutator_Kperm(perm2,d)
   indx_K<- c(matrix(x,nrow= d^length(perm1))[ind02,ind01])
 }
 
@@ -510,11 +510,11 @@
       sz <- sz+2;
     }
   }
-  
+
   xL22_H4  <- rep(0,length(x)) #matrix(rep(0,d^16),nrow=d^8);
   for (k in 1:72){
     xL22_H4  <- xL22_H4 +
-      x[indx_Commutator_Kperm(Permutation_Inverse(perm22_H4[k,]),d )]
+      x[.indx_Commutator_Kperm(PermutationInv(perm22_H4[k,]),d )]
   }
   return(xL22_H4)
 }
@@ -524,7 +524,7 @@
   N <- length(eL)
   if (sum(eL*c(1:N)) != N ){
     stop("eL is not a valid partition type")}
-  eL_j<-Partition_Type_All(N)$eL_r
+  eL_j<-PartitionTypeAll(N)$eL_r
   loc_type_el=c(0,0)
   for (r in 1:N){
     if  (is.vector(eL_j[[r]])){

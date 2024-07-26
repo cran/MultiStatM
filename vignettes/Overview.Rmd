@@ -23,7 +23,7 @@ library(MultiStatM)
 
 ## Background
 
-The package MultiStatM provides general formulae for set partitions,
+The package `MultiStatM` provides general formulae for set partitions,
 multivariate moments and cumulants, vector Hermite polynomials. It
 provides theoretical formulae for some important symmetric and
 asymmetric multivariate distributions and well as estimation functions
@@ -103,7 +103,7 @@ cumulants leads to high-dimensional matrices with special symmetric
 structures which are quite hard to follow notionally and
 computationally. McCullagh (2018) provides quite an elegant approach
 using tensor methods; however, tensor methods are not very well known
-and computationally not so\~simple.
+and computationally not so  simple.
 
 The method discussed here is based on relatively simple calculus.
 Although the tensor product of Euclidean vectors is not commutative, it
@@ -119,174 +119,240 @@ matrices, whereas there is no such limitation in our derivations and our
 results. For further discussion, one can see also Kolda (2009) and Qi
 (2006).
 
+In  `MultiStatM` 2.0.0 many functions of the previous version 1.2.1 have been renamed or grouped for better clarity and joining similar functions producing, for example the same output for univariate or multivariate cases 
+
+The table below provides a complete plan of transition from `MultiStatM` 1.2.1 to `MultiStatM` 2.0.0.  Functions of version 1.2.1 which are within the same rowhave been grouped into a single function. For example the functions `conv_Cum2Mom` and 
+`conv_Cum2MomMulti` which provided cumulants to moments conversion respectively in the univariate and multivariate cases have been joined in the function `Cum2Mom` which has now an option `Type=c("Univariate","Multivariate")`.
+
++------------------------+-----------------------------+---------------+
+| **MultiStatM 1.2.1**   | **MultiStatM 2.0.0**        | **Family**    |
++========================+=============================+===============+
+|conv_Cum2Mom            | Cum2Mom,                    | Moments and   |
+|conv_Cum2MomMulti       | Type=Univariate/Multivariate| cumulants     |
++------------------------+-----------------------------+---------------+
+|conv_Mom2Cum            | Mom2Cum,                    | Moments and   |
+|conv_Mom2CumMulti       | Type=Univariate/Multivariate| cumulants     |
++------------------------+-----------------------------+---------------+
+|conv_Stand_Multi        | MVStandardize               |               |
++------------------------+-----------------------------+---------------+
+|distr_CFUSN_MomCum_Th   | MomCumCFUSN                 | Moments and   |
+|                        |                             | cumulants     |
++------------------------+-----------------------------+---------------+
+|distr_SkewNorm_MomCum_Th| MomCumSkewNorm              | Moments and   |
+|                        |                             | cumulants     |
++------------------------+-----------------------------+---------------+
+|distr_Uni_MomCum_Th     | MomCumUniS                  | Moments and   |
+|                        |                             | cumulants     |
++------------------------+-----------------------------+---------------+
+|distr_ZabsM_MomCum_Th   | MomCumZabs,                 | Moments and   |
+|distr_Zabs_MomCum_Th    | Type=Univariate/Multivariate| cumulants     |
++------------------------+-----------------------------+---------------+
+|distr_SkewNorm_EVSK_Th  | EVSKSkewNorm                | Moments and   |
+|                        |                             | cumulants     |
++------------------------+-----------------------------+---------------+
+|distr_Uni_EVSK_Th       | EVSKUniS                    | Moments and   |
+|distr_UniAbs_EVSK_Th    | Type=Standard/Modulus       | cumulants     |
++------------------------+-----------------------------+---------------+
+|distr_CFUSN_Rand        | rCFUSN,                     | Random        |
+|                        |                             | Generation    |
++------------------------+-----------------------------+---------------+
+|distr_CFUSSD_Rand       | rCFUSSD                     | Random        |
+|                        |                             | Generation    |
++------------------------+-----------------------------+---------------+
+|distr_SkewNorm_Rand     | rSkewNorm                   | Random        |
+|                        |                             | Generation    |
++------------------------+-----------------------------+---------------+
+| distr_Uni_Rand         | rUniS                       | Random        |
+|                        |                             | Generation    |
++------------------------+-----------------------------+---------------+
+|Esti_Kurt_Mardia        | SampleKurt                  | Estimation    |
+|Esti_Kurt_MRSz          | Type=Mardia/MRSz/Total      |               |
+|Esti_Kurt_Total         |                             |               |
++------------------------+-----------------------------+---------------+
+|Esti_Skew_Mardia        | SampleSkew                  | Estimation    |
+| Esti_Skew_MRSz         | Type=Mardia/MRSz            |               |
++------------------------+-----------------------------+---------------+
+|Esti_Kurt_Variance_Th   | VarianceKurt                | Estimation    |
++------------------------+-----------------------------+---------------+
+|Esti_Skew_Variance_Th   | VarianceSkew                | Estimation    |
++------------------------+-----------------------------+---------------+
+| Esti_EVSK              | SampleEVSK                  | Estimation    |
++------------------------+-----------------------------+---------------+
+|Esti_Hermite_Poly_HN_M  | SampleHermiteN             | Estimation    |
++------------------------+-----------------------------+---------------+
+|Esti_Gram_Charlier      | SampleGC                    | Estimation    |
++------------------------+-----------------------------+---------------+
+| Esti_MMom_MCum         | SampleMomCum                | Estimation    |
++------------------------+-----------------------------+---------------+
+|Esti_Variance_Skew_Kurt | SampleVarianceSkewKurt      |               |
++------------------------+-----------------------------+---------------+
+|Hermite_Coeff           | HermiteCoeff                | Hermite       |
+|Hermite_CoeffMulti      | Type=Univariate/Multivariate| Polynomials   |
++------------------------+-----------------------------+---------------+
+|Hermite_Poly_HN         | HermiteN                    | Hermite       |
+|Hermite_Poly_HN_Multi   | Type=Univariate/Multivariate| Polynomials   |
++------------------------+-----------------------------+---------------+
+|Hermite_Poly_NH_Inv     | HermiteN2X                  | Hermite       |
+|Hermite_Poly_NH_Multi_In| Type=Univariate/Multivariate| Polynomials   |
++------------------------+-----------------------------+---------------+
+| Hermite_Nth            | Eliminated: use HermiteN    |               |
++------------------------+-----------------------------+---------------+
+| Hermite_N_Cov_X1_X2    | HermiteCov12                | Hermite       |
+|                        |                             | Polynomials   |
++------------------------+-----------------------------+---------------+
+|indx_Commutator_Kmn     | CommutatorIndx              | Commutators   |
+|indx_Commutator_Kperm   | Type=Kmn/Kperm/Mixing/Moment|               |
+|indx_Commutator_Mixing  |                             |               |
+|indx_Commutator_Moment  |                             |               |
++------------------------+-----------------------------+---------------+
+| indx_Elimination       | EliminIndx                  | Commutators   |
++------------------------+-----------------------------+---------------+
+| indx_Qplication        | QplicIndx                   | Commutators   |
++------------------------+-----------------------------+---------------+
+| indx_Symmetry          | SymIndx                     | Commutators   |
++------------------------+-----------------------------+---------------+
+| indx_UnivMomCum        | UnivMomCum                  | Commutators   |
++------------------------+-----------------------------+---------------+
+| matr_Commutator_Kmn    | CommutatorMatr              | Commutators   |
+| matr_Commutator_Kperm  | Type=Kmn/Kperm/Mixing/Moment|               |
+| matr_Commutator_Mixing |                             |               |
+| matr_Commutator_Moment |                             |               |
++------------------------+-----------------------------+---------------+
+| matr_Elimination       | EliminMatr                  | Commutators   |
++------------------------+-----------------------------+---------------+
+| matr_Qplication        | QplicMatr                   | Commutators   |
++------------------------+-----------------------------+---------------+
+| matr_Symmetry          | SymMatr                     | Commutators   |
++------------------------+-----------------------------+---------------+
+|Partition_2Perm         | Partitions                  | Partitions    |
+|Partition_Diagrams      | Type=2Perm/Diagram/Indecomp |               |              |        ClosedNoLoops   |      /Pairs                 |               |              
+|Partition_Indecomposable|                             |               |
+|Partition_Pairs         |                             |               |
++------------------------+-----------------------------+---------------+
+|Permutation_Inverse     | PermutationInv              | Partitions    |
++------------------------+-----------------------------+---------------+
+|Partition_Type_All      | PartitionTypeAll            | Partitions    |
++------------------------+-----------------------------+---------------+
+
+
+
 ## Set Partitions
 
-The package `MultiStatM` provides several functions dealing with set
-partitions. Such functions provide some basic tools used to built the
-multivariate formulae for moments and cumulants in the following
-sections.
+`MultiStatM` provides several functions dealing with set partitions. Such functions provide some basic tools used to build the multivariate formulae for moments and cumulants in the following sections.
 
-Generally a set of $N$ elements can be split into a set of disjoint
-subsets, i.e. it can be partitioned. The set of $N$ elements will
-correspond to set $1 : N = \{1, 2, \dots ,N\}$. If
-$\cal{K} = \{b_1, b_2, \dots , b_r \}$ where each $b_j \subset 1 : N$,
-then $\cal{K}$ is a partition provided $\cup b_j = 1 : n$, each $b_j$ is
-non-empty and $b_j \cap b_i = \emptyset$ (the empty set) is disjoint
-whenever $j \neq i$. The subsets $b_j$, $j = 1, 2, \dots, r$ are called
-the blocks of $\cal{K}$. We will call $r$ (the number of the blocks in
-partition $\cal{K}$), the size of $\cal{K}$, and denote it by
-$|\cal{K}| = r$, and a partition with size $r$ will be denoted by
-$\cal{K}_{\{r\}}$. Let us denote the set of all partitions of the
-numbers $1 : N$ by $\cal{P}_N$.
+Generally a set of $N$ elements can be split into a set of disjoint subsets, i.e. it can be partitioned. The set of $N$ elements will correspond to set $1 : N = \{1, 2, \dots ,N\}$. If ${\cal{K}} = \{b_1, b_2, \dots , b_r \}$ where each $b_j \subset 1 : N$, then ${\cal{K}}$ is a partition provided
+$\cup b_j = 1 : N$, each $b_j$ is non-empty and $b_j \cap b_i = \emptyset$ (the empty set) is disjoint
+whenever $j \neq i$. The subsets $b_j$, $j = 1, 2, \dots, r$ are called the blocks of $\cal{K}$. We
+will call $r$ (the number of the blocks in partition $\cal{K}$), the size of $\cal{K}$, and denote it by $|{\cal{K}}| = r$, and a partition with size $r$ will be denoted by ${\cal{K}}_{\{r\}}$. Let us denote the set
+of all partitions of the numbers $1 : N$ by ${\cal{P}}_N$.
 
-Consider next a partition
-$\cal{K}_{\{r\}} = \{b_1, b_2, \dots , b_r \} \in \cal{P}_N$, with size
-$r$. Denote the cardinality $k_j$ of a block in the partition
-$\cal{K}_{\{r\}}$, i.e. $k_j =|b_j|$. The **type of a partition**
-$\cal{K}_{\{r\}}$ is $l = [ l_1, \dots , l_N]$, if $\cal{K}_{\{r\}}$
-contains exactly $l_j$ blocks with cardinality $j$. A partition with
-size $r$ and type $l$ will be denoted by $\cal{K}_{\{r|l\}}$. It is
-clear that $l_j ≥ 0$, and $\sum_j jl_j=N$, and $\sum_j l_j=r$.
-Naturally, some $l_j$ 's are zero.
+Consider next a partition ${\mathcal{K}}_{\{r\}}=\{b_{1},b_{2},\dots,b_{r}\}\in {\mathcal{P}}_{N}$, with size $r$. Denote the cardinality $k_{j}$
+of a block in the partition ${\mathcal{K}}_{\{r\}}$, i.e. $k_{j}=|b_{j}|$.
+The type of a partition ${\mathcal{K}}_{\{r\}}$ is $l=[l_{1},\dots ,l_{N}]$, 
+if ${\mathcal{K}}_{\{r\}}$ contains exactly $l_{j}$ blocks with cardinality $j$. The type $l$ is with length $N$ always. A partition with size $r$ and
+type $l$ will be denoted by ${\mathcal{K}}_{\{r|l\}}$. It is clear that 
+$l_{j}\geq 0$, and $\sum_{j}jl_{j}=N$, and $\sum_{j}l_{j}=r$. Naturally, some 
+$l_{j}$'s are zero. A block constitutes a row vector of entries $0$'s and $1$'s with length $N$. The places of $1$'s correspond to the elements of the block. A partition matrix collects the rows of its blocks, it is an $r\times N$ matrix with column-sums $1$.
 
-| Function                        | Description                         |
-|:--------------------------------|:------------------------------------|
-| Partition_Type_All              | Type and number of partitions       |
-| Partition_Indecomposable        | Building indecomposable partitions  |
-| Partition_Pairs                 | Partition into pairs of the set 1:N |
-| Permutation_Inverse             | Inverse of a Permutation            |
-| Partition_DiagramsClosedNoLoops | Closed Diagrams without Loops       |
+The basic function is `PartitionTypeAll` which provides complete information on the partition of a set of  `N` elements, namely:
 
-The basic function is `Partition_Type_All` which provides complete
-information on the partition of a set of `N` elements, namely
+- `S_N_r`: a vector with the number of partitions of size `r=1`, `r=2`, etc. (Stirling numbers of the second kind); `S_N_r[r]` denotes the number of partition matrices
+of size `r`.
 
--   `Part.class`: the list of all possible partitions given as partition
-    matrices
+- `Part.class`: the list of all possible partitions given as partition matrices. This list is enumerated according to `S_N_r[r]`, $r=1,2,\ldots N$, such that the partition matrices with
+size `R` are listed from $\sum_{r<R}$\texttt{S\_N\_r}$\left[ r\right] +1$ up to $\sum_{r\leq R}$\texttt{S\_N\_r}$\left[ r\right]$. The order of the
+partition matrices within a fixed size is called canonical.
 
--   `S_N_r`: a vector with the number of partitions of size r=1, r=2,
-    etc. (Stirling numbers of second kind )
+- `S_r_j`: a list of vectors of number of partitions with given types grouped by partitions of size `r=1`, `r=2`, etc.; an entry is the number of partitions with that type.
 
--   `eL_r`: a list of partition types with respect to partitions of size
-    r=1, r=2, etc.
+- `eL_r`: a list of partition types with respect to partitions of size `r=1`, `r=2`, etc. ; since a partition type is a row
+vector with length `N` this list includes   matrices of types (row vectors), the number of rows are the length of vectors of `S_r_j` of a given size `r`.   
 
--   `S_r_j`: vectors of number of partitions with given types grouped by
-    partitions of size r=1, r=2, etc.
+
 
 **Example 1**. Consider the case where `N=4` and run the following
 
 ```{r}
-PTA<-Partition_Type_All(4)
+PTA<-PartitionTypeAll(4)
 ```
 
-All the partition matrices are listed in `Part.class`. See the first
-three below
+`S_N_r` provides the number of partitions with `r=1` to `r=4` blocks:
 
 ```{r}
-PTA$Part.class[[1]]
+PTA$S_N_r
+```
+
+All the partition matrices are listed in `Part.class`, for example the first partition matrix of size 2 among 7 is
+
+```{r}
 PTA$Part.class[[2]]
-PTA$Part.class[[3]] 
 ```
 
-The lists `S_N_r` and `eL_r` contain respectively the number of
-partitions with `r=1` blocks, `r=2` blocks, etc. and the types of
-partitions for each partition of size `r`
+The second partition matrix of size 3 is
 
 ```{r}
-PTA$S_N_r 
+PTA$Part.class[[10]] 
+```
+
+etc.. If one interested in the number of partitions with different types for `r=2` then consider the list `S_r_j`, i.e.
+
+```{r}
+PTA$S_r_j[[2]] 
+```
+
+That is, for partitions with `r=2` blocks, there are 2 possible types with 4 and 3 partitions each. These types will show up in the list `eL_r`:
+
+```{r}
 PTA$eL_r
 ```
 
-From the results above we see that there are 1 partition of 1 block
-(`r=1`), 7 partitions of two blocks (`r=2`), 6 partitions of 3 blocks
-and 1 partition of 4 blocks. From `PTA$eL_r[[2]]` we see that there are
-two types of partition with `r=2`: the first is of type $(l_1=1,l_3=1)$
-and the second is of type $(l_2=2)$.
+From the results above we see that there are: 1 partition of 1 block (
+`r=1`); 7 partitions of two blocks (`r=2`); 6 partitions of 3 blocks and 1 partition of 4 blocks. From `PTA$eL_r}[[2]]`
+we see that there are two types of partition with `r=2`: the first is
+of type $\left[ 1,0,1,0\right] ={(l_{1}=1,l_{2}=0,l_{3}=1,l_{4}=0)}$ with 4 partitions and the second is of type $\left[ 0,2,0,0\right] ={(l_{1}=0,l_{2}=2,l_{3}=0,l_{4}=0)}$ with 3 partitions.
 
-If one needs to know how many partitions of type $(l_1,l_3)$ are there
-for `r=2` then consider the list `S_r_j`, i.e.
 
-```{r}
-PTA$S_r_j[[2]] ## Partitions with size r=2, includes two types (above) each with number
-```
-
-That is, for partitions with `r=2` blocks, 4 are of type $(l_1=1,l_3=1)$
-and 3 are of type $(l_2=2)$.
-
-Other available partition functions are:
-
--   `Partition_2perm` which provides the permutation of N elements
-    according to a partition matrix $pU$;
-
--   `Partition_Indecomposable`, which provides the list of all
-    indecomposable partitions with respect to a partition matrix L
-
--   `Partition_Pairs`, which provides the list of partitions dividing
-    into pairs the set of N elements.
-
--   `Partition_DiagramsClosedNoLoops` Closed Diagrams without Loops
-
--   `Permutation_Inverse` which provides the inverse of a permutation
-
-For further details see Terdik (2021, chapter 1).
+Another general function in this class is `Partitions` which has a `Type` argument in order to specify the type of partition to compute:  `2Perm` which provides the permutation of `N` elements according to a partition matrix `L`; `Diagram` which provides the list of partition matrices indecomposable with respect to L, representing diagrams without loops;
+`Indecomp`, which provides the list of all indecomposable partitions with respect to a partition matrix `L`; `Pairs`, which provides the list of partitions dividing into pairs the set of `N` elements.
 
 ## Commutators, symmetrizer and selection matrices
 
-| Function               | Description                                                         |
-|:----------------------|:------------------------------------------------|
-| matr_Commutator_Kmn    | Commutation matrix                                                  |
-| matr_Commutator_Kperm  | Commutator for T-products of vectors                                |
-| matr_Commutator_Mixing | Mixing commutator                                                   |
-| matr_Elimination       | Elimination matrix                                                  |
-| matr_Qplication        | Qplication matrix                                                   |
-| matr_Symmetry          | Symmetrizer matrix                                                  |
-| indx_Commutator_Kmn    | Index vector for commutation of T-products of two vectors           |
-| indx_Commutator_Kperm  | Index vector for commutation of T-products of any number of vectors |
-| indx_Elimination       | Distinct values selection vector                                    |
-| indx_Qplication        | Qplication vector                                                   |
-| indx_Symmetry          | Symmetrizing vector                                                 |
-| indx_UnivMomCum        | Univariate moments and cumulants from T-vectors                     |
 
-The `matr` group of functions produce commutators and selection
+The `CommutatorMatr`  function produces commutators and selection
 matrices. The use of matrices allows represent as linear combinations
 problems of permutation and powers of T-products. On the other side, the
 size of these matrix can quickly become quite important. To deal with
 this issues and option for sparse matrices is always provided; also a
-corresponding `indx` group of functions is provided; these function
-provide selection vectors which give equivalent results ans the
-corresponding functions in the group `matr`.
+corresponding `CommutatorIndx`  function is provided; these function
+provide selection vectors which give equivalent results and the
+corresponding functions in the group `Matr`.
 
-The function `matr_Commutator_Kmn` produces a commutation matrix,
-$\mathbf{K}_{m \cdot n}$ of dimension $mn \times mn$ such that, given a
-matrix $\mathbf{A}$ $m\times n$,
-$\mathbf{K}_{m \cdot n} \operatorname{vec}\mathbf{A}=\operatorname{vec}\mathbf{A}'$
-(see Terdik (2021, p.8,(1.12)) ). The same result can be obtained using
-`indx_Commutator_Kmn`
+`Kmn` produces a commutation matrix, with usual notation $\mathbf{K}_{m \cdot n}$, of dimension $mn \times mn$  such that, given a matrix $\mathbf{A}$ $m\times n$, $\mathbf{K}_{m \cdot n} \operatorname{vec}\mathbf{A}=\operatorname{vec}\mathbf{A}'$ (see @terdik2021multivariate, p.8) while `Kperm` produce any permutation of Kronecker products of vectors of any length. 
 
-`matr_Commutator_Kperm` and `indx_Commutator_Kperm` produce any
-permutation of kronecker products of vectors of any length.
 
 **Example 2**. For the product of vectors
 $\mathbf{a}_1 \otimes \mathbf{a}_2 \otimes\mathbf{a}_3$ of dimensions
 $d_1$ to $d_3$ respectively.
-`matr_Commutator_Kperm(c(3,1,2),c(d1,d2,d3))` produces
-$\mathbf{a}_3 \otimes \mathbf{a}_1 \otimes\mathbf{a}_2$.
+`CommutatorMatr(Type="Kperm",c(3,1,2),c(d1,d2,d3))` produces $\mathbf{a}_3 \otimes \mathbf{a}_1 \otimes\mathbf{a}_2$.
+
 
 ```{r}
 a1<-c(1,2)
 a2<-c(2,3,4)
 a3<-c(1,3)
 p1<-a1%x%a2%x%a3
-as.vector(matr_Commutator_Kperm(c(3,1,2),c(2,3,2))%*%p1) ## same result as below
-a3%x%a1%x%a2   
+c(CommutatorMatr(Type="Kperm",c(3,1,2),c(2,3,2))%*%p1) 
+a3%x%a1%x%a2 
 ```
 
-The same result can be obtained by using `indx_Commutator_Kperm`
+The same result can be obtained by using `CommutatorIndx`
+
 
 ```{r}
-p1[indx_Commutator_Kperm(c(3,1,2),c(2,3,2))]
+p1[CommutatorIndx(Type="Kperm",c(3,1,2),c(2,3,2))]
 ```
 
-The `matr_Commutator_Mixing` is exploited for deriving the covariance
+The `CommutatorMatr` with `Type="Mixing"` is exploited for deriving the covariance
 matrix of Hermite polynomials; see Terdik (2021, 4.6).
 
 The Elimination and Qplication matrices- related functions respectively
@@ -297,21 +363,21 @@ T-products.
 a<-c(1,2)
 a3<-a%x%a%x%a
 a3
-as.vector(matr_Elimination(2,3)%*%a3)
-as.vector(matr_Qplication(2,3)%*%matr_Elimination(2,3)%*%a3)
+c(EliminMatr(2,3)%*%a3)
+c(QplicMatr(2,3)%*%EliminMatr(2,3)%*%a3)
 ```
 
 Closely connected to the above matrices are the functions
-`indx_UnivMomCum` and `indx_Elimination`. The former provides a vector
+`UnivMomCum` and `EliminIndx`. The former provides a vector
 of indexes to select univariate moments or cumulants of the single
 elements of a d-vector X from available vector of T-moments and
 T-cumulants. The latter eliminates the duplicated/q-plicated elements in
 a T-vector of multivariate moments and cumulants. The function
-`indx_Elimination` produces the same results as `matr_Elimination` and
-it is less demanding in terms of memory. The use of `matr_Elimination`
+`EliminIndx` produces the same results as `EliminMatr` and
+it is less demanding in terms of memory. The use of `EliminMatr`
 can be preferable is one wishes to deal with linear combination of
-matrices. See examples 4 and 6 below for the use of `indx_UnivMomCum`
-and `indx_Elimination`.
+matrices. See examples 4 and 6 below for the use of `UnivMomCum`
+and `EliminIndx`.
 
 The symmetrizer matrix, a $d^n \times d^n$ matrix for the symmetrization
 of a T-product of $n$ vectors with the same dimension $d$ which
@@ -323,21 +389,13 @@ vectors of dimension $d$ is defined as $$
 \mathbf{S}_{d \mathbf{1}q}=\frac{1}{q} \sum_{p \in \cal{P}_q} \mathbf{K}_p
 $$ where $\cal{P}_q$ is the set of all permutations of the numbers $1:q$
 and $\mathbf{K}_p$ is the commutator matrix of for the permutation
-$p \in \cal{P}_q$, (i.e. the `matr_Commutator_Kperm` of the package).
+$p \in \cal{P}_q$, (i.e. the `CommutatorMatrKperm` with `Type="Kperm"`of the package).
 Note that, by definition, computing the symmetrizer requires $q!$
 operations; in the package, the computational complexity is overcome by
 exploiting the Chacon and Duong (2015) efficient recursive algorithms
 for functionals based on higher order derivatives.
 
 ## Multivariate T-Hermite Polynomials
-
-| Function                  | Description                                                                                              |
-|:----------------------|:------------------------------------------------|
-| Hermite_Poly_HN           | Univariate Hermite polynomials                                                                           |
-| Hermite_Poly_HN_Multi     | Multivariate T-Hermite polynomials                                                                       |
-| Hermite_Poly_NH_Inv       | Inverse univariate Hermite polynomial                                                                    |
-| Hermite_Poly_NH_Multi_Inv | Inverse of d-variate T-Hermite Polynomial                                                                |
-| Hermite_N_Cov_X1_X2       | Computation of the covariance matrix between $d$-variate T-Hermite polynomials $H_N(X_1)$ and $H_N(X_2)$ |
 
 Consider a Gaussian vector $\mathbf{X}$ of dimension $d$ with
 $\operatorname{E}\mathbf{X}$ and
@@ -366,12 +424,12 @@ From this one can get useful recursion formulae $$
 \mathbf{H}_n(\mathbf{X})=\mathbf{S}_{d \mathbf{1}_n}\left(  \mathbf{H}_{n-1}(\mathbf{X}) \otimes \mathbf{X}- (n-1) \mathbf{H}_{n-2}(\mathbf{X}) \otimes \boldsymbol{\kappa}_2^{\otimes} \right).
 $$
 
+
 For further details, consult Terdik (2021, 4.5).
 
 The definition of the $d$-variate Hermite polynomial requires the
 covariance matrix $\mathbf{\Sigma}$ of the vector $\mathbf{X}$. The
-`Hermite_Poly_HN` and `Hermite_Poly_HN_multi` functions compute the
-univariate and `d`-variate Hermite polynomials and their inverses up to
+`HermiteN(...,Type="Univariate")` and `HermiteN(...,Type="Multivariate")` functions compute the univariate and `d`-variate Hermite polynomials and their inverses up to
 a given order `N` evaluated at $x$ for a given covariance matrix `Sig2`.
 By default `Sig2`=$I_\mathbf{d}$.
 
@@ -379,18 +437,21 @@ By default `Sig2`=$I_\mathbf{d}$.
 evaluated at `x<-c(1,2,3)` where $x$ is the realization of
 $\mathbf{X} \sim N(\mathbf{0}, I_{\mathbf{3}})$ is
 
+
 ```{r}
 x<-c(1,2,3)
-H2<-Hermite_Poly_HN_Multi(x,N=2)
+H2<-HermiteN(x,N=2,Type="Multivariate")
 H2[[1]]
 H2[[2]]
 ```
 
+
 If `x` is the realization of
 $\mathbf{X} \sim N(\mathbf{0}, 4I_\mathbf{2})$
 
+
 ```{r}
-H2<-Hermite_Poly_HN_Multi(x,Sig2=4*diag(3),N=2)
+H2<-HermiteN(x,Sig2=4*diag(3),N=2,Type="Multivariate")
 H2[[1]]
 H2[[2]]
 ```
@@ -398,18 +459,17 @@ H2[[2]]
 One can recover the vector x from H2 with the inverse function:
 
 ```{r}
-
-Hermite_Poly_NH_Multi_Inv(H2,N=2,Sig2=4*diag(3))[[1]] 
+HermiteN2X(H2,N=2,Sig2=4*diag(3),Type="Multivariate")[[1]] 
 ```
 
-The function `Hermite_N_Cov_X1_X2` can be exploited to obtain the
+The function `HermiteCov12` can be exploited to obtain the
 covariance matrix of $H_N(\mathbf{X}_1)$ and $H_N(\mathbf{X}_2)$ for
 vectors $\mathbf{X}_1$ and $\mathbf{X}_2$ having covariance matrix
 $\mathbf{\Sigma_{12}}$.
 
 ```{r}
 Covmat<-matrix(c(1,0.8,0.3,0.8,2,1,0.3,1,2),3,3)
-Cov_X1_X2 <- Hermite_N_Cov_X1_X2(SigX12=Covmat,N=3)
+Cov_X1_X2 <- HermiteCov12(SigX12=Covmat,N=3)
 ```
 
 ## Multivariate T-moments and T-cumulants
@@ -447,16 +507,9 @@ The package `MultiStatM` contains functions which obtains moments from
 cumulants and vice-versa as well as function which provide theoretical
 moments and cumulants for some important multivariate distributions.
 
-The `conv_Cum2Mom` and `conv_Mom2Cum` either for the univariate and
+The `Cum2Mom` and `Mom2Cum` either for the univariate and
 multivariate cases provide conversion formulae for cumlants from moments
 and viceversa given any list of (theoretical) moments (or cumulants).
-
-| Function          | Description                                     |
-|:------------------|:------------------------------------------------|
-| conv_Cum2Mom      | Convert cumulants to moments (univariate)       |
-| conv_Cum2MomMulti | Convert T-cumulants to T-moments (multivariate) |
-| conv_Mom2Cum      | Convert moments to cumulants (univariate)       |
-| conv_Mom2CumMulti | Convert T-moments to T-cumulants (multivariate) |
 
 The conversion formula from moments to cumulants (see Terdik (2001,
 3.4)) is given by $$\begin{split}
@@ -482,144 +535,99 @@ this case the the first four moments are given in the vector `mu` below
 
 ```{r}
 mu<-list(c(1,1),c(2,1.5,1.5,2),c(4,3,3,3,3,3,3,4),c(10,7,7,6.5,7,6.5,6.5,7,7,6.5,6.5,7,6.5,7,7,10))
-cum<-conv_Mom2CumMulti(mu)
+cum<-Mom2Cum(mu, Type="Multivariate")
 cum
 ```
 
 Getting back to moments
 
 ```{r}
-conv_Cum2MomMulti(cum)
+Cum2Mom(cum,Type="Multivariate")
 ```
 
 I one wishes to select only the distinct moments from the vector of
 third moments, then
 
 ```{r}
-mu[[3]][indx_Elimination(2,3)]
+mu[[3]][EliminIndx(2,3)]
 ```
 
 Alternatively one can also use the elimination matrix
 
 ```{r}
-r.mu<-matr_Elimination(2,3)%*% mu[[3]]
-as.vector(r.mu)
+r.mu<-EliminMatr(2,3)%*% mu[[3]]
+c(r.mu)
 ```
 
-Note that `matr_Elimination` does not correspond the the function
+Note that `EliminMatr` does not correspond the the function
 `unique`, rather it individuates the duplicated elements from the
 symmetry of the Kronecker product. This allow to recover the whole
 vector when needed.
 
 ```{r}
-as.vector(matr_Qplication(2,3)%*%r.mu)
+c(QplicMatr(2,3)%*%r.mu)
 ```
 
-The same result by using `indx_Qplication`
+The same result by using `QplicIndx`
 
 ```{r}
-r.mu[indx_Qplication(2,3)]
+r.mu[QplicIndx(2,3)]
 ```
 
-The `MomCum` functions provide theoretical moments and cumulants for
-some common multivariate distributions: Skew-normal. Canonical
-Fundamental Skew-normal (CFUSN), Uniform distribution on the sphere,
-central folded Normal distribution (univariate and multivariate); for
-detail on the multivariate formulae used see (Jammalamadaka et al.,
-2021).
+The `MomCum` functions provide theoretical moments and cumulants for some common multivariate distributions: Skew-normal, Canonical Fundamental Skew-normal (CFUSN), Uniform distribution on the sphere, central folded Normal distribution (univariate and multivariate); for detail on the multivariate formulae used see @jamma2021San. Evaluation of theoretical moments and cumulants is done by  the `MomCumNAME` group of functions. Some more details on the multivariate distributions considered are reported in the list below. 
 
-| Function                 | Description                                                           |
-|:----------------------|:------------------------------------------------|
-| distr_CFUSN_MomCum_Th    | Moments and cumulants CFUSN                                           |
-| distr_ZabsM_MomCum_Th    | Moments and cumulants multivariate central folded Normal distribution |
-| distr_SkewNorm_MomCum_Th | Moments and cumulants d-variate Skew Normal                           |
-| distr_Uni_MomCum_Th      | Moments and cumulants Uniform Distribution on the Sphere              |
-| distr_Zabs_MomCum_Th     | Moments and cumulants Central folded Normal distribution              |
-| distr_SkewNorm_EVSK_Th   | EVSK multivariate Skew Normal                                         |
-| distr_UniAbs_EVSK_Th     | Moments of the modulus of the Uniform distribution on the sphere      |
-| distr_Uni_EVSK_Th        | EVSK Uniform on the sphere                                            |
 
-Expressions for theoretical moments and cumulants are provided by the
-`distr_NAME_MomCum_Th` functions. In particular
+- A $d$-vector $\mathbf{U}$ having uniform distribution on the sphere $\mathbb{S}_{d-1}$. Moments and cumulants of all orders are provided for $\mathbf{U}$  by the function `MomCumUniS`; the function `EVSKUniS` can compute moments and cumulants (up to the 4th order), skewness, and kurtosis of $\mathbf{U}$ (`Type="Standard"`) and its modulus (`Type="Modulus"`). 
+Recall that any $d$-vector, say $\mathbf{W}$, has a spherically symmetric distribution
+if that distribution is invariant under the group of rotations in
+$\mathbb{R}^{d}$. This is equivalent to saying that $\mathbf{W}$ has the
+stochastic representation $\mathbf{W}=R\mathbf{U}$ 
+where $R$ is a non negative random variable. Moments and cumulants of $\mathbf{W}$ can be obtained by its stochastic representation as discussed in @jamma2021San, Theorem 1 and  Lemma 1. Furthermore a $d$-vector $\mathbf{X}$ has an elliptically symmetric distribution if it has the representation
+$$
+\mathbf{X}=\boldsymbol{\mu}+\boldsymbol{\Sigma}^{1/2}\mathbf{W}%
+$$
+where $\boldsymbol{\mu}\in\mathbb{R}^{d}$, $\boldsymbol{\Sigma}$ is a
+variance-covariance matrix and $\mathbf{W}$ is spherically distributed.
+Hence the cumulants of $\mathbf{X}$ are just constant times the cumulants
+of $\mathbf{W}$ except for the mean i.e.
+$$
+\underline{\operatorname*{Cum}}_{m}\left(  \mathbf{X}\right)  =\left(
+\boldsymbol{\Sigma}^{1/2}\right)  ^{\otimes m}\underline{\operatorname*{Cum}%
+}_{m}\left(  \mathbf{W}\right)  .
+$$
 
--   A $d$-vector $\mathbf{U}$ having uniform distribution on the sphere
-    $\mathbb{S}_{d-1}$. Moments and cumulants of all orders are provided
-    for $\mathbf{U}$ (`NAME=Uni`) and its modulus (`NAME=UniAbs`).
-    Recall that any $d$-vector, say $\mathbf{W}$ has a spherically
-    symmetric distribution if that distribution is invariant under the
-    group of rotations in $\mathbb{R}^{d}$. This is equivalent to saying
-    that $\mathbf{W}$ has the stochastic representation
-    $\mathbf{W}=R\mathbf{U}$ where $R$ is a non negative random
-    variable. Moments and cumulants of $\mathbf{W}$ can be obtained by
-    its stochastic representation as discussed in Jammalamadaka et
-    al.(2021a, Theorem 1) and Jammalamadaka et al. (2021c, Lemma 1).
-    Furthermore a $d$-vector $\mathbf{X}$ has an elliptically symmetric
-    distribution if it has the representation $$
-    \mathbf{X}=\boldsymbol{\mu}+\boldsymbol{\Sigma}^{1/2}\mathbf{W}%
-    $$ where $\boldsymbol{\mu}\in\mathbb{R}^{d}$, $\boldsymbol{\Sigma}$
-    is a variance-covariance matrix and $\mathbf{W}$ is spherically
-    distributed. Hence the cumulants of $\mathbf{X}$ are just constant
-    times the cumulants of $\mathbf{W}$ except for the mean i.e. $$
-    \underline{\operatorname*{Cum}}_{m}\left(  \mathbf{X}\right)  =\left(
-    \boldsymbol{\Sigma}^{1/2}\right)  ^{\otimes m}\underline{\operatorname*{Cum}%
-    }_{m}\left(  \mathbf{W}\right)  ,
-    $$
+- If $\mathbf{Z}$ denotes a $d$-vector with $d$-variate standard normal distribution, the function  `MomCumZabs`  provide the moments and cumulants of  $|\mathbf{Z}|$ respectively in the univariate (`Type="univariate"`) and multivariate case (`Type="Multivariate"`). 
 
--   If $\mathbf{Z}$ denotes a $d$-vector with $d$-variate Normal
-    distribution, the functions with `NAME=Zabs` and `NAME=ZabsM`
-    provide the moments and cumulants of $|\mathbf{Z}|$ respectively in
-    the univariate ($d=1$) and multivariate case.
+- The multivariate skew-normal distribution introduced by @azzalini1996multivariate, whose marginal densities
+are scalar skew-normals. A $d$-dimensional random vector $\mathbf{X}$ is
+said to have a multivariate skew-normal distribution, $\text{SN}_{d}\left(\boldsymbol{\mu},\boldsymbol{\Omega},\boldsymbol{\alpha}\right)$ with shape
+parameter $\boldsymbol{\alpha}$ if it has the density function
+$$
+2\varphi\left(  \mathbf{X};\boldsymbol{\mu},\boldsymbol{\Omega}\right)
+\Phi\left(  \boldsymbol{\alpha}^{\top}\left(  \mathbf{X}-\boldsymbol{\mu
+}\right)  \right)  , \quad\mathbf{X} \in\mathbb{R}^{d},
+$$
+where $\varphi\left(\mathbf{X};\boldsymbol{\mu},\boldsymbol{\Omega}\right)$ is the $d$-dimensional normal density with mean $\boldsymbol{\mu}$
+and correlation matrix $\boldsymbol{\Omega}$; here $\varphi$ and $\Phi$ denote
+the univariate standard normal density and the cdf. For a general formula for cumulants, see @jamma2021San, Lemma 4. For this distribution are available the functions `MomCumSkewNorm`, which computes the theoretical values of moments and cumulants up to the r-th order and `EVSKSkewNorm` which gives mean vector, covariance, skewness and  kurtosis vectors and other measures. 
 
--   The Multivariate Skew Normal distribution introduced by Azzalini and
-    Dalla Valle (1996), whose marginal densities are scalar
-    skew-normals. A $d$-dimensional random vector $\mathbf{X}$ is said
-    to have a multivariate skew-normal distribution,
-    $\text{SN}_{d}\left(\boldsymbol{\mu},\boldsymbol{\Omega},\boldsymbol{\alpha}\right)$
-    with shape parameter $\boldsymbol{\alpha}$ if it has the density
-    function $$
-    2\varphi\left(  \mathbf{X};\boldsymbol{\mu},\boldsymbol{\Omega}\right)
-    \Phi\left(  \boldsymbol{\alpha}^{\top}\left(  \mathbf{X}-\boldsymbol{\mu
-    }\right)  \right)  , \quad\mathbf{X} \in\mathbb{R}^{d}.
-    $$ where
-    $\varphi\left(\mathbf{X};\boldsymbol{\mu},\boldsymbol{\Omega}\right)$
-    is the $d$-dimensional normal density with mean $\boldsymbol{\mu}$
-    and correlation matrix $\boldsymbol{\Omega}$; here $\varphi$ and
-    $\Phi$ denote the univariate standard normal density and the cdf.
-    For a general formula for cumulants, see Jammalamadaka et al.
-    (2021a, Lemma 4).
+- @arellano2005fundamental  introduced the
+CFUSN distribution (cf. their Proposition 2.3), to include all
+existing definitions of skew-normal distributions. The marginal stochastic
+representation of $\mathbf{X}$ with distribution $\text{CFUSN}_{d,m}\left(\boldsymbol{\Delta}\right)$ is given by
+$$
+	\mathbf{X}=\boldsymbol{\Delta}\left\vert \mathbf{Z}_{1}\right\vert
+	+\left(  \mathbf{I}_{d}-\boldsymbol{\Delta\Delta}^{\top}\right)
+	^{1/2}\mathbf{Z}_{2} 
+$$
+where $\boldsymbol{\Delta}$, is the $d\times m$ skewness matrix such that
+$\left\Vert \boldsymbol{\Delta}\underline{a}\right\Vert <1$, for all
+$\left\Vert \underline{a}\right\Vert =1$, and $\mathbf{Z}_{1}\in\mathcal{N}\left(  0,\mathbf{I}_{m}\right)$ and $\mathbf{Z}_{2}\in\mathcal{N}\left(  0,\mathbf{I}_{d}\right)$ are independent (Proposition 2.2. Arellano-Valle and Genton (2005)). A simple construction of
+$\boldsymbol{\Delta}$ is $\boldsymbol{\Delta}=\boldsymbol{\Lambda}\left(\mathbf{I}_{m}\mathbf{+}\boldsymbol{\Lambda}^{\top}\boldsymbol{\Lambda}\right)^{-1/2}$ with some real matrix $\boldsymbol{\Lambda}$ with dimensions $d\times m$. The $\text{CFUSN}_{d,m}\left(\boldsymbol{\mu},\boldsymbol{\Sigma},\boldsymbol{\Delta}\right)$ can be defined via the linear transformation
+$\boldsymbol{\mu}+\boldsymbol{\Sigma}^{1/2}\mathbf{X}$.  For a general formula for cumulants, see @jamma2021San, Lemma 5. For this distributions `MomCumCFUSN` provides moments and cumulants up to the $r$-th order. 
 
--   Arellano-Valle and Genton (2005) introduced the CFUSN distribution
-    (cf. their Proposition 2.3), to include all existing definitions of
-    SN distributions. The marginal stochastic representation of
-    $\mathbf{X}$ with distribution
-    $\text{CFUSN}_{d,m}\left(\boldsymbol{\Delta}\right)$ is given by $$
-      \mathbf{X}=\boldsymbol{\Delta}\left\vert \mathbf{Z}_{1}\right\vert
-      +\left(  \mathbf{I}_{d}-\boldsymbol{\Delta\Delta}^{\top}\right)
-      ^{1/2}\mathbf{Z}_{2} 
-    $$ where $\boldsymbol{\Delta}$, is the $d\times m$ skewness matrix
-    such that
-    $\left\Vert \boldsymbol{\Delta}\underline{a}\right\Vert <1$, for all
-    $\left\Vert \underline{a}\right\Vert =1$, and
-    $\mathbf{Z}_{1}\in\mathcal{N}\left( 0,\mathbf{I}_{m}\right)$ and
-    $\mathbf{Z}_{2}\in\mathcal{N}\left( 0,\mathbf{I}_{d}\right)$ are
-    independent (Proposition 2.2. Arellano-Valle and Genton (2005)). A
-    simple construction of $\boldsymbol{\Delta}$ is
-    $\boldsymbol{\Delta}=\boldsymbol{\Lambda}\left(\mathbf{I}_{m}\mathbf{+}\boldsymbol{\Lambda}^{\top}\boldsymbol{\Lambda}\right)^{-1/2}$
-    with some real matrix $\boldsymbol{\Lambda}$ with $d\times m$. The
-    $\text{CFUSN}_{d,m}\left(\boldsymbol{\mu},\boldsymbol{\Sigma},\boldsymbol{\Delta}\right)$
-    can be defined via the linear transformation
-    $\boldsymbol{\mu}+\boldsymbol{\Sigma}^{1/2}\mathbf{X}$. For a
-    general formula for cumulants, see Jammalamadaka et al. (2021a,
-    Lemma 5).
+The `Random generation` family of functions in \CRANpkg{MultiStatM}  provide random number generators for multivariate distributions.
 
-The `Rand` functions provide random number generators for multivariate
-distributions.
-
-The `EVSK` functions compute the theoretical values of the mean vector,
-covariance, skewness vector, total skenwness, kurtosis vector and total
-kurtosis for given multivariate distributions: Uniform on the sphere,
-modulus of the Uniform distribution on the sphere, Skew-normal
-distribution.
 
 **Example 5**. For a skew-normal distribution with $\alpha=(10,5,0)$ and
 correlation function $\Omega= \text{diag} (1,1,1)$ we have the third
@@ -628,16 +636,16 @@ moments and cumulants are
 ```{r}
 alpha<-c(10,5,0)
 omega<-diag(3)
-MSN<-distr_SkewNorm_MomCum_Th(r=3,omega,alpha,nMu=TRUE)
+MSN<-MomCumSkewNorm(r=3,omega,alpha,nMu=TRUE)
 round(MSN$Mu[[3]],3)
 round(MSN$CumX[[3]],3)
 ```
 
-As another example, for the modulus of the Uniform distribution on the
+As another example, for the  Uniform distribution on the
 sphere, the fourth cumulant is:
 
 ```{r}
-distr_Uni_EVSK_Th(3, nCum = TRUE)$Kurt.U
+EVSKUniS(3,  Type="Standard")$Kurt.U
 ```
 
 ## Estimation
@@ -647,17 +655,6 @@ available: multivariate moments and cumulants, skewness and kurtosis
 vectors Mardia's skewness and kurtosis indexes, Mori, Rohatgi, Szekely
 (MRSz's) skewness vector and kurtosis matrices.
 
-| Function                   | Description                                                                  |
-|:----------------------|:------------------------------------------------|
-| Esti_Hermite_Poly_HN_Multi | Estimation of the N-th d-variate polynomial                                  |
-| Esti_EVSK                  | Estimation of multivariate Mean, Variance, T-Skewness and T-Kurtosis vectors |
-| Esti_Kurt_CMRSz            | Estimation of Cardoso, Mori,Rohatgi , Szekely (CMRSz's) kurtosis matrix      |
-| Esti_Kurt_Mardia           | Estimation of Mardia's Kurtosis Index                                        |
-| Esti_Kurt_Total            | Estimation of the Total Kurtosis Index                                       |
-| Esti_MMom_MCum             | Estimation of multivariate T-Moments and T-Cumulants                         |
-| Esti_Skew_Mardia           | Estimation of Mardia's Skewness index                                        |
-| Esti_Skew_MRSz             | Estimation for Mori, Rohatgi, Szekely (MRSz's) skewness vector               |
-| Esti_Variance_Skew_Kurt    | Estimated Variance of skewness and kurtosis vectors                          |
 
 A complete picture of skewness is provided by the third-order T-cumulant
 (skewness vector) of a standardized $\mathbf{X}$; set
@@ -721,32 +718,32 @@ covariance matrix of the data-estimated skewness and kurtosis vectors
 **Example 6**. Consider a multivariate data vector of dimension $d=3$
 and $n=250$ from the multivariate skew-normal distribution of Example 5.
 The estimated first four cumulants are listed in the object `EsMSN`
-obtained by the `Esti_EVSK` function; the corresponding theoretical
-values are in the object `ThMSN` obtained by the `istr_SkewNorm_EVSK_Th`
+obtained by the `SampleEVSK` function; the corresponding theoretical
+values are in the object `ThMSN` obtained by the `EVSKSkewNorm`
 function.
 
 ```{r}
-data<-distr_SkewNorm_Rand(1000,omega,alpha)
-EsMSN<-Esti_EVSK(data)
-ThMSN<-distr_SkewNorm_EVSK_Th(omega,alpha)
+data<-rSkewNorm(1000,omega,alpha)
+EsMSN<-SampleEVSK(data)
+ThMSN<-EVSKSkewNorm(omega,alpha)
 ```
 
 Compare the distinct elements of the estimated skewness vector and the
-theoretical ones using `indx_Elimination`.
+theoretical ones using `Eliminindx`.
 
 ```{r}
-EsMSN$estSkew[indx_Elimination(3,3)]   
-ThMSN$SkewX[indx_Elimination(3,3)]   
+EsMSN$estSkew[EliminIndx(3,3)]   
+ThMSN$SkewX[EliminIndx(3,3)]   
 
 ```
 
 If one wishes to recover the estimated univariate skewness and kurtosis
 of the components $X1$, $X2$ and $X3$ of $X$, then, using
-`indx_UnivMomCum`,
+`UnivMomCum`,
 
 ```{r}
-EsMSN$estSkew[indx_UnivMomCum(3,3)]  ## Get univariate skewness for X1,X2,X3
-EsMSN$estKurt[indx_UnivMomCum(3,4)]  ## Get univariate kurtosis for X1,X2,X3
+EsMSN$estSkew[UnivMomCum(3,3)]  ## Get univariate skewness for X1,X2,X3
+EsMSN$estKurt[UnivMomCum(3,4)]  ## Get univariate kurtosis for X1,X2,X3
 ```
 
 An estimate of Mardia's skewness index is provided together with the
@@ -755,7 +752,7 @@ Mardia's skewness can be recovered from the element `SkewX.tot` in the
 object `ThMSN`.
 
 ```{r}
-Esti_Skew_Mardia(data)
+SampleSkew(data,Type="Mardia")
 ThMSN$SkewX.tot
 ```
 
@@ -764,12 +761,14 @@ for the skewness index under the null hypothesis of normality, The
 theoretical value, for the distribution at hand, can be computed using
 formula [...]
 
+
 ```{r}
-Esti_Skew_MRSz(data)
+SampleSkew(data,Type="MRSz")
+as.vector(t(c(diag(3))%x%diag(3))%*%ThMSN$SkewX)
 ```
 
 ```{r}
-as.vector(t(c(diag(3))%x%diag(3))%*%ThMSN$SkewX)  ## Theoretical MRS skewness vector
+c(t(c(diag(3))%x%diag(3))%*%ThMSN$SkewX)  ## Theoretical MRS skewness vector
 ```
 
 ## Acknowledgement

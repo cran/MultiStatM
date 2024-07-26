@@ -1,17 +1,14 @@
-## 1. distr_Uni_Rand
-## 2. distr_SkewNorm_Rand
-## 3. distr_CFUSN_Rand
-## 4. distr_CFUSSD_Rand
-## 5.
-## 6.
-## 7. distr_Uni_EVSK_Th
-## 8. distr_Uni_MomCum_Th
+## 1. rUnis
+## 2. rSkewNorm
+## 3. rCFUSN
+## 4. rCFUSSD
+## 5. MomCumSkewNorm
+## 6. MomCumUnif
+## 7. MomCumCFUSN
+## 8. MomCumZabs
 ## 9. distr_UniAbs_EVSK_Th_
-## 10. distr_SkewNorm_EVSK_Th
-## 11. distr_Zabs_MomCum_Th
-## 12. distr_ZabsM_MomCum_Th   (Multi)
-## 13. distr_CFUSN_MomCum_Th
-
+## 10. EVSKSkewNorm
+## 11. distr_Uni_EVSK_Th
 
 #####################
 #########################################################
@@ -29,10 +26,9 @@
 #' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
 #' skewness and kurtosis. Sankhya A, 83(2), 607-644.
 #' @family Random generation
-#' @family Multivariate distributions
 #' @export
 
-distr_Uni_Rand <-  function(n,d){
+rUniS <-  function(n,d){
 Z <- matrix( stats::rnorm(d*n), nrow = n)
 U3 <- t(apply(Z, 1, function(y) y/sqrt(sum(y^2))))
 return(U3)
@@ -53,7 +49,7 @@ return(U3)
 #' @examples
 #' alpha<-c(10,5,0)
 #' omega<-diag(3)
-#' x<-distr_SkewNorm_Rand(20,omega,alpha)
+#' x<-rSkewNorm(20,omega,alpha)
 #'
 #' @references Azzalini, A. with the collaboration of Capitanio, A. (2014).
 #' The Skew-Normal and Related Families. Cambridge University Press,
@@ -61,9 +57,8 @@ return(U3)
 #' @references Gy.H.Terdik, Multivariate statistical methods - Going beyond the linear,
 #' Springer 2021, Section 5.1.2
 #' @family Random generation
-#' @family Multivariate distributions
 #' @export
-distr_SkewNorm_Rand <- function(n,omega,alpha){
+rSkewNorm  <- function(n,omega,alpha){
   Om<-omega
   alf<-alpha
   d <- length(alf)
@@ -82,7 +77,7 @@ distr_SkewNorm_Rand <- function(n,omega,alpha){
 
 
 ###################################################################
-#########################(distr_CFUSN_Rand) ################
+#########################(rCFUSN) ################
 #######################################################################
 
 #' Random multivariate CFUSN
@@ -98,17 +93,16 @@ distr_SkewNorm_Rand <- function(n,omega,alpha){
 #' ieg<- eigen(diag(p)+t(Lamd)%*%Lamd)
 #' V <- ieg$vectors
 #' Delta <-Lamd %*% V %*% diag(1/sqrt(ieg$values)) %*% t(V)
-#' x<-distr_CFUSN_Rand(20,Delta)
+#' x<-rCFUSN(20,Delta)
 #'
 #' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
 #' Springer 2021 (5.5) p.247
 #' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
 #' skewness and kurtosis. Sankhya A, 83(2), 607-644.
 #' @family Random generation
-#' @family Multivariate distributions
 #' @export
 
-distr_CFUSN_Rand <- function(n,Delta){
+rCFUSN  <- function(n,Delta){
   #
   d <- dim(Delta)[1]
   p <- dim(Delta)[2]
@@ -151,22 +145,21 @@ distr_CFUSN_Rand <- function(n,Delta){
 #' ieg<- eigen(diag(p)+t(Lamd)%*%Lamd)
 #' V <- ieg$vectors
 #' Delta <-Lamd %*% V %*% diag(1/sqrt(ieg$values)) %*% t(V)
-#' distr_CFUSSD_Rand(20,d,p,1,1,Delta)
+#' rCFUSSD(20,d,p,1,1,Delta)
 #' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
 #' Springer 2021, (5.36) p. 266, (see p.247 for Delta)
 #' @family Random generation
-#' @family Multivariate distributions
 #' @export
-distr_CFUSSD_Rand <- function(n,d,p,a,b,Delta){
+rCFUSSD  <- function(n,d,p,a,b,Delta){
   #
   ieg2 <- eigen(diag(d)-Delta%*%t(Delta))
   V2 <- ieg2$vectors
   Delta2 <-  V2 %*% diag(sqrt(ieg2$values)) %*% t(V2)
   R <- stats::rgamma(n, shape= a, scale = b ) # a > 0 scale = 1/rate
   p1 <-  stats::rbeta(n,p/2,d/2,n)
-  
-  U2 <-  distr_Uni_Rand(n,d)
-  mU1 <- abs(distr_Uni_Rand(n,p));
+
+  U2 <-  rUniS(n,d)
+  mU1 <- abs(rUniS(n,p));
   Z1 <-  mU1*matrix(kronecker(rep(1,p),R*p1),ncol = p)
   Z2 <-  U2*matrix(kronecker(rep(1,d),R*(1-p1)),ncol = d)
   X <- t(Delta%*%t(Z1)+Delta2%*%t(Z2))
@@ -174,30 +167,8 @@ distr_CFUSSD_Rand <- function(n,d,p,a,b,Delta){
 }
 
 
-############################################
-#########   ################
-###########################################
-#####
-#####
-#' EVSK Uniform on the sphere
-#'
-#'
-#' Computes the theoretical values of the mean vector,  covariance, skewness vector,
-#' total skenwness, kurtosis vector and total
-#' kurtosis for the Uniform distribution on the sphere.  Note that Skewness is ZERO
-#' @param d dimensions
-#' @param nCum if it is TRUE then cumulants, skewness an kurtosis are calculated
-#' @return The list with  mean vector,  covariance, skewness vector,
-#' total skenwness, kurtosis vector and total kurtosis
-#' 
-#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
-#' Springer 2021 Proposition 5.3 p.297
-#' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
-#' skewness and kurtosis. Sankhya A, 83(2), 607-644.
-#' @family Theoretical Moments and Cumulants
-#' @family Multivariate distributions
-#' @export
-distr_Uni_EVSK_Th <- function(d,nCum = TRUE){
+
+.distr_Uni_EVSK_Th <- function(d,nCum = TRUE){
   eL <- c(0,2,0,0)
   # loc_type_el <- Partition_Type_eL_Location(eL)
   #L2 <- .Commutator_Moment_eL(eL,d)
@@ -209,11 +180,11 @@ distr_Uni_EVSK_Th <- function(d,nCum = TRUE){
   x<- kronecker(Idv,Idv)
   EU4 <- .indx_Commutator_Moment(x,eL,d)*1/d/(d+2)
   EU.k <- list(EU1,EU2,EU3,EU4)
-  
-  UEVSK <- list(EU1,varU,EU.k)
-  names(UEVSK) <- c("EU1","varU","EU.k")
+
+  UEVSK <- EU.k
+  names(UEVSK) <- c("EU1","EU2","EU3","EU4")
   if (nCum == TRUE){
-    cumU.k <- conv_Mom2CumMulti(EU.k)
+    cumU.k <- .conv_Mom2CumMulti(EU.k)
     kurtU <- as.vector(cumU.k[[4]]*d^2)
     skewU <- rep(0,d^3)
     Skew.tot<-c(0)
@@ -236,19 +207,18 @@ distr_Uni_EVSK_Th <- function(d,nCum = TRUE){
 #' @return The list of moments and cumulants in vector form
 #' @examples
 #' # The first four moments for d=3
-#' distr_Uni_MomCum_Th(4,3,nCum=0)
+#' MomCumUniS(4,3,nCum=0)
 #' # The first four moments and cumulants for d=3
-#' distr_Uni_MomCum_Th(4,3,nCum=4)
+#' MomCumUniS(4,3,nCum=4)
 #' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
 #' Springer 2021 Proposition 5.3 p.297
-#' @family Theoretical Moments and Cumulants
-#' @family Multivariate distributions
+#' @family Moments and cumulants
 #' @export
 
-distr_Uni_MomCum_Th <- function(r,d,nCum = FALSE)
+MomCumUniS <- function(r,d,nCum = FALSE)
 {
   # if (r%%2 !=0 )   return(EUM.k <- 0)# (4%%2)*2
-  
+
   m0 <- floor(r/2)
   # 1d moments
   EU.k0 <- c(rep(0,r))
@@ -261,7 +231,7 @@ distr_Uni_MomCum_Th <- function(r,d,nCum = FALSE)
   EUM.k[[2]] <- 1/d*Idv
   EUM.k[[3]] <- c(rep(0,d^3))
   varU<- matrix(1/d*Idv,nrow = d)
-  
+
   for (k in 2:m0) {
     # tic
     eL <- c(0,k,c(rep(0,2*k-2)))
@@ -272,12 +242,12 @@ distr_Uni_MomCum_Th <- function(r,d,nCum = FALSE)
   }
   if ( r%%2 == 0 ) EUM.k <- EUM.k[-(2*m0+1)]
   if (nCum == TRUE) {
-    CumU <- conv_Mom2CumMulti(EUM.k )
+    CumU <- .conv_Mom2CumMulti(EUM.k )
     MomCumU <- list(EUM.k,CumU )
     names(MomCumU) <- c("EUM" , "CumU")
     return(MomCumU)
   }
-  
+
   nev <- NULL
   for (k in 1:r) {
     nev[[k]] <- paste("EU.",as.character(k), sep='')
@@ -287,23 +257,9 @@ distr_Uni_MomCum_Th <- function(r,d,nCum = FALSE)
 }
 
 
-#####################################################################
-############################# UniAbsDistr_Th ##############
-#############################################################
-#' Moments of the modulus of the Uniform distribution on the sphere
-#'
-#' Moments (up to the 4th order) of the modulus of the d-variate Uniform distribution on
-#' the sphere on (d-1)
-#' @param d vector-dimension
-#' @param nCum if it is TRUE then cumulants, skewness an kurtosis are calculated
-#' @return  The list of the first four moments in vector form
-#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
-#' Springer 2021, Lemma 5.12 p.298
-#' @family Theoretical Moments and Cumulants
-#' @family Multivariate distributions
-#' @export
-distr_UniAbs_EVSK_Th <- function(d,nCum=FALSE ){
-#
+
+.distr_UniAbs_EVSK_Th <- function(d,nCum=TRUE ){
+
   Id <- diag(d)
 EabsU1 <- sqrt(1/pi)/.Gkd(1,d)*rep(1,d)
 EabsU2 <- as.vector(Id)/d+(rep(1,d^2)-as.vector(Id))/pi/.Gkd(2,d)
@@ -319,8 +275,8 @@ for (k in c(1:d)) {
     if (j != k)  e21 <- e21 +  kronecker(.kron2(Id[,k]),Id[,j])
   }
 }
-#e21 <- matr_Symmetry(d,3,useSparse=F) %*%e21*3
-e21 <- indx_Symmetry(e21,d,3)*3
+
+e21 <- SymIndx(e21,d,3)*3
 e111 <- rep(0,d^3)
 for (k in c(1:d)) {
   for (j in c(1:d) ) {
@@ -348,8 +304,7 @@ for (k in c(1:d)) {
     if (j != k)  e31 <- e31 +  kronecker(.kron3(Id[,k]),Id[,j])
   }
 }
-#e31 <- matr_Symmetry(d,4,useSparse = F)%*%e31*4
-e31 <- indx_Symmetry(e31,d,4)*4
+e31 <- SymIndx(e31,d,4)*4
 ###########################################
 e211 <- rep(0,d^4)
 for (k in c(1:d)) {
@@ -363,8 +318,8 @@ for (k in c(1:d)) {
     }
   }
 }
-#e211 <- matr_Symmetry(d,4,useSparse = F)%*%e211*6
-e211 <- indx_Symmetry(e211,d,4)*6
+
+e211 <- SymIndx(e211,d,4)*6
 ##################################
 e22 <- rep(0,d^4)
 for (k in c(1:d)) {
@@ -390,15 +345,15 @@ for (k in c(1:d)) {
     }
   }
 }
-#e1111 <- matr_Symmetry(d,4,useSparse = F)%*%e1111
-e1111 <- indx_Symmetry(e1111,d,4)
+
+e1111 <- SymIndx(e1111,d,4)
 ###########################################################
 e.vect4 <-( e31/pi +  e22/4 + e211/sqrt(pi^3)  +  e1111/pi^2)/.Gkd(4,d)
 EabsU4 <- as.vector(3*e4/d/(d+2) +  e.vect4)
 Eabs <- list(EabsU1,EabsU2,EabsU3,EabsU4 )
 
 if (nCum == TRUE){
-   cumU.k <- conv_Mom2CumMulti(Eabs)
+   cumU.k <- .conv_Mom2CumMulti(Eabs)
 # Eabs[[1]] <- c(rep(0,d))
 varU <- matrix(cumU.k[[2]],nrow = d)
 # varU.inv <-  solve(varU)  # %*%varU
@@ -418,29 +373,8 @@ return(Eabs)
 
 
 
- #################################
- ###############################################################################
- ##### Mod Z    ##########
- ###################################
- # n <- 9
-#' Moments and cumulants Central folded Normal distribution
-#'
-#' Provides the theoretical moments and cumulants of the univariate Central Folded
-#' Normal distribution. By default only moments are provided.
-#' @param r The highest moment (cumulant) order
-#' @param nCum if it is TRUE then cumulants are calculated
-#' @return  The list of moments and cumulants
-#' @examples
-#' # The first three moments
-#' distr_Zabs_MomCum_Th(3, nCum = FALSE)
-#' # The first three moments and cumulants
-#' distr_Zabs_MomCum_Th(3, nCum = TRUE)
-#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
-#' Springer 2021, Proposition 5.1 p.242 and  formula: p. 301
-#' @family Multivariate distributions
-#' @family Theoretical Moments and Cumulants
-#' @export
- distr_Zabs_MomCum_Th <- function(r,nCum=FALSE){
+
+.distr_Zabs_MomCum_Th <- function(r,nCum=FALSE){
    #
    n<-r
    n0 <- floor((n-2)/2) +(n/2-n%/%2>0)
@@ -462,7 +396,7 @@ return(Eabs)
    }
    if (n/2-n%/%2 >0) mu <- mu[-(2*n0+2)]
    if (nCum==1){
-     cum <- conv_Mom2Cum(mu )
+     cum <- .conv_Mom2Cum(mu )
      MomCumZ <- list(mu,cum )
      names(MomCumZ) <- c("MuZ" , "CumZ")
      return(MomCumZ)}
@@ -489,16 +423,15 @@ return(Eabs)
  #' @examples
  #' alpha<-c(10,5,0)
  #' omega<-diag(3)
- #' distr_SkewNorm_EVSK_Th(omega,alpha)
+ #' EVSKSkewNorm(omega,alpha)
  #' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
  #' Springer 2021 (5.5) p.247
  #' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
  #' skewness and kurtosis. Sankhya A, 83(2), 607-644.
- #' @family Theoretical Moments and Cumulants
- #' @family Multivariate distributions
+ #' @family Moments and cumulants
  #' @export
 
-distr_SkewNorm_EVSK_Th <- function(omega,alpha){
+EVSKSkewNorm <- function(omega,alpha){
 
   oszt <- sqrt(1+t(alpha)%*%omega%*%alpha)
   dim(oszt) <- NULL
@@ -522,7 +455,7 @@ distr_SkewNorm_EVSK_Th <- function(omega,alpha){
 }
 
 ########################################################
-###########       distr_SkewNorm_MomCum_Th ###################
+###########       MomCumSkewNorm ###################
 #######################################################
 #' Moments and cumulants d-variate Skew Normal
 #'
@@ -538,16 +471,15 @@ distr_SkewNorm_EVSK_Th <- function(omega,alpha){
 #' @examples
 #' alpha<-c(10,5,0)
 #' omega<-diag(3)
-#' distr_SkewNorm_MomCum_Th(r=4,omega,alpha)
+#' MomCumSkewNorm(r=4,omega,alpha)
 #' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
 #' Springer 2021 (5.5) p.247, Lemma 5.1 p. 246
 #' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
 #' skewness and kurtosis. Sankhya A, 83(2), 607-644.
-#' @family Theoretical Moments and Cumulants
-#' @family Multivariate distributions
+#' @family Moments and cumulants
 #' @export
 
-distr_SkewNorm_MomCum_Th <- function(r = 4,omega,alpha,nMu = FALSE ){
+MomCumSkewNorm <- function(r = 4,omega,alpha,nMu = FALSE ){
   #
   # Om correlation matrix
   Om<-omega
@@ -560,7 +492,7 @@ distr_SkewNorm_MomCum_Th <- function(r = 4,omega,alpha,nMu = FALSE ){
   deltk <- NULL
   deltk[[1]] <- delt
   deltk[[2]] <- kronecker(delt,delt)
-  MC.absZ <- distr_Zabs_MomCum_Th(r,nCum = 1)
+  MC.absZ <- .distr_Zabs_MomCum_Th(r,nCum = 1)
   cum <- NULL
   cum[[1]] <- as.vector(EX)
   cum[[2]] <- as.vector(VarX)
@@ -569,7 +501,7 @@ distr_SkewNorm_MomCum_Th <- function(r = 4,omega,alpha,nMu = FALSE ){
     cum[[k]] <- as.vector(MC.absZ$CumZ[k]* deltk[[k]])
   }
  if (nMu == TRUE){
-  Mu <- conv_Cum2MomMulti(cum)
+  Mu <- .conv_Cum2MomMulti(cum)
   EVSKTheo <- list(Mu,cum )
   names(EVSKTheo) <- c("MuX","CumX")
   return(EVSKTheo)
@@ -582,25 +514,9 @@ distr_SkewNorm_MomCum_Th <- function(r = 4,omega,alpha,nMu = FALSE ){
 
 
 
-################################## Multi  ##############
-#' Moments and cumulants multivariate central folded Normal distribution
-#'
-#' Provides the theoretical moments and cumulants of the multivariate central Folded
-#' Normal distribution. By default only cumulants are provided.
-#' @param r The highest cumulant (moment) order
-#' @param d dimension
-#' @param nMu if True then moments are calculated as well.
-#' @return  The list of cumulants (and moments) in vector form.
-#'
-#'
-#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
-#' Springer 2021, Lemma 5.2 p. 249
-#' @family Theoretical Moments and Cumulants
-#' @family Multivariate distributions
-#' @export
-distr_ZabsM_MomCum_Th  <- function(r,d,nMu=FALSE){
+.distr_ZabsM_MomCum_Th  <- function(r,d,nCum=FALSE){
   #
-  MC.Z <- distr_Zabs_MomCum_Th(r,nCum = 1)
+  MC.Z <- .distr_Zabs_MomCum_Th(r,nCum = 1)
   Id <- diag(d)
   i_kron_k <- NULL
   i_kron_k[[1]] <- rep(1,d)
@@ -617,13 +533,13 @@ distr_ZabsM_MomCum_Th  <- function(r,d,nMu=FALSE){
     }
     CumMZ[[k]] <-  MC.Z$CumZ[k]*i_kron_k[[k]]
   }
-  if (nMu == TRUE){
-    MuMZ <- conv_Cum2MomMulti(CumMZ)
+  MuMZ <- .conv_Cum2MomMulti(CumMZ)
+  if (nCum == TRUE){
     MomCumMZ <- list(MuMZ,CumMZ )
     names(MomCumMZ) <- c("MuMZ","CumMZ")
     return(MomCumMZ)
   }
-  return(CumMZ)
+  return(MuMZ)
 }
 
 
@@ -644,18 +560,17 @@ distr_ZabsM_MomCum_Th  <- function(r,d,nMu=FALSE){
 #' ieg<- eigen(diag(p)+t(Lamd)%*%Lamd)
 #' V <- ieg$vectors
 #' Delta <-Lamd %*% V %*% diag(1/sqrt(ieg$values)) %*% t(V)
-#' MomCum_CFUSN <- distr_CFUSN_MomCum_Th (r,d,p,Delta)
+#' MomCum <- MomCumCFUSN(r,d,p,Delta)
 #' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
 #' Springer 2021, Lemma 5.3 p.251
-#' @family Theoretical Moments and Cumulants
-#' @family Multivariate distributions
+#' @family Moments and cumulants
 #' @export
 
-distr_CFUSN_MomCum_Th  <- function(r,d,p,Delta,nMu = FALSE){
+MomCumCFUSN  <- function(r,d,p,Delta,nMu = FALSE){
   #
   EX <- sqrt(2/pi)*Delta%*%rep(1,p)
   VarX <- diag(d)-2/pi*Delta%*%t(Delta)
-  MC.Z <- distr_Zabs_MomCum_Th(r,nCum = 1)
+  MC.Z <- .distr_Zabs_MomCum_Th(r,nCum = 1)
   Ip <- diag(p)
   i_kron_k <- NULL
   i_kron_k[[1]] <- rep(1,p)
@@ -678,7 +593,7 @@ distr_CFUSN_MomCum_Th  <- function(r,d,p,Delta,nMu = FALSE){
     CumMX[[k+1]] <-  as.vector(MC.Z$CumZ[k]*De_kron_k[[k+1]]%*%(i_kron_k[[k+1]]))
   }
   if (nMu == TRUE){
-    MuMX <- conv_Cum2MomMulti(CumMX)
+    MuMX <- .conv_Cum2MomMulti(CumMX)
     MomCumMX <- list(MuMX,CumMX )
     names(MomCumMX) <- c("MuMX","CumMX")
     return(MomCumMX)
