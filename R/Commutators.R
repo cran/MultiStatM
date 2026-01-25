@@ -10,7 +10,7 @@
 ## 5. SymMatr - calculates symmetrizer; 1.3.1 Symmetrization, p.14. (1.29)
 ## 6. EliminMatr 1.3.2 Multi-Indexing, Elimination, and Duplication, p.21,(1.32)
 ## 7. QplicMatr, p.21, (1.31)
-## 8. UnivMomCum - selects univariate moments and cumulants from the T-vector cumulants
+## 8. MargMomCum - selects univariate moments and cumulants from the T-vector cumulants
 
 
 
@@ -184,7 +184,7 @@
       M_m_n<- M_m_n + .matr_Commutator_Kperm(q[kk,],Bdq[kk,],useSparse=TRUE)
     }
   }
-
+  M_m_n <- t(M_m_n)
   return(M_m_n)
 }
 
@@ -461,7 +461,7 @@ QplicIndx <-function(d,q){
 
 
 
-#' Univariate moments and cumulants from T-vectors
+#' Marginal moments and cumulants from T-vectors
 #'
 #' A vector of indexes to select the moments and cumulants of the single components
 #' of the random vector X for which a T-vector of moments and cumulants is available
@@ -478,11 +478,11 @@ QplicIndx <-function(d,q){
 #' X<-rSkewNorm(200, omega, alpha)
 #' EVSK<-SampleEVSK(X)
 #' ## Get the univariate skewness and kurtosis for X1,X2,X3
-#' EVSK$estSkew[UnivMomCum(3,3)]
-#' EVSK$estKurt[UnivMomCum(3,4)]
+#' EVSK$estSkew[MargMomCum(3,3)]
+#' EVSK$estKurt[MargMomCum(3,4)]
 #' @family Matrices and commutators
 #' @export
-UnivMomCum<-function(d,q){
+MargMomCum<-function(d,q){
   if (d>100)  (stop("d must NOT be greater than 100"))
   x<- .primnum(545)
   x<- x[1:d]

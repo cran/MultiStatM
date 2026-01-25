@@ -180,7 +180,7 @@ The table below provides a complete plan of transition from `MultiStatM` 1.2.1 t
 +------------------------+-----------------------------+---------------+
 |Esti_Hermite_Poly_HN_M  | SampleHermiteN             | Estimation    |
 +------------------------+-----------------------------+---------------+
-|Esti_Gram_Charlier      | SampleGC                    | Estimation    |
+|Esti_Gram_Charlier      | GramCharlier                | Estimation    |
 +------------------------+-----------------------------+---------------+
 | Esti_MMom_MCum         | SampleMomCum                | Estimation    |
 +------------------------+-----------------------------+---------------+
@@ -211,7 +211,7 @@ The table below provides a complete plan of transition from `MultiStatM` 1.2.1 t
 +------------------------+-----------------------------+---------------+
 | indx_Symmetry          | SymIndx                     | Commutators   |
 +------------------------+-----------------------------+---------------+
-| indx_UnivMomCum        | UnivMomCum                  | Commutators   |
+| indx_UnivMomCum        | MargMomCum                  | Commutators   |
 +------------------------+-----------------------------+---------------+
 | matr_Commutator_Kmn    | CommutatorMatr              | Commutators   |
 | matr_Commutator_Kperm  | Type=Kmn/Kperm/Mixing/Moment|               |
@@ -368,7 +368,7 @@ c(QplicMatr(2,3)%*%EliminMatr(2,3)%*%a3)
 ```
 
 Closely connected to the above matrices are the functions
-`UnivMomCum` and `EliminIndx`. The former provides a vector
+`MargMomCum` and `EliminIndx`. The former provides a vector
 of indexes to select univariate moments or cumulants of the single
 elements of a d-vector X from available vector of T-moments and
 T-cumulants. The latter eliminates the duplicated/q-plicated elements in
@@ -376,7 +376,7 @@ a T-vector of multivariate moments and cumulants. The function
 `EliminIndx` produces the same results as `EliminMatr` and
 it is less demanding in terms of memory. The use of `EliminMatr`
 can be preferable is one wishes to deal with linear combination of
-matrices. See examples 4 and 6 below for the use of `UnivMomCum`
+matrices. See examples 4 and 6 below for the use of `MargMomCum`
 and `EliminIndx`.
 
 The symmetrizer matrix, a $d^n \times d^n$ matrix for the symmetrization
@@ -742,8 +742,8 @@ of the components $X1$, $X2$ and $X3$ of $X$, then, using
 `UnivMomCum`,
 
 ```{r}
-EsMSN$estSkew[UnivMomCum(3,3)]  ## Get univariate skewness for X1,X2,X3
-EsMSN$estKurt[UnivMomCum(3,4)]  ## Get univariate kurtosis for X1,X2,X3
+EsMSN$estSkew[MargMomCum(3,3)]  ## Get univariate skewness for X1,X2,X3
+EsMSN$estKurt[MargMomCum(3,4)]  ## Get univariate kurtosis for X1,X2,X3
 ```
 
 An estimate of Mardia's skewness index is provided together with the

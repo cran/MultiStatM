@@ -34,7 +34,7 @@ When Type is "Modulus":
 \item{kurt.U}{Kurtosis vector}
 }
 \description{
-Cumulants (up to the 4th order), skewness, and kurtosis of the d-variate Uniform distribution on
+Cumulants (up to the 4th order), skewness, and (excess) kurtosis of the d-variate Uniform distribution on
 the sphere or the modulus of the d-variate Uniform distribution on the sphere.
 }
 \examples{
@@ -46,20 +46,21 @@ EVSKUniS(d=3, Type="Modulus")
 }
 \references{
 Gy. Terdik, Multivariate statistical methods - Going beyond the linear,
-Springer 2021 Proposition 5.3 p.297
+Springer 2021 Proposition 5.3, p.297.
 
 S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
 skewness and kurtosis. Sankhya A, 83(2), 607-644.
-
-Gy. Terdik, Multivariate statistical methods - Going beyond the linear,
-Springer 2021, Lemma 5.12 p.298
 }
 \seealso{
 Other Moments and cumulants: 
 \code{\link{Cum2Mom}()},
+\code{\link{EVSKGenHyp}()},
 \code{\link{EVSKSkewNorm}()},
+\code{\link{EVSKSkewt}()},
 \code{\link{Mom2Cum}()},
 \code{\link{MomCumCFUSN}()},
+\code{\link{MomCumGenHyp}()},
+\code{\link{MomCumMVt}()},
 \code{\link{MomCumSkewNorm}()},
 \code{\link{MomCumUniS}()},
 \code{\link{MomCumZabs}()}

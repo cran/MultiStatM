@@ -31,9 +31,12 @@ SampleSkew(x, Type = "MRSz")
 
 }
 \references{
-Gy.Terdik, Multivariate statistical methods - going beyond the linear, Springer 2021. Example 6.1 and 6.2.
+Gy.Terdik (2021). Multivariate statistical methods - going beyond the linear, Springer. Example 6.1 and 6.2.
 
-S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate skewness and kurtosis. Sankhya A, 83(2), 607-644.
+S. R. Jammalamadaka, E. Taufer, Gy. Terdik (2021). On multivariate skewness and kurtosis. Sankhya A, 83(2), 607-644.
+
+N. Henze (1997). Limit laws for multivariate skewness in the sense of Móri, Rohatgi and Székely.
+Statistics & probability letters, 33(3), 299-307.
 }
 \seealso{
 Other Estimation: 

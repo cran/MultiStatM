@@ -51,10 +51,14 @@ Springer 2021, Proposition 5.1 p.242 and formula: p. 301
 \seealso{
 Other Moments and cumulants: 
 \code{\link{Cum2Mom}()},
+\code{\link{EVSKGenHyp}()},
 \code{\link{EVSKSkewNorm}()},
+\code{\link{EVSKSkewt}()},
 \code{\link{EVSKUniS}()},
 \code{\link{Mom2Cum}()},
 \code{\link{MomCumCFUSN}()},
+\code{\link{MomCumGenHyp}()},
+\code{\link{MomCumMVt}()},
 \code{\link{MomCumSkewNorm}()},
 \code{\link{MomCumUniS}()}
 }

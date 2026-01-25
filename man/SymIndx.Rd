@@ -37,9 +37,9 @@ Springer 2021.Section 1.3.1 Symmetrization, p.14. (1.29)
 Other Matrices and commutators: 
 \code{\link{EliminIndx}()},
 \code{\link{EliminMatr}()},
+\code{\link{MargMomCum}()},
 \code{\link{QplicIndx}()},
 \code{\link{QplicMatr}()},
-\code{\link{SymMatr}()},
-\code{\link{UnivMomCum}()}
+\code{\link{SymMatr}()}
 }
 \concept{Matrices and commutators}

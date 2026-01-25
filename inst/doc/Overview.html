@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -451,7 +452,7 @@ and multivariate cases have been joined in the function
 <col width="54%" />
 </colgroup>
 <tbody>
-<tr class="odd">
+<tr>
 <td rowspan="2"><h1 id="multistatm-1.2.1"><strong>MultiStatM
 1.2.1</strong></h1>
 <p>conv_Cum2Mom conv_Cum2MomMulti</p></td>
@@ -462,233 +463,233 @@ and multivariate cases have been joined in the function
 <p>Moments and cumulants</p></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>conv_Mom2Cum conv_Mom2CumMulti</td>
 <td>Mom2Cum, Type=Univariate/Multivariate</td>
 <td>Moments and cumulants</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>conv_Stand_Multi</td>
 <td>MVStandardize</td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>distr_CFUSN_MomCum_Th</td>
 <td>MomCumCFUSN</td>
 <td>Moments and cumulants</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>distr_SkewNorm_MomCum_Th</td>
 <td>MomCumSkewNorm</td>
 <td>Moments and cumulants</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>distr_Uni_MomCum_Th</td>
 <td>MomCumUniS</td>
 <td>Moments and cumulants</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>distr_ZabsM_MomCum_Th distr_Zabs_MomCum_Th</td>
 <td>MomCumZabs, Type=Univariate/Multivariate</td>
 <td>Moments and cumulants</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>distr_SkewNorm_EVSK_Th</td>
 <td>EVSKSkewNorm</td>
 <td>Moments and cumulants</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>distr_Uni_EVSK_Th distr_UniAbs_EVSK_Th</td>
 <td>EVSKUniS Type=Standard/Modulus</td>
 <td>Moments and cumulants</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>distr_CFUSN_Rand</td>
 <td>rCFUSN,</td>
 <td>Random Generation</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>distr_CFUSSD_Rand</td>
 <td>rCFUSSD</td>
 <td>Random Generation</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>distr_SkewNorm_Rand</td>
 <td>rSkewNorm</td>
 <td>Random Generation</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>distr_Uni_Rand</td>
 <td>rUniS</td>
 <td>Random Generation</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Esti_Kurt_Mardia Esti_Kurt_MRSz Esti_Kurt_Total</td>
 <td>SampleKurt Type=Mardia/MRSz/Total</td>
 <td>Estimation</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Esti_Skew_Mardia Esti_Skew_MRSz</td>
 <td>SampleSkew Type=Mardia/MRSz</td>
 <td>Estimation</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Esti_Kurt_Variance_Th</td>
 <td>VarianceKurt</td>
 <td>Estimation</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Esti_Skew_Variance_Th</td>
 <td>VarianceSkew</td>
 <td>Estimation</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Esti_EVSK</td>
 <td>SampleEVSK</td>
 <td>Estimation</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Esti_Hermite_Poly_HN_M</td>
 <td colspan="3">SampleHermiteN | Estimation |</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Esti_Gram_Charlier</td>
-<td>SampleGC</td>
+<td>GramCharlier</td>
 <td>Estimation</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Esti_MMom_MCum</td>
 <td>SampleMomCum</td>
 <td>Estimation</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Esti_Variance_Skew_Kurt</td>
 <td>SampleVarianceSkewKurt</td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Hermite_Coeff Hermite_CoeffMulti</td>
 <td>HermiteCoeff Type=Univariate/Multivariate</td>
 <td>Hermite Polynomials</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Hermite_Poly_HN Hermite_Poly_HN_Multi</td>
 <td>HermiteN Type=Univariate/Multivariate</td>
 <td>Hermite Polynomials</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Hermite_Poly_NH_Inv Hermite_Poly_NH_Multi_In</td>
 <td>HermiteN2X Type=Univariate/Multivariate</td>
 <td>Hermite Polynomials</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Hermite_Nth</td>
 <td>Eliminated: use HermiteN</td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Hermite_N_Cov_X1_X2</td>
 <td>HermiteCov12</td>
 <td>Hermite Polynomials</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>indx_Commutator_Kmn indx_Commutator_Kperm indx_Commutator_Mixing
 indx_Commutator_Moment</td>
 <td>CommutatorIndx Type=Kmn/Kperm/Mixing/Moment</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>indx_Elimination</td>
 <td>EliminIndx</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>indx_Qplication</td>
 <td>QplicIndx</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>indx_Symmetry</td>
 <td>SymIndx</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>indx_UnivMomCum</td>
-<td>UnivMomCum</td>
+<td>MargMomCum</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>matr_Commutator_Kmn matr_Commutator_Kperm matr_Commutator_Mixing
 matr_Commutator_Moment</td>
 <td>CommutatorMatr Type=Kmn/Kperm/Mixing/Moment</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>matr_Elimination</td>
 <td>EliminMatr</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>matr_Qplication</td>
 <td>QplicMatr</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>matr_Symmetry</td>
 <td>SymMatr</td>
 <td>Commutators</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Partition_2Perm Partition_Diagrams Partition_Indecomposable
 Partition_Pairs</td>
 <td>Partitions Type=2Perm/Diagram/Indecomp</td>
 <td>Partitions</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Permutation_Inverse</td>
 <td>PermutationInv</td>
 <td>Partitions</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Partition_Type_All</td>
 <td>PartitionTypeAll</td>
 <td>Partitions</td>
@@ -840,29 +841,29 @@ vectors of any length.</p>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>a3<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>p1<span class="ot">&lt;-</span>a1<span class="sc">%x%</span>a2<span class="sc">%x%</span>a3</span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">CommutatorMatr</span>(<span class="at">Type=</span><span class="st">&quot;Kperm&quot;</span>,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>))<span class="sc">%*%</span>p1) </span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>a3<span class="sc">%x%</span>a1<span class="sc">%x%</span>a2 </span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span></code></pre></div>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>a3<span class="sc">%x%</span>a1<span class="sc">%x%</span>a2 </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span></code></pre></div>
 <p>The same result can be obtained by using
 <code>CommutatorIndx</code></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>p1[<span class="fu">CommutatorIndx</span>(<span class="at">Type=</span><span class="st">&quot;Kperm&quot;</span>,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>))]</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>p1[<span class="fu">CommutatorIndx</span>(<span class="at">Type=</span><span class="st">&quot;Kperm&quot;</span>,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>))]</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;  [1]  2  3  4  4  6  8  6  9 12 12 18 24</span></span></code></pre></div>
 <p>The <code>CommutatorMatr</code> with <code>Type=&quot;Mixing&quot;</code> is
 exploited for deriving the covariance matrix of Hermite polynomials; see
 Terdik (2021, 4.6).</p>
 <p>The Elimination and Qplication matrices- related functions
 respectively eliminate and restore duplicated or q-plicated elements in
 powers of T-products.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>a<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>a3<span class="ot">&lt;-</span>a<span class="sc">%x%</span>a<span class="sc">%x%</span>a</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>a3</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 2 4 2 4 4 8</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">EliminMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>a3)</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 4 8</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">QplicMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span><span class="fu">EliminMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>a3)</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 2 4 2 4 4 8</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>a<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>a3<span class="ot">&lt;-</span>a<span class="sc">%x%</span>a<span class="sc">%x%</span>a</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>a3</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 2 4 2 4 4 8</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">EliminMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>a3)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 4 8</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">QplicMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span><span class="fu">EliminMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>a3)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 2 4 2 4 4 8</span></span></code></pre></div>
 <p>Closely connected to the above matrices are the functions
-<code>UnivMomCum</code> and <code>EliminIndx</code>. The former provides
+<code>MargMomCum</code> and <code>EliminIndx</code>. The former provides
 a vector of indexes to select univariate moments or cumulants of the
 single elements of a d-vector X from available vector of T-moments and
 T-cumulants. The latter eliminates the duplicated/q-plicated elements in
@@ -871,7 +872,7 @@ a T-vector of multivariate moments and cumulants. The function
 <code>EliminMatr</code> and it is less demanding in terms of memory. The
 use of <code>EliminMatr</code> can be preferable is one wishes to deal
 with linear combination of matrices. See examples 4 and 6 below for the
-use of <code>UnivMomCum</code> and <code>EliminIndx</code>.</p>
+use of <code>MargMomCum</code> and <code>EliminIndx</code>.</p>
 <p>The symmetrizer matrix, a <span class="math inline">\(d^n \times
 d^n\)</span> matrix for the symmetrization of a T-product of <span class="math inline">\(n\)</span> vectors with the same dimension <span class="math inline">\(d\)</span> which overcomes the difficulties
 arising from the non commutative property of the Kronecker product, and
@@ -938,27 +939,27 @@ inverses up to a given order <code>N</code> evaluated at <span class="math inlin
 <p><strong>Example 3</strong> The first and the second <span class="math inline">\(3\)</span>-variate Hermite polynomials evaluated
 at <code>x&lt;-c(1,2,3)</code> where <span class="math inline">\(x\)</span> is the realization of <span class="math inline">\(\mathbf{X} \sim N(\mathbf{0},
 I_{\mathbf{3}})\)</span> is</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>H2<span class="ot">&lt;-</span><span class="fu">HermiteN</span>(x,<span class="at">N=</span><span class="dv">2</span>,<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>H2[[<span class="dv">1</span>]]</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>H2[[<span class="dv">2</span>]]</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; [1] 0 2 3 2 3 6 3 6 8</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>H2<span class="ot">&lt;-</span><span class="fu">HermiteN</span>(x,<span class="at">N=</span><span class="dv">2</span>,<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>H2[[<span class="dv">1</span>]]</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>H2[[<span class="dv">2</span>]]</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; [1] 0 2 3 2 3 6 3 6 8</span></span></code></pre></div>
 <p>If <code>x</code> is the realization of <span class="math inline">\(\mathbf{X} \sim N(\mathbf{0},
 4I_\mathbf{2})\)</span></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>H2<span class="ot">&lt;-</span><span class="fu">HermiteN</span>(x,<span class="at">Sig2=</span><span class="dv">4</span><span class="sc">*</span><span class="fu">diag</span>(<span class="dv">3</span>),<span class="at">N=</span><span class="dv">2</span>,<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>H2[[<span class="dv">1</span>]]</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>H2[[<span class="dv">2</span>]]</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; [1] -3  2  3  2  0  6  3  6  5</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>H2<span class="ot">&lt;-</span><span class="fu">HermiteN</span>(x,<span class="at">Sig2=</span><span class="dv">4</span><span class="sc">*</span><span class="fu">diag</span>(<span class="dv">3</span>),<span class="at">N=</span><span class="dv">2</span>,<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>H2[[<span class="dv">1</span>]]</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>H2[[<span class="dv">2</span>]]</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; [1] -3  2  3  2  0  6  3  6  5</span></span></code></pre></div>
 <p>One can recover the vector x from H2 with the inverse function:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">HermiteN2X</span>(H2,<span class="at">N=</span><span class="dv">2</span>,<span class="at">Sig2=</span><span class="dv">4</span><span class="sc">*</span><span class="fu">diag</span>(<span class="dv">3</span>),<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)[[<span class="dv">1</span>]] </span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">HermiteN2X</span>(H2,<span class="at">N=</span><span class="dv">2</span>,<span class="at">Sig2=</span><span class="dv">4</span><span class="sc">*</span><span class="fu">diag</span>(<span class="dv">3</span>),<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)[[<span class="dv">1</span>]] </span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#&gt; [1] 1 2 3</span></span></code></pre></div>
 <p>The function <code>HermiteCov12</code> can be exploited to obtain the
 covariance matrix of <span class="math inline">\(H_N(\mathbf{X}_1)\)</span> and <span class="math inline">\(H_N(\mathbf{X}_2)\)</span> for vectors <span class="math inline">\(\mathbf{X}_1\)</span> and <span class="math inline">\(\mathbf{X}_2\)</span> having covariance matrix
 <span class="math inline">\(\mathbf{\Sigma_{12}}\)</span>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>Covmat<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.8</span>,<span class="fl">0.3</span>,<span class="fl">0.8</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>Cov_X1_X2 <span class="ot">&lt;-</span> <span class="fu">HermiteCov12</span>(<span class="at">SigX12=</span>Covmat,<span class="at">N=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>Covmat<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.8</span>,<span class="fl">0.3</span>,<span class="fl">0.8</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.3</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>Cov_X1_X2 <span class="ot">&lt;-</span> <span class="fu">HermiteCov12</span>(<span class="at">SigX12=</span>Covmat,<span class="at">N=</span><span class="dv">3</span>)</span></code></pre></div>
 </div>
 <div id="multivariate-t-moments-and-t-cumulants" class="section level2">
 <h2>Multivariate T-moments and T-cumulants</h2>
@@ -1026,51 +1027,51 @@ standard normal distribution with null mean vector and covariance matrix
 with unit elements on the main diagonal and off-diagonal elements equal
 to 0.5; in this case the the first four moments are given in the vector
 <code>mu</code> below</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>mu<span class="ot">&lt;-</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">1.5</span>,<span class="fl">1.5</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">10</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>cum<span class="ot">&lt;-</span><span class="fu">Mom2Cum</span>(mu, <span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>cum</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; [1] 1 1</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt; [1] 1.0 0.5 0.5 1.0</span></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; [1] 0 0 0 0 0 0 0 0</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt;  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>mu<span class="ot">&lt;-</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">1.5</span>,<span class="fl">1.5</span>,<span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="fl">6.5</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">10</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>cum<span class="ot">&lt;-</span><span class="fu">Mom2Cum</span>(mu, <span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>cum</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; [1] 1 1</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; [1] 1.0 0.5 0.5 1.0</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; [1] 0 0 0 0 0 0 0 0</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a><span class="co">#&gt;  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span></code></pre></div>
 <p>Getting back to moments</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">Cum2Mom</span>(cum,<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 1</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; [1] 2.0 1.5 1.5 2.0</span></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt;  [1] 10.0  7.0  7.0  6.5  7.0  6.5  6.5  7.0  7.0  6.5  6.5  7.0  6.5  7.0  7.0</span></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt; [16] 10.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">Cum2Mom</span>(cum,<span class="at">Type=</span><span class="st">&quot;Multivariate&quot;</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 1</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co">#&gt; [1] 2.0 1.5 1.5 2.0</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt; [[4]]</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a><span class="co">#&gt;  [1] 10.0  7.0  7.0  6.5  7.0  6.5  6.5  7.0  7.0  6.5  6.5  7.0  6.5  7.0  7.0</span></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="co">#&gt; [16] 10.0</span></span></code></pre></div>
 <p>I one wishes to select only the distinct moments from the vector of
 third moments, then</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>mu[[<span class="dv">3</span>]][<span class="fu">EliminIndx</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>mu[[<span class="dv">3</span>]][<span class="fu">EliminIndx</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 4</span></span></code></pre></div>
 <p>Alternatively one can also use the elimination matrix</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>r.mu<span class="ot">&lt;-</span><span class="fu">EliminMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span> mu[[<span class="dv">3</span>]]</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">c</span>(r.mu)</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>r.mu<span class="ot">&lt;-</span><span class="fu">EliminMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span> mu[[<span class="dv">3</span>]]</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">c</span>(r.mu)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 4</span></span></code></pre></div>
 <p>Note that <code>EliminMatr</code> does not correspond the the
 function <code>unique</code>, rather it individuates the duplicated
 elements from the symmetry of the Kronecker product. This allow to
 recover the whole vector when needed.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">QplicMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>r.mu)</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">QplicMatr</span>(<span class="dv">2</span>,<span class="dv">3</span>)<span class="sc">%*%</span>r.mu)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span></code></pre></div>
 <p>The same result by using <code>QplicIndx</code></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>r.mu[<span class="fu">QplicIndx</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>r.mu[<span class="fu">QplicIndx</span>(<span class="dv">2</span>,<span class="dv">3</span>)]</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="co">#&gt; [1] 4 3 3 3 3 3 3 4</span></span></code></pre></div>
 <p>The <code>MomCum</code> functions provide theoretical moments and
 cumulants for some common multivariate distributions: Skew-normal,
 Canonical Fundamental Skew-normal (CFUSN), Uniform distribution on the
@@ -1156,26 +1157,26 @@ random number generators for multivariate distributions.</p>
 <p><strong>Example 5</strong>. For a skew-normal distribution with <span class="math inline">\(\alpha=(10,5,0)\)</span> and correlation function
 <span class="math inline">\(\Omega= \text{diag} (1,1,1)\)</span> we have
 the third moments and cumulants are</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">0</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>omega<span class="ot">&lt;-</span><span class="fu">diag</span>(<span class="dv">3</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>MSN<span class="ot">&lt;-</span><span class="fu">MomCumSkewNorm</span>(<span class="at">r=</span><span class="dv">3</span>,omega,alpha,<span class="at">nMu=</span><span class="cn">TRUE</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="fu">round</span>(MSN<span class="sc">$</span>Mu[[<span class="dv">3</span>]],<span class="dv">3</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="co">#&gt;  [1] 1.568 0.073 0.000 0.073 0.570 0.000 0.000 0.000 0.711 0.073 0.570 0.000</span></span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co">#&gt; [13] 0.570 0.996 0.000 0.000 0.000 0.355 0.000 0.000 0.711 0.000 0.000 0.355</span></span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt; [25] 0.711 0.355 0.000</span></span>
-<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="fu">round</span>(MSN<span class="sc">$</span>CumX[[<span class="dv">3</span>]],<span class="dv">3</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt;  [1] 0.154 0.077 0.000 0.077 0.039 0.000 0.000 0.000 0.000 0.077 0.039 0.000</span></span>
-<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt; [13] 0.039 0.019 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span></span>
-<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt; [25] 0.000 0.000 0.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>alpha<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">0</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>omega<span class="ot">&lt;-</span><span class="fu">diag</span>(<span class="dv">3</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>MSN<span class="ot">&lt;-</span><span class="fu">MomCumSkewNorm</span>(<span class="at">r=</span><span class="dv">3</span>,omega,alpha,<span class="at">nMu=</span><span class="cn">TRUE</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="fu">round</span>(MSN<span class="sc">$</span>Mu[[<span class="dv">3</span>]],<span class="dv">3</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt;  [1] 1.568 0.073 0.000 0.073 0.570 0.000 0.000 0.000 0.711 0.073 0.570 0.000</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; [13] 0.570 0.996 0.000 0.000 0.000 0.355 0.000 0.000 0.711 0.000 0.000 0.355</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt; [25] 0.711 0.355 0.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">round</span>(MSN<span class="sc">$</span>CumX[[<span class="dv">3</span>]],<span class="dv">3</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#&gt;  [1] 0.154 0.077 0.000 0.077 0.039 0.000 0.000 0.000 0.000 0.077 0.039 0.000</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="co">#&gt; [13] 0.039 0.019 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt; [25] 0.000 0.000 0.000</span></span></code></pre></div>
 <p>As another example, for the Uniform distribution on the sphere, the
 fourth cumulant is:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">EVSKUniS</span>(<span class="dv">3</span>,  <span class="at">Type=</span><span class="st">&quot;Standard&quot;</span>)<span class="sc">$</span>Kurt.U</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt;  [1] -1.2  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0 -0.4  0.0  0.0</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; [16]  0.0  0.0  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0</span></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">#&gt; [31] -0.4  0.0  0.0  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -1.2  0.0  0.0  0.0 -0.4</span></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; [46]  0.0  0.0  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0  0.0  0.0</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt; [61] -0.4  0.0  0.0  0.0  0.0  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0 -0.4  0.0  0.0</span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; [76]  0.0 -0.4  0.0  0.0  0.0 -1.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">EVSKUniS</span>(<span class="dv">3</span>,  <span class="at">Type=</span><span class="st">&quot;Standard&quot;</span>)<span class="sc">$</span>Kurt.U</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#&gt;  [1] -1.2  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0 -0.4  0.0  0.0</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co">#&gt; [16]  0.0  0.0  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt; [31] -0.4  0.0  0.0  0.0  0.0  0.0 -0.4  0.0  0.0  0.0 -1.2  0.0  0.0  0.0 -0.4</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt; [46]  0.0  0.0  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0  0.0  0.0 -0.4  0.0  0.0  0.0</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt; [61] -0.4  0.0  0.0  0.0  0.0  0.0  0.0  0.0 -0.4  0.0 -0.4  0.0 -0.4  0.0  0.0</span></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="co">#&gt; [76]  0.0 -0.4  0.0  0.0  0.0 -1.2</span></span></code></pre></div>
 </div>
 <div id="estimation" class="section level2">
 <h2>Estimation</h2>
@@ -1251,54 +1252,54 @@ in the object <code>EsMSN</code> obtained by the <code>SampleEVSK</code>
 function; the corresponding theoretical values are in the object
 <code>ThMSN</code> obtained by the <code>EVSKSkewNorm</code>
 function.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">rSkewNorm</span>(<span class="dv">1000</span>,omega,alpha)</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>EsMSN<span class="ot">&lt;-</span><span class="fu">SampleEVSK</span>(data)</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>ThMSN<span class="ot">&lt;-</span><span class="fu">EVSKSkewNorm</span>(omega,alpha)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">rSkewNorm</span>(<span class="dv">1000</span>,omega,alpha)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>EsMSN<span class="ot">&lt;-</span><span class="fu">SampleEVSK</span>(data)</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>ThMSN<span class="ot">&lt;-</span><span class="fu">EVSKSkewNorm</span>(omega,alpha)</span></code></pre></div>
 <p>Compare the distinct elements of the estimated skewness vector and
 the theoretical ones using <code>Eliminindx</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>EsMSN<span class="sc">$</span>estSkew[<span class="fu">EliminIndx</span>(<span class="dv">3</span>,<span class="dv">3</span>)]   </span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt;  [1]  0.553645757  0.321903151 -0.042009525  0.214214390  0.007298792</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt;  [6]  0.023751673  0.029318273  0.068464555 -0.049131406  0.065397721</span></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>ThMSN<span class="sc">$</span>SkewX[<span class="fu">EliminIndx</span>(<span class="dv">3</span>,<span class="dv">3</span>)]   </span>
-<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt;  [1] 0.68927167 0.34463583 0.00000000 0.17231792 0.00000000 0.00000000</span></span>
-<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">#&gt;  [7] 0.08615896 0.00000000 0.00000000 0.00000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>EsMSN<span class="sc">$</span>estSkew[<span class="fu">EliminIndx</span>(<span class="dv">3</span>,<span class="dv">3</span>)]   </span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="co">#&gt;  [1]  0.51844514  0.32015942 -0.03835771  0.16422740 -0.01834720 -0.03970922</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="co">#&gt;  [7]  0.08922792  0.05437411  0.05925446 -0.05084661</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>ThMSN<span class="sc">$</span>SkewX[<span class="fu">EliminIndx</span>(<span class="dv">3</span>,<span class="dv">3</span>)]   </span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="co">#&gt;  [1] 0.68927167 0.34463583 0.00000000 0.17231792 0.00000000 0.00000000</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="co">#&gt;  [7] 0.08615896 0.00000000 0.00000000 0.00000000</span></span></code></pre></div>
 <p>If one wishes to recover the estimated univariate skewness and
 kurtosis of the components <span class="math inline">\(X1\)</span>,
 <span class="math inline">\(X2\)</span> and <span class="math inline">\(X3\)</span> of <span class="math inline">\(X\)</span>, then, using
 <code>UnivMomCum</code>,</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>EsMSN<span class="sc">$</span>estSkew[<span class="fu">UnivMomCum</span>(<span class="dv">3</span>,<span class="dv">3</span>)]  <span class="do">## Get univariate skewness for X1,X2,X3</span></span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.55364576 0.02931827 0.06539772</span></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>EsMSN<span class="sc">$</span>estKurt[<span class="fu">UnivMomCum</span>(<span class="dv">3</span>,<span class="dv">4</span>)]  <span class="do">## Get univariate kurtosis for X1,X2,X3</span></span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; [1]  0.20291995 -0.03904306 -0.02658244</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>EsMSN<span class="sc">$</span>estSkew[<span class="fu">MargMomCum</span>(<span class="dv">3</span>,<span class="dv">3</span>)]  <span class="do">## Get univariate skewness for X1,X2,X3</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&gt; [1]  0.51844514  0.08922792 -0.05084661</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>EsMSN<span class="sc">$</span>estKurt[<span class="fu">MargMomCum</span>(<span class="dv">3</span>,<span class="dv">4</span>)]  <span class="do">## Get univariate kurtosis for X1,X2,X3</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="co">#&gt; [1] -0.09908000  0.04828046 -0.15818137</span></span></code></pre></div>
 <p>An estimate of Mardia’s skewness index is provided together with the
 p-value under the null hypothesis of normality. The theoretical value of
 Mardia’s skewness can be recovered from the element
 <code>SkewX.tot</code> in the object <code>ThMSN</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">SampleSkew</span>(data,<span class="at">Type=</span><span class="st">&quot;Mardia&quot;</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="co">#&gt; $Mardia.Skewness</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.7887987</span></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; $p.value</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; [1] 2.345182e-23</span></span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>ThMSN<span class="sc">$</span>SkewX.tot</span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co">#&gt; [1] 0.9279208</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">SampleSkew</span>(data,<span class="at">Type=</span><span class="st">&quot;Mardia&quot;</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="co">#&gt; $Mardia.Skewness</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.6983175</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt; $p.value</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co">#&gt; [1] 2.733265e-20</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>ThMSN<span class="sc">$</span>SkewX.tot</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.9279208</span></span></code></pre></div>
 <p>The MRS skewness vector and index are provided together with the
 p-value for the skewness index under the null hypothesis of normality,
 The theoretical value, for the distribution at hand, can be computed
 using formula […]</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">SampleSkew</span>(data,<span class="at">Type=</span><span class="st">&quot;MRSz&quot;</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#&gt; $MRSz.Skewness.Vector</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.79161182 0.30209002 0.09185275</span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt; $MRSz.Skewness.Index</span></span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; [1] 0.7263446</span></span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a><span class="co">#&gt; $p.value</span></span>
-<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a><span class="co">#&gt; [1] 1.164125e-15</span></span>
-<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a><span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">c</span>(<span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%x%</span><span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%*%</span>ThMSN<span class="sc">$</span>SkewX)</span>
-<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a><span class="co">#&gt; [1] 0.8615896 0.4307948 0.0000000</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">t</span>(<span class="fu">c</span>(<span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%x%</span><span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%*%</span>ThMSN<span class="sc">$</span>SkewX)  <span class="do">## Theoretical MRS skewness vector</span></span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.8615896 0.4307948 0.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">SampleSkew</span>(data,<span class="at">Type=</span><span class="st">&quot;MRSz&quot;</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="co">#&gt; $MRSz.Skewness.Vector</span></span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="co">#&gt; [1]  0.64296332  0.46864180 -0.03483022</span></span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="co">#&gt; $MRSz.Skewness.Index</span></span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co">#&gt; [1] 0.6342401</span></span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a><span class="co">#&gt; $p.value</span></span>
+<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a><span class="co">#&gt; [1] 1.089959e-13</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">as.vector</span>(<span class="fu">t</span>(<span class="fu">c</span>(<span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%x%</span><span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%*%</span>ThMSN<span class="sc">$</span>SkewX)</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.8615896 0.4307948 0.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">t</span>(<span class="fu">c</span>(<span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%x%</span><span class="fu">diag</span>(<span class="dv">3</span>))<span class="sc">%*%</span>ThMSN<span class="sc">$</span>SkewX)  <span class="do">## Theoretical MRS skewness vector</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.8615896 0.4307948 0.0000000</span></span></code></pre></div>
 </div>
 <div id="acknowledgement" class="section level2">
 <h2>Acknowledgement</h2>

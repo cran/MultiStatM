@@ -42,9 +42,9 @@ Springer 2021, p.21, (1.31)
 Other Matrices and commutators: 
 \code{\link{EliminIndx}()},
 \code{\link{EliminMatr}()},
+\code{\link{MargMomCum}()},
 \code{\link{QplicIndx}()},
 \code{\link{SymIndx}()},
-\code{\link{SymMatr}()},
-\code{\link{UnivMomCum}()}
+\code{\link{SymMatr}()}
 }
 \concept{Matrices and commutators}

@@ -7,6 +7,8 @@
 ## 3. KronPower
 ## 4. KronProdCells
 ## 5. KronProdVects ??????
+## 6. .Gkd  ## function
+## 7. is.scalar
 ## 6. Hermite_N
 ## 7. Scaling_MultiSample
 ## 8. Partition_Generator Section 1.4.1 Generating all Partitions
@@ -20,6 +22,7 @@
 ## 15 indx.L22_H4_t
 ## 16 Indx_Commutator_Mixing_t
 ## 17 Partition_Type_eL_Location
+## 18 Double factorial
 
 
 #####################
@@ -30,7 +33,28 @@
 
 .kron4 <- function(A) kronecker(kronecker(A,A),kronecker(A,A))
 
-.Gkd <- function(k,d) gamma((d+k)/2)/gamma(d/2)
+.kron_power <- function(A, m) {
+  # Check if m is a non-negative integer
+  if (!is.numeric(m) || m < 0 || m != as.integer(m)) {
+    stop("m must be a non-negative integer.")
+  }
+
+  # Initialize result as the identity matrix if m is 0
+  result <- diag(1, nrow = 1, ncol = 1)
+
+  # Compute the Kronecker product m times
+  for (i in 1:m) {
+    result <- kronecker(result, A)
+  }
+
+  return(result)
+}
+
+
+.Gkd <- function(k,d) {
+  if(d+k<1){stop("Error: d+k must be positive")}
+  gamma((d+k)/2)/gamma(d/2)
+}
 ##################################
 #KronProdList
 ###############################
@@ -373,47 +397,47 @@
 
 ## Use as internal function , produces the same result as .commutator_moment
 
-.indx_Commutator_Moment<-function(x,el_rm,d) {
-  N<-length(el_rm)
-  PTB<-PartitionTypeAll(N)
-  loc_type_el <- .Partition_Type_eL_Location(el_rm)
-  r <- loc_type_el[1]
-  m <- loc_type_el[2]
-
-  part_class<-PTB$Part.class
-  S_N_r<-PTB$S_N_r
-  S_m_j<-PTB$S_r_j
-
-  sepL<-cumsum(S_N_r)
-  sepS_r<-cumsum(S_m_j[[r]])
-
-
-  if (r==1) {perm_Urk1<- 1:N
-  px<-0
-  px<-px+ x[.indx_Commutator_Kperm(perm_Urk1,d)]
-
-  return("px"=px)
-  }
-  else {
-    if (m==1) {l_ind<-sepL[r-1]+1} else {l_ind<-sepL[r-1]+sepS_r[m-1]+1}
-    if (.is.scalar(S_m_j[r])) {u_ind<-l_ind+S_m_j[[r]]-1}
-    else {u_ind<-l_ind+S_m_j[[r]][m]-1}
-    perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
-    sz<- 1
-    for (k in l_ind:u_ind){
-      perm_Urk1[sz,]<-.Partition_2Perm(part_class[[k]])
-      sz<-sz+1
-    }
-  }
-  px<-0
-  for (ss in 1:dim(perm_Urk1)[1]) {
-    uu<-perm_Urk1[ss,]
-    px<-px+ x[.indx_Commutator_Kperm(uu,d)]
-  }
-
-
-  return("px"= px)
-}
+# .indx_Commutator_Moment<-function(x,el_rm,d) {
+#   N<-length(el_rm)
+#   PTB<-PartitionTypeAll(N)
+#   loc_type_el <- .Partition_Type_eL_Location(el_rm)
+#   r <- loc_type_el[1]
+#   m <- loc_type_el[2]
+#
+#   part_class<-PTB$Part.class
+#   S_N_r<-PTB$S_N_r
+#   S_m_j<-PTB$S_r_j
+#
+#   sepL<-cumsum(S_N_r)
+#   sepS_r<-cumsum(S_m_j[[r]])
+#
+#
+#   if (r==1) {perm_Urk1<- 1:N
+#   px<-0
+#   px<-px+ x[.indx_Commutator_Kperm(perm_Urk1,d)]
+#
+#   return("px"=px)
+#   }
+#   else {
+#     if (m==1) {l_ind<-sepL[r-1]+1} else {l_ind<-sepL[r-1]+sepS_r[m-1]+1}
+#     if (.is.scalar(S_m_j[r])) {u_ind<-l_ind+S_m_j[[r]]-1}
+#     else {u_ind<-l_ind+S_m_j[[r]][m]-1}
+#     perm_Urk1<-matrix(0,S_m_j[[r]][m],N)
+#     sz<- 1
+#     for (k in l_ind:u_ind){
+#       perm_Urk1[sz,]<-.Partition_2Perm(part_class[[k]])
+#       sz<-sz+1
+#     }
+#   }
+#   px<-0
+#   for (ss in 1:dim(perm_Urk1)[1]) {
+#     uu<-perm_Urk1[ss,]
+#     px<-px+ x[.indx_Commutator_Kperm(uu,d)]
+#   }
+#
+#
+#   return("px"= px)
+# }
 
 .indx_Commutator_Mixing_t <- function(x, d1,d2) {
   if (length(x)!= prod(d1)*prod(d2)) (stop("x must have dimension prod(d1)*prod(d2)"))
@@ -520,27 +544,24 @@
 }
 
 
-.Partition_Type_eL_Location <- function(eL){
-  N <- length(eL)
-  if (sum(eL*c(1:N)) != N ){
-    stop("eL is not a valid partition type")}
-  eL_j<-PartitionTypeAll(N)$eL_r
-  loc_type_el=c(0,0)
-  for (r in 1:N){
-    if  (is.vector(eL_j[[r]])){
-      if (prod((eL==eL_j[[r]]))){
-        loc_type_el<- c(r,1)
-      }
-    }
-    else {
-      eL_jt<-eL_j[[r]]
-      for (mm in 1:dim(eL_jt)[[1]]){
-        if (prod((eL==eL_jt[mm,]))){
-          loc_type_el<- c(r,mm)
-        }
-      }
-    }
+## Compute double factorial
+.double_factorial <- function(n) {
+  if (!is.numeric(n) || length(n) != 1 || n != floor(n)) {
+    stop("Input must be a single integer.")
   }
-  return(loc_type_el)
+  if (n < -1) {
+    stop("Double factorial is not defined for integers less than -1.")
+  }
+  if (n == 0 || n == -1) {
+    return(1)
+  }
+  result <- 1
+  while (n > 1) {
+    result <- result * n
+    n <- n - 2
+  }
+  return(result)
 }
+
+
 

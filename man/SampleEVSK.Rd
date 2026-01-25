@@ -7,13 +7,13 @@
 SampleEVSK(X)
 }
 \arguments{
-\item{X}{d-variate data vector}
+\item{X}{d-variate data matrix}
 }
 \value{
 The list of the estimated mean, variance, skewness and kurtosis vectors
 }
 \description{
-Provides estimates of mean, variance, skewness and kurtosis vectors for  d-variate data
+Provides estimates of mean, variance, skewness and (excess) kurtosis vectors for  d-variate data
 }
 \examples{
 x<- MASS::mvrnorm(100,rep(0,3), 3*diag(rep(1,3)))

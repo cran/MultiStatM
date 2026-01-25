@@ -20,8 +20,9 @@ Depending on the selected type, the corresponding specific function is called.
 }
 \details{
 The function `CommutatorIndx` acts as a wrapper to call specific commutator functions based on the input `Type`.
+See also `CommutatorMatr` for details.
 
-\strong{Type "Kmn"}:
+\strong{Type "Kmn"}: Transforms \code{vec(A)} to \code{vec(A^T)}, where \code{A^T} is the transpose of matrix \code{A}.
 \describe{
   \item{Parameters:}{
     \itemize{
@@ -34,7 +35,7 @@ The function `CommutatorIndx` acts as a wrapper to call specific commutator func
   }
 }
 
-\strong{Type "Kperm"}:
+\strong{Type "Kperm"}: Generates a specified permutation of matrix dimensions.
 \describe{
   \item{Parameters:}{
     \itemize{
@@ -47,7 +48,7 @@ The function `CommutatorIndx` acts as a wrapper to call specific commutator func
   }
 }
 
-\strong{Type "Mixing"}:
+\strong{Type "Mixing"}: Generates an index for Mixing commutation  used in linear algebra transformations involving tensor products.
 \describe{
   \item{Parameters:}{
     \itemize{
@@ -61,7 +62,7 @@ The function `CommutatorIndx` acts as a wrapper to call specific commutator func
   }
 }
 
-\strong{Type "Moment"}:
+\strong{Type "Moment"}: Generates an index for Moment commutation  based on partitioning of moments.
 \describe{
   \item{Parameters:}{
     \itemize{

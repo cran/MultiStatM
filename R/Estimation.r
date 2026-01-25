@@ -16,8 +16,9 @@
 ## 14 SampleEVSK
 ## 15 Variance_of_Esti_Skew
 ## 16 SampleVarianceSkewKurt
-## 17 SampleHermiteN
-##
+## 17 SampleHermiteN  #### CANCELLED
+## 18 Sample GC
+## 19 Sample Edg
 
 
 ##  SkewEsti
@@ -133,8 +134,8 @@ SampleMomCum  <- function(X,r,centering = FALSE,scaling = TRUE){
 ####################
 #' Estimation of multivariate Mean, Variance, T-Skewness and T-Kurtosis vectors
 #'
-#' Provides estimates of mean, variance, skewness and kurtosis vectors for  d-variate data
-#' @param X d-variate data vector
+#' Provides estimates of mean, variance, skewness and (excess) kurtosis vectors for  d-variate data
+#' @param X d-variate data matrix
 #' @return The list of the estimated mean, variance, skewness and kurtosis vectors
 #' @examples
 #' x<- MASS::mvrnorm(100,rep(0,3), 3*diag(rep(1,3)))
@@ -150,8 +151,8 @@ SampleEVSK <- function(X){
     Mu_X<-mean(X)
     Vari_X<-stats::var(X)
     z<-(X-Mu_X)/sqrt(Vari_X)
-    est.Skew<-mean(z^3)
-    est.Kurt<-mean(z^4)
+    est.Skew<- mean(z^3)
+    est.Kurt<- mean(z^4) - 3
     estiEVSK <- list(Mu_X,Vari_X, est.Skew,est.Kurt )
     names(estiEVSK) <- c("estMu" ,   "estVar"  , "estSkew" , "estKurt")
     return(estiEVSK)
@@ -196,7 +197,7 @@ SampleEVSK <- function(X){
 
 .Esti_Kurt_Total<-function(x){
   EVSK <- SampleEVSK(x)
-  MK <-sum(EVSK$estCurt^2)
+  MK <-sum(EVSK$estKurt^2)
   n <- dim(x)[1]
   d <- dim(x)[2]
   pval<-stats::pchisq(n*MK/24,choose(d+3,4),lower.tail = FALSE)
@@ -350,7 +351,7 @@ SampleVarianceSkewKurt<- function(X){
   #############
   H4Zt <-  apply(Z,1,.Hermite_Fourth)
   # Est_H4(Z)
-  cH4 <-  -  apply(H4Zt,2,function(U) U-estiEVSK$estCurt)
+  cH4 <-  -  apply(H4Zt,2,function(U) U-estiEVSK$estKurt)
   Vari_Kurt_e <- stats::cov(t(cH4))
   esti.var.SK <- list(Vari_Skew_e, Vari_Kurt_e)
   names(esti.var.SK) <- c("Vari_Skew_e" ,   "Vari_Kurt_e")
@@ -437,93 +438,4 @@ VarianceKurt <- function(cum){
 }
 
 
-#' Estimate the N-th d-variate Hermite polynomial
-#'
-#' The vector x is standardized and the N-th d-variate polynomial is computed
-#'
-#' @param x a d-variate data vector
-#' @param N the order of the d-variate Hermite polynomial
-#' @return The vector of the N-th d-variate polynomial
-#' @examples
-#' x<-MASS::mvrnorm(100,rep(0,3),diag(3))
-#' H3<-SampleHermiteN(x,3)
-SampleHermiteN<-function(x,N){
-  z<-MVStandardize(x)
-  HN<-apply(apply(z,1,.Hermite_Nth, N=N),1,mean)
-  return(HN)
-}
-
-#' Gram-Charlier approximation to a multivariate density
-#'
-#' Provides the truncated Gram-Charlier approximation to a multivariate density. Approximation can
-#' be up to the first k=8 cumulants.
-#'
-#' @param X A matrix of d-variate data
-#' @param k the order of the approximation, by default set to 4;
-#' (k must not be smaller than 3 or greater than 8)
-#' @param cum if NULL (default) the cumulant vector is estimated from X.
-#' If \code{cum} is provided no estimation of cumulants is performed.
-#' @return The vector of the Gram-Charlier density evaluated at X
-#'
-#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
-#' Springer 2021. Section 4.7.
-#'
-#' @examples
-#' # Gram-Charlier density approximation (k=4) of data generated from
-#' # a bivariate skew-gaussian distribution
-#' n<-50
-#' alpha<-c(10,0)
-#' omega<-diag(2)
-#' X<-rSkewNorm(n,omega,alpha)
-#' EC<-SampleEVSK(X)
-#' fy4<-SampleGC(X[1:5,],cum=EC)
-#' @export
-SampleGC<-function(X,k=4,cum=NULL){
-  if (!is.null(cum)) {k=length(cum)}
-  if (k<3) stop("k must be greater than 2")
-  if (k>8) stop("k cannot be greater than 8")
-  if (is.vector(X)) stop(" X must be a data matrix")
-
-  d<-dim(X)[[2]]
-
-  if (!is.null(cum)) {EC<-cum
-  z1<-t(apply(X,1, function(x) x-as.vector(EC[[1]])))
-  if (is.vector(EC[[2]])) {cx<-matrix(EC[[2]],nrow=d)} else {cx<-EC[[2]]}
-  svdx<-svd(cx)
-  sm12<-svdx$u%*%diag(1/sqrt(svdx$d))%*%t(svdx$u)
-  if (is.vector(z1)) {as.matrix(z1);Z<-t(sm12%*%z1) }  else {Z<-t(sm12%*%t(z1))}
-  }
-  else {EC<-SampleMomCum(X,k)$estCum.r
-  Z<-MVStandardize(X)
-  }
-
-  gy<-1
-  for (j in 3:min(k,5)){
-    HN<-apply(Z,1,.Hermite_Nth, N=j)
-    gy<-gy+EC[[j]]%*%HN/factorial(j)
-  }
-  phi<-mvtnorm::dmvnorm(Z,rep(0,d),diag(d))
-
-  if (k>5){
-    if (k==6) {B6<-SymIndx(EC[[6]]+10*kronecker(EC[[3]],EC[[3]]),d,6)
-    Bell<-list(B6)
-    }
-    if (k==7) {B6<-SymIndx(EC[[6]]+10*kronecker(EC[[3]],EC[[3]]),d,6)
-    B7<-SymIndx(EC[[7]]+35*kronecker(EC[[3]],EC[[4]]),d,7)
-    Bell<-list(B6,B7)
-    }
-    if (k==8) {B6<-SymIndx(EC[[6]]+10*kronecker(EC[[3]],EC[[3]]),d,6)
-    B7<-SymIndx(EC[[7]]+35*kronecker(EC[[3]],EC[[4]]),d,7)
-    B8<-SymIndx(EC[[8]]+56*kronecker(EC[[3]],EC[[5]])+35*kronecker(EC[[4]],EC[[4]]),d,8)
-    Bell<-list(B6,B7,B8)
-    }
-    for (j in 6:min(k,8)){
-      HN<-apply(Z,1,.Hermite_Nth, N=j)
-      gy<-gy+Bell[[j-5]]%*%HN/factorial(j)
-    }
-  }
-
-  GC<-as.vector(gy*phi)
-  return(GC)
-}
 

@@ -9,14 +9,20 @@
 ## 9. distr_UniAbs_EVSK_Th_
 ## 10. EVSKSkewNorm
 ## 11. distr_Uni_EVSK_Th
+## 12. MomCumMVt - multivariate t
+## 13. .evenMomt supports MomCumMVt
+## 14. EVSKSkewt
+## 15. EVSKGenHyp
+## 16. MomCumGenHyp
 
 #####################
 #########################################################
 #########################    #############
 ##########################################################
-#' Random Uniform on the sphere
+#' Random multivariate spherically symmetric distributions
+
 #'
-#' Generate random d-vectors from the Uniform distribution on the sphere
+#' Generate random d-vectors from the spherically symmetric uniform distribution on the sphere
 #' @param n sample size
 #' @param d dimension
 #'
@@ -178,7 +184,7 @@ rCFUSSD  <- function(n,d,p,a,b,Delta){
   varU<- matrix(1/d*Idv,nrow = d)
   EU3 <- rep(0,d^3)
   x<- kronecker(Idv,Idv)
-  EU4 <- .indx_Commutator_Moment(x,eL,d)*1/d/(d+2)
+  EU4 <- .indx_Commutator_Moment_t(x,eL,d)*1/d/(d+2)
   EU.k <- list(EU1,EU2,EU3,EU4)
 
   UEVSK <- EU.k
@@ -217,8 +223,6 @@ rCFUSSD  <- function(n,d,p,a,b,Delta){
 
 MomCumUniS <- function(r,d,nCum = FALSE)
 {
-  # if (r%%2 !=0 )   return(EUM.k <- 0)# (4%%2)*2
-
   m0 <- floor(r/2)
   # 1d moments
   EU.k0 <- c(rep(0,r))
@@ -232,13 +236,15 @@ MomCumUniS <- function(r,d,nCum = FALSE)
   EUM.k[[3]] <- c(rep(0,d^3))
   varU<- matrix(1/d*Idv,nrow = d)
 
+  if (m0 >=2) {
   for (k in 2:m0) {
     # tic
     eL <- c(0,k,c(rep(0,2*k-2)))
     Idv.u <- kronecker(Idv.u,Idv)
-    EUM.k[[2*k]] <- as.vector(EU.k0[2*k] *.indx_Commutator_Moment(Idv.u,eL,d)/per[k])
+    EUM.k[[2*k]] <- as.vector(EU.k0[2*k] *.indx_Commutator_Moment_t(Idv.u,eL,d)/per[k])
     EUM.k[[2*k+1]] <-c(rep(0,d^(2*k+1)))
     #   print( toc)
+  }
   }
   if ( r%%2 == 0 ) EUM.k <- EUM.k[-(2*m0+1)]
   if (nCum == TRUE) {
@@ -413,7 +419,7 @@ return(Eabs)
  #' EVSK multivariate Skew Normal
  #'
  #' Computes the theoretical values of the mean vector,  covariance, skewness vector,
- #' total skenwness, kurtosis vector and total
+ #' total skenwness, (excess) kurtosis vector and total
  #' kurtosis for the multivariate Skew Normal distribution
  #' @param omega A \eqn{d \times d} correlation matrix
  #' @param alpha shape parameter d-vector
@@ -600,4 +606,368 @@ MomCumCFUSN  <- function(r,d,p,Delta,nMu = FALSE){
   }
   return(CumMX)
 }
+
+
+#' Moments and cumulants Multivariate t-Student distribution
+#'
+#' The t- distribution is defined as
+#' \deqn{\mathbf{X} = \sqrt{\frac{p}{S^2}} \mathbf{Z}}
+#' where \eqn{\mathbf{Z}} is a multivariate standard-normal random vector
+#' and  \eqn{S^2} is a \eqn{\chi^2_p}.
+#' random variable independent of \eqn{\mathbf{Z}}.
+#' @param p degrees of freedom
+#' @param d dimension
+#' @param r highest order of moments and cumulants
+#' @param nCum if it is TRUE then cumulants are calculated
+
+#' @return The list of moments (or cumulants) in vector form
+#' @examples
+#' # The first four moments for trivariate t with 10 d.f.
+#' MomCumMVt(p=10,d=3,r=4,nCum=FALSE)
+#'
+#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
+#' Springer 2021 Proposition XXXXXX
+#' @family Moments and cumulants
+#' @export
+
+MomCumMVt <- function(p, d, r,nCum=FALSE) {
+  # p: degrees of freedom
+  # d: vector dimension
+  # r: highest moment order (up to which we compute)
+  if (d<2) {stop("Error: 'd' should be greater than 1")}
+  moments_list <- list()
+
+  for (k in 1:r) {
+    if (k %% 2 == 0) {
+      # Even-order moment (use momMt)
+      m <- k / 2
+      moments_list[[paste0("mu", k)]] <- .evenMomt(p, d, m)
+    } else {
+      # Odd-order moment is zero vector of length d^k
+      zero_vec <- rep(0, d^k)
+      moments_list[[paste0("mu", k)]] <- zero_vec
+    }
+  }
+
+  if (nCum == TRUE) {moments_list <- Mom2Cum(moments_list,Type="Multivariate")}
+
+  return(moments_list)
+}
+
+
+# Computes even moments for the multivariate t distribution
+# with p degrees of freedom
+.evenMomt <- function(p,d,m){
+  # p - degreees of freedom
+  # d - vector dimension
+  # 2*m even order moment
+  if (p/2 <= m ) {stop("Error: 'p' should be greater than 2m")}
+  C1 <- p^m/(2^m * gamma(p/2)/gamma(p/2-m))
+  const <- C1 * .double_factorial(2*m-1)
+  Im <- .kron_power(c(diag(d)),m)
+  demom <- const * SymIndx(Im,d,(2*m))
+  return(demom)
+}
+
+
+#' EVSK multivariate Skew-t
+#'
+#' Computes the theoretical values of the mean,  variance,
+#' skewness and (excess) kurtosis vectors for the d-variate Skew-t distribution \eqn{St_d(\xi, \boldsymbol{\Omega},
+#' \boldsymbol{\alpha},m)}
+#' defined as
+#'  \deqn{Y = \xi + \sqrt{\frac{m}{S^2}} \mathbf{X}}
+#' where \eqn{\mathbf{X}} is a multivariate skew-normal random variable
+#' \eqn{SN_d(0, \boldsymbol{\Omega} , \boldsymbol{\alpha})} and \eqn{S^2} is a \eqn{\chi^2_m}
+#' random variable independent of \eqn{\mathbf{X}}.
+#' @param xi A mean vector
+#' @param omega A \eqn{d \times d} correlation matrix
+#' @param alpha shape parameter d-vector
+#' @param m degrees of freedom
+#' @return  A list of theoretical values for the mean,   variance, skewness and
+#' kurtosis vectors
+#'
+#' @examples
+#' xi <- c(0,0,0) #
+#' alpha <- c(10,5,0) #
+#' omega <- diag(3) #
+#' m <- 10 #
+#'
+#' EVSKSkewt(xi,omega,alpha,m)
+#' @references Gy.Terdik, Multivariate statistical methods - Going beyond the linear,
+#' Springer 2021  p.277
+#' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
+#' skewness and kurtosis. Sankhya A, 83(2), 607-644.
+#' @family Moments and cumulants
+#' @export
+EVSKSkewt <- function(xi,omega,alpha,m){
+  nxi <- xi #
+  nomega <- omega #
+  nalpha <- alpha #
+    ndf <- m #
+  d <- length(alpha)
+  ndelta <- c(nalpha%*%nomega)/c((1+nalpha%*%nomega%*%nalpha)^(1/2))
+  #########  mean and variance
+  # mean vector
+  muSt <- nxi + sqrt(ndf/pi) * ndelta * .Gkd(-1,ndf)
+  # variance vector
+  K2St <- (ndf/(ndf-2))*c(nomega)- (ndf/pi) * .Gkd(-1,ndf)^2 * c(kronecker(ndelta,ndelta))
+  # variance matrix
+  K2m <- matrix(K2St,d,d)
+  # SVD of K2m
+  svdx<-svd(K2m)
+  K2_m12<-svdx$u%*%diag(1/sqrt(svdx$d))%*%t(svdx$u)
+  ### Skewness terms
+  C1 <- sqrt(2/pi) * (ndf/2)^(3/2) * .Gkd(-1,ndf)
+  C2 <- (4/pi) * .Gkd(-1,ndf)^2 - 2 / (ndf-3)
+  C3 <-  2/((ndf-3)*(ndf-2))
+  D1 <- c(.kron_power(ndelta,3) )
+  D2 <- c(kronecker(c(nomega),ndelta))
+  D2 <- D2 + D2[CommutatorIndx(Type="Kperm",perm=c(1,3,2),dims=d)] + D2[CommutatorIndx(Type="Kperm",perm=c(3,1,2),dims=d)]
+  cum3St <-  C1 * (C2 * D1 + C3 * D2 )
+  skewSt  <- c(.kron_power(K2_m12,3)%*%cum3St)
+  ### kurtosis terms
+  KC1 <- (4/pi) * (ndf/2)^2 * .Gkd(-1,ndf)^2 *(4/(ndf-3) -(6/pi) * .Gkd(-1,ndf)^2 )
+  KC2 <- (ndf/2)^2 * 8 / ( (ndf-4) * (ndf-2 )^2 )
+  KC3 <- (8/pi) * (ndf/2)^2 * .Gkd(-1,ndf)^2 / ( (ndf-3) * (ndf-2 ) )
+  KD1 <- .kron_power(ndelta,4)
+  KD2 <- .kron_power(c(nomega),2)
+  KD2 <- KD2 + KD2[CommutatorIndx(Type="Kperm",perm=c(1,3,2,4),dims=d)] + KD2[CommutatorIndx(Type="Kperm",perm=c(1,4,2,3),dims=d)]
+  KD3 <- c(kronecker(c(nomega),kronecker(ndelta,ndelta)))
+  KD3 <- KD3 + KD3[CommutatorIndx(Type="Kperm",perm=c(1,3,2,4),dims=d)] +
+    KD3[CommutatorIndx(Type="Kperm",perm=c(3,1,2,4),dims=d)] +
+    KD3[CommutatorIndx(Type="Kperm",perm=c(3,1,4,2),dims=d)] +
+    KD3[CommutatorIndx(Type="Kperm",perm=c(1,3,4,2),dims=d)] +
+    KD3[CommutatorIndx(Type="Kperm",perm=c(3,4,1,2),dims=d)]
+  cum4St <- KC1 * KD1 + KC2 * KD2 - KC3 * KD3
+  kurtSt <- c(.kron_power(K2_m12,4)%*%cum4St)
+  EVSKSt <- list(muSt,K2m, skewSt, kurtSt )
+  names(EVSKSt) <- c("mu","variance", "skewness", "kurtosis")
+  return(EVSKSt)
+}
+
+
+#' EVSK multivariate Generalized hyperbolic
+#'
+#' Computes the theoretical values of the mean,  variance,
+#' skewness and (excess) kurtosis vectors for the d-variate Generalized
+#' Hyperbolic distribution \eqn{\mathcal{GH}\left( \lambda
+#' ,\chi ,\psi ,\boldsymbol{\mu },\boldsymbol{\Sigma },\boldsymbol{\gamma }%
+#' \right)}
+#' defined as
+#'  \deqn{\mathbf{X}=\boldsymbol{\mu }+V\boldsymbol{\gamma }+\sqrt{V}\boldsymbol{%
+#' \Sigma }^{1/2}\mathbf{Z}}
+#' where \eqn{\mathbf{Z}\in \mathcal{N}\left( 0,\mathbf{I}_{d}\right)},
+#' \eqn{ V \geq 0}, is independent of \eqn{\mathbf{Z}}, is a non-negative,
+#' scalar-valued variate, which is \emph{Generalized Inverse Gaussian} (scalar
+#'  valued GIG), \eqn{V\in GIG\left( \lambda ,\chi ,\psi \right)}.
+#'
+#' @param lambda scalar valued
+#' @param chi scalar valued
+#' @param psi scalar valued
+#' @param mu a vector of dimension d
+#' @param sigma a dxd covariance matrix
+#' @param gamma a scalar value
+#'
+#' @return  A list of theoretical values for the mean,   variance, skewness and
+#' kurtosis vectors
+#'
+#' @examples
+#' lambda <- 1
+#' chi <- 2
+#' psi <- 2
+#' mu <- rep(0,2)
+#' sigma <- diag(2)
+#' gamma <-  c(0.2,0.5)
+#' EVSKGenHyp(lambda, chi, psi, mu, sigma, gamma)
+#' @references  A.J. McNeil, R. Frey, and P. Embrechts.
+#' Quantitative risk management: concepts,
+#' techniques and tools-revised edition. Princeton university press, 2015.
+#' @family Moments and cumulants
+#' @export
+EVSKGenHyp <- function(lambda, chi, psi, mu, sigma, gamma){
+
+  # --- Coerce/check input shapes  ---
+  mu    <- as.numeric(mu)
+  gamma <- as.numeric(gamma)
+
+  # ensure sigma is a numeric matrix (square)
+  sigma <- as.matrix(sigma)
+  if (!is.numeric(sigma) || nrow(sigma) != ncol(sigma)) {
+    stop("`sigma` must be a numeric square matrix")
+  }
+
+  d <- length(gamma)
+  if (length(mu) != d) {
+    stop("length(mu) must equal length(gamma)")
+  }
+  if (nrow(sigma) != d) {
+    stop("sigma must be a d x d matrix where d = length(gamma)")
+  }
+
+  # Function for E[V^r]
+  E_Vr <- function(r, lambda, chi, psi) {
+    (chi / psi)^(r / 2) * (besselK(sqrt(chi * psi), lambda + r) / besselK(sqrt(chi * psi), lambda))
+  }
+
+  mom_V <- c(E_Vr(1, lambda, chi, psi),
+             E_Vr(2, lambda, chi, psi),
+             E_Vr(3, lambda, chi, psi),
+             E_Vr(4, lambda, chi, psi))
+
+  cum_V <- Mom2Cum(mom_V,Type="Univariate")
+
+  ## - mean GH
+  mean_GH <- mu + cum_V[1]*gamma
+
+  ## - Variance GH
+  sigma_GH <- cum_V[1] * sigma + cum_V[2] * outer(gamma,gamma)
+
+  ## Third cumulant
+  Cum3_GH <- c(SymMatr(d,3) %*% (3 * cum_V[2] * kronecker(gamma,c(sigma)) +
+                                   cum_V[3] * kronecker(gamma,kronecker(gamma,gamma))))
+
+  ## Fourth cumulant
+
+  Cum4_GH <- c(SymMatr(d,4) %*% (3 * cum_V[2] * kronecker(c(sigma),c(sigma)) +
+                                   6 * cum_V[3] * kronecker(c(sigma),kronecker(gamma,gamma)) +
+                                   cum_V[4] * kronecker(gamma,kronecker(gamma,kronecker(gamma,gamma)))   ))
+
+  # SVD of Sigma_GH
+  svdx<-svd(sigma_GH)
+  S_m12 <- svdx$u %*% diag(1/sqrt(svdx$d)) %*% t(svdx$u)
+
+  ### Skewness
+  SkewGH  <- c(.kron_power(S_m12,3) %*% Cum3_GH)
+
+  ### kurtosis terms
+  KurtGH <- c(.kron_power(S_m12,4) %*% Cum4_GH)
+
+  EVSKGH <- list(mean_GH,sigma_GH, SkewGH, KurtGH )
+  names(EVSKGH) <- c("mean","variance", "skewness", "kurtosis")
+  return(EVSKGH)
+}
+
+
+#' Moments and cumulants of the multivariate
+#' Generalized Hyperbolic distribution
+#'
+#' Computes cumulants and moments up to order r=6 of the d-variate Generalized
+#' Hyperbolic distribution \eqn{\mathcal{GH}\left( \lambda
+#' ,\chi ,\psi ,\boldsymbol{\mu },\boldsymbol{\Sigma },\boldsymbol{\gamma }%
+#' \right)}
+#' defined as
+#'  \deqn{\mathbf{X}=\boldsymbol{\mu }+V\boldsymbol{\gamma }+\sqrt{V}\boldsymbol{%
+#' \Sigma }^{1/2}\mathbf{Z}}
+#' where \eqn{\mathbf{Z}\in \mathcal{N}\left( 0,\mathbf{I}_{d}\right)},
+#' \eqn{ V \geq 0}, is independent of \eqn{\mathbf{Z}}, is a non-negative,
+#' scalar-valued variate, which is \emph{Generalized Inverse Gaussian} (scalar
+#'  valued GIG), \eqn{V\in GIG\left( \lambda ,\chi ,\psi \right)}.
+#'
+#' @param r highest order of moments and cumulants
+#' @param lambda scalar valued
+#' @param chi scalar valued
+#' @param psi scalar valued
+#' @param mu a vector of dimension d
+#' @param sigma a dxd covariance matrix
+#' @param gamma a scalar value
+#' @param nMu if it is TRUE then moments are calculated
+#'
+#' @return The list of moments (or cumulants) in vector form
+#' @examples
+#' lambda <- 1
+#' chi <- 2
+#' psi <- 2
+#' mu <- rep(0,2)
+#' sigma <- diag(2)
+#' gamma <-  c(0.2,0.5)
+#' MomCumGenHyp(r=4,lambda, chi, psi, mu, sigma, gamma)
+#' @family Moments and cumulants
+#' @export
+MomCumGenHyp <- function(r = 4, lambda, chi, psi, mu, sigma, gamma, nMu = FALSE) {
+
+  # --- Coerce/check input shapes  ---
+  mu    <- as.numeric(mu)
+  gamma <- as.numeric(gamma)
+
+  # ensure sigma is a numeric matrix (square)
+  sigma <- as.matrix(sigma)
+  if (!is.numeric(sigma) || nrow(sigma) != ncol(sigma)) {
+    stop("`sigma` must be a numeric square matrix")
+  }
+
+  d <- length(gamma)
+  if (d < 2) stop("Error: 'd' should be greater than 1")
+
+  if (length(mu) != d) {
+    stop("length(mu) must equal length(gamma)")
+  }
+  if (nrow(sigma) != d) {
+    stop("sigma must be a d x d matrix where d = length(gamma)")
+  }
+
+  if (r > 6) {
+    warning("Only moments/cumulants up to order 6 are provided.")
+    r <- 6
+  }
+
+  # Function for E[V^r]
+  E_Vr <- function(r, lambda, chi, psi) {
+    (chi / psi)^(r / 2) * (besselK(sqrt(chi * psi), lambda + r) / besselK(sqrt(chi * psi), lambda))
+  }
+
+  # Precompute up to 6th order only
+  mom_V <- sapply(1:6, function(k) E_Vr(k, lambda, chi, psi))
+  cum_V <- Mom2Cum(mom_V, Type = "Univariate")
+
+  ## - mean GH
+  mean_GH <- mu + cum_V[1] * gamma
+
+  ## - Second cumulant - vec(Variance GH)
+  Cum2_GH <- c(cum_V[1] * sigma + cum_V[2] * outer(gamma, gamma))
+
+  ## Third cumulant
+  Cum3_GH <- c(SymMatr(d, 3) %*% (
+    3 * cum_V[2] * kronecker(gamma, c(sigma)) +
+      cum_V[3] * kronecker(gamma, kronecker(gamma, gamma))
+  ))
+
+  ## Fourth cumulant
+  Cum4_GH <- c(SymMatr(d, 4) %*% (
+    3 * cum_V[2] * kronecker(c(sigma), c(sigma)) +
+      6 * cum_V[3] * kronecker(c(sigma), kronecker(gamma, gamma)) +
+      cum_V[4] * kronecker(gamma, kronecker(gamma, kronecker(gamma, gamma)))
+  ))
+
+  cumulant_list <- list(mean_GH, Cum2_GH, Cum3_GH, Cum4_GH)
+
+  if (r >= 5) {
+    sigam <- sigma %*% gamma
+    Cum5_GH <- c(SymMatr(d, 5) %*% (
+      15 * cum_V[3] * kronecker(.kron_power(c(sigma), 2), sigam) +
+        10 * cum_V[4] * kronecker(c(sigma), .kron_power(sigam, 3)) +
+        cum_V[5] * .kron_power(sigam, 5)
+    ))
+    cumulant_list[[5]] <- Cum5_GH
+  }
+
+  if (r >= 6) {
+    sigam <- sigma %*% gamma
+    Cum6_GH <- c(SymMatr(d, 6) %*% (
+      15 * cum_V[3] * .kron_power(c(sigma), 3) +
+        45 * cum_V[4] * kronecker(.kron_power(c(sigma), 2), .kron_power(sigam, 2)) +
+        15 * cum_V[5] * kronecker(c(sigma), .kron_power(sigam, 4)) +
+        cum_V[6] * .kron_power(sigam, 6)
+    ))
+    cumulant_list[[6]] <- Cum6_GH
+  }
+
+  # Truncate list to r cumulants
+  cumulant_list <- cumulant_list[1:r]
+
+  if (nMu) cumulant_list <- Cum2Mom(cumulant_list, Type = "Multivariate")
+
+  return(cumulant_list)
+}
+
 

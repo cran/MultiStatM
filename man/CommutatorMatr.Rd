@@ -41,7 +41,7 @@ The function \code{CommutatorMatr} supports the following types of commutator ma
     \strong{Arguments:}
     \describe{
       \item{\code{perm} (integer vector)}{The permutation vector.}
-      \item{\code{dims} (integer vector)}{The dimensions of the matrices involved.}
+      \item{\code{dims} (integer vector)}{The dimensions of the vectors in the tensor product  involved.}
       \item{\code{useSparse} (logical, optional)}{If TRUE, returns a sparse matrix. Default is FALSE.}
     }
   }

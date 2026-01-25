@@ -34,10 +34,10 @@ Springer 2021.  Section  1.3.2 Multi-Indexing, Elimination, and Duplication, p.2
 \seealso{
 Other Matrices and commutators: 
 \code{\link{EliminMatr}()},
+\code{\link{MargMomCum}()},
 \code{\link{QplicIndx}()},
 \code{\link{QplicMatr}()},
 \code{\link{SymIndx}()},
-\code{\link{SymMatr}()},
-\code{\link{UnivMomCum}()}
+\code{\link{SymMatr}()}
 }
 \concept{Matrices and commutators}

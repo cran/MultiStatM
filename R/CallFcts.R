@@ -38,7 +38,7 @@
 #'     \strong{Arguments:}
 #'     \describe{
 #'       \item{\code{perm} (integer vector)}{The permutation vector.}
-#'       \item{\code{dims} (integer vector)}{The dimensions of the matrices involved.}
+#'       \item{\code{dims} (integer vector)}{The dimensions of the vectors in the tensor product  involved.}
 #'       \item{\code{useSparse} (logical, optional)}{If TRUE, returns a sparse matrix. Default is FALSE.}
 #'     }
 #'   }
@@ -185,8 +185,9 @@ Partitions <- function(Type, ...) {
 #'
 #' @details
 #' The function `CommutatorIndx` acts as a wrapper to call specific commutator functions based on the input `Type`.
+#' See also `CommutatorMatr` for details.
 #'
-#' \strong{Type "Kmn"}:
+#' \strong{Type "Kmn"}: Transforms \code{vec(A)} to \code{vec(A^T)}, where \code{A^T} is the transpose of matrix \code{A}.
 #' \describe{
 #'   \item{Parameters:}{
 #'     \itemize{
@@ -199,7 +200,7 @@ Partitions <- function(Type, ...) {
 #'   }
 #' }
 #'
-#' \strong{Type "Kperm"}:
+#' \strong{Type "Kperm"}: Generates a specified permutation of matrix dimensions.
 #' \describe{
 #'   \item{Parameters:}{
 #'     \itemize{
@@ -212,7 +213,7 @@ Partitions <- function(Type, ...) {
 #'   }
 #' }
 #'
-#' \strong{Type "Mixing"}:
+#' \strong{Type "Mixing"}: Generates an index for Mixing commutation  used in linear algebra transformations involving tensor products.
 #' \describe{
 #'   \item{Parameters:}{
 #'     \itemize{
@@ -226,7 +227,7 @@ Partitions <- function(Type, ...) {
 #'   }
 #' }
 #'
-#' \strong{Type "Moment"}:
+#' \strong{Type "Moment"}: Generates an index for Moment commutation  based on partitioning of moments.
 #' \describe{
 #'   \item{Parameters:}{
 #'     \itemize{
@@ -271,13 +272,21 @@ Partitions <- function(Type, ...) {
 #' @family Commutators
 #' @export
 CommutatorIndx <- function(Type, ...) {
-  switch(Type,
-         "Kmn" = .indx_Commutator_Kmn(...),
-         "Kperm" = .indx_Commutator_Kperm(...),
-         "Mixing" = .indx_Commutator_Mixing(...),
-         "Moment" = .indx_Commutator_Moment(...),
-         stop("Invalid Type. Choose from 'Kmn', 'Kperm', 'Mixing', 'Moment'."))
+  if (Type == "Kmn") {
+    return(.indx_Commutator_Kmn(...))
+  } else if (Type == "Kperm") {
+    return(.indx_Commutator_Kperm(...))
+  } else if (Type == "Mixing") {
+    return(.indx_Commutator_Mixing(...))
+  } else if (Type == "Moment") {
+    return(.indx_Commutator_Moment(...))
+  } else {
+    stop("Invalid type. Choose from 'Kmn', 'Kperm', 'Mixing', 'Moment'.")
+  }
 }
+
+
+
 
 
 
@@ -564,9 +573,10 @@ SampleKurt <- function(x, Type = c("Mardia", "MRSz", "Total")) {
 #' # MRSz's skewness example
 #' SampleSkew(x, Type = "MRSz")
 #'
-#' @references Gy.Terdik, Multivariate statistical methods - going beyond the linear, Springer 2021. Example 6.1 and 6.2.
-#' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate skewness and kurtosis. Sankhya A, 83(2), 607-644.
-#'
+#' @references Gy.Terdik (2021). Multivariate statistical methods - going beyond the linear, Springer. Example 6.1 and 6.2.
+#' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik (2021). On multivariate skewness and kurtosis. Sankhya A, 83(2), 607-644.
+#' @references N. Henze (1997). Limit laws for multivariate skewness in the sense of Móri, Rohatgi and Székely.
+#' Statistics & probability letters, 33(3), 299-307.
 #' @family Estimation
 #'
 #' @export
@@ -639,7 +649,7 @@ MomCumZabs <- function(r, d, Type, nCum = FALSE) {
 
 #' EVSK of the Uniform distribution on the sphere or its modulus
 #'
-#' Cumulants (up to the 4th order), skewness, and kurtosis of the d-variate Uniform distribution on
+#' Cumulants (up to the 4th order), skewness, and (excess) kurtosis of the d-variate Uniform distribution on
 #' the sphere or the modulus of the d-variate Uniform distribution on the sphere.
 #'
 #' @param d dimensions
@@ -665,11 +675,9 @@ MomCumZabs <- function(r, d, Type, nCum = FALSE) {
 #' \item{kurt.U}{Kurtosis vector}
 #'
 #' @references Gy. Terdik, Multivariate statistical methods - Going beyond the linear,
-#' Springer 2021 Proposition 5.3 p.297
+#' Springer 2021 Proposition 5.3, p.297.
 #' @references S. R. Jammalamadaka, E. Taufer, Gy. Terdik. On multivariate
 #' skewness and kurtosis. Sankhya A, 83(2), 607-644.
-#' @references Gy. Terdik, Multivariate statistical methods - Going beyond the linear,
-#' Springer 2021, Lemma 5.12 p.298
 #' @family Moments and cumulants
 #' @export
 #' @examples

@@ -213,6 +213,58 @@ HermiteCov12 <- function(SigX12,N){
 }
 
 
+.SampleHermiteN_d <- function(X,N,Sig2 = NULL){
+  if (is.null(dim(X))) (stop("X needs to have dimension d>1"))
+  He_L <- vector(mode="list", length=N)
+  # Nth order multivariate Hermite polynomial for Gram-Charlier
+  #* N is the order
+  #* x is the sample of multivariate rows dimension is d
+  #*
+  #  N <- 5
+  d  <- dim(X)[2]
+  n <- dim(X)[1]
+  if (is.null(Sig2)) {Sig2 = diag(d)}  # for G-C we need only standardized
+
+  He_L[[1]]<-X
+
+  if (N>1){
+    for (Nt in c(2:N)) {
+      k <- Nt+1
+      H_uni <- HermiteCoeff(Type = "Univariate", N = Nt) # coefficients for x^p
+      di <- NULL
+      di[1] <- 0
+      for (j in c(2:k)) {
+        di[j] <- di[j-1]+d^(j-1)
+      }
+      #* dimensions of x^j is the difference di[3]-di[2] is the dimension of
+      #*  X[1,]%x%X[1,], i.e. d^2 etc
+      krX <- X # collecting the kronecker powers of the sample
+      tr <- NULL
+      for (j in c(2:k)) {
+        tr <- t(apply(krX,1,function(x) kronecker(x[c(1:d)],x[c((di[j-1]+1):di[j])])))
+        krX <- cbind(krX,tr)
+      }
+
+      indcoef <- seq(Nt, to = 1, by =-2) # the  x^j wich needed
+
+      H <- 0 # Hermite polynom for the sample
+      cum0 <- 1
+      cum2 <- c(Sig2)
+      for (el in 1:length(indcoef)) {
+        H1 <- t(apply(H_uni[el]*krX[,(di[indcoef[el] ]+1):di[indcoef[el]+1]],1,
+                      function(x) kronecker(x,cum0)))
+        H <- H + H1
+        cum0 <- cum0%x%cum2
+      }
+
+      if (Nt%%2==0) {H <- H +H_uni[el+1]* t(t(rep(1,n))%x% cum0)} # the constant for even N
+      # head(H)[,1:5]
+      He <- t(apply(H,1,function(x) SymIndx(x, d, Nt))) # the polynom is symmetric
+      He_L[[Nt]] <- He
+    }
+  }
+  return(He_L)
+}
 
 
 

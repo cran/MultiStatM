@@ -1,3 +1,21 @@
+## Version 2.1.0
+
+### New features
+* Introduced new functions EVSKGenHyp, EVSKSkewt, MomCumGenHyp, MomCumMVt,
+  IntEdgeworth, IntGramCharlier, IntHermiteN, MTCE.
+
+### Breaking changes
+* `SampleHermiteN()` has been removed; use `HermiteN()` instead (now supports
+  univariate and multivariate Hermite polynomials up to order N).
+
+* `SampleGC()` and `SampleEdg()` have been replaced by the more efficient
+  `GramCharlier()` and `Edgeworth()` functions.
+
+* `UnivMomCum()` has been renamed to `MargMomCum()`.
+
+
+  
+
 ## Version 2.0.0
  
 * Most functions have been renamed and reorganized in their arguments and output. For example the functions \code{conv_Cum2Mom} and \code{conv_Cum2MomMulti} of version 1.2.1 have been joined in the new function \code{Cum2Mom} which now has an additional argument \code{Type=c("Univariate","Multivariate")}.

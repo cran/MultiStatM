@@ -17,7 +17,7 @@ total skenwness, kurtosis vector and total kurtosis
 }
 \description{
 Computes the theoretical values of the mean vector,  covariance, skewness vector,
-total skenwness, kurtosis vector and total
+total skenwness, (excess) kurtosis vector and total
 kurtosis for the multivariate Skew Normal distribution
 }
 \examples{
@@ -35,9 +35,13 @@ skewness and kurtosis. Sankhya A, 83(2), 607-644.
 \seealso{
 Other Moments and cumulants: 
 \code{\link{Cum2Mom}()},
+\code{\link{EVSKGenHyp}()},
+\code{\link{EVSKSkewt}()},
 \code{\link{EVSKUniS}()},
 \code{\link{Mom2Cum}()},
 \code{\link{MomCumCFUSN}()},
+\code{\link{MomCumGenHyp}()},
+\code{\link{MomCumMVt}()},
 \code{\link{MomCumSkewNorm}()},
 \code{\link{MomCumUniS}()},
 \code{\link{MomCumZabs}()}

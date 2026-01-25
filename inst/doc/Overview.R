@@ -103,8 +103,8 @@ ThMSN$SkewX[EliminIndx(3,3)]
 
 
 ## -----------------------------------------------------------------------------
-EsMSN$estSkew[UnivMomCum(3,3)]  ## Get univariate skewness for X1,X2,X3
-EsMSN$estKurt[UnivMomCum(3,4)]  ## Get univariate kurtosis for X1,X2,X3
+EsMSN$estSkew[MargMomCum(3,3)]  ## Get univariate skewness for X1,X2,X3
+EsMSN$estKurt[MargMomCum(3,4)]  ## Get univariate kurtosis for X1,X2,X3
 
 ## -----------------------------------------------------------------------------
 SampleSkew(data,Type="Mardia")

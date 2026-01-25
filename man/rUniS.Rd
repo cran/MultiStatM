@@ -2,7 +2,7 @@
 % Please edit documentation in R/Distributions.R
 \name{rUniS}
 \alias{rUniS}
-\title{Random Uniform on the sphere}
+\title{Random multivariate spherically symmetric distributions}
 \usage{
 rUniS(n, d)
 }
@@ -15,7 +15,7 @@ rUniS(n, d)
 A random matrix \eqn{n \times d}
 }
 \description{
-Generate random d-vectors from the Uniform distribution on the sphere
+Generate random d-vectors from the spherically symmetric uniform distribution on the sphere
 }
 \references{
 Gy.Terdik, Multivariate statistical methods - Going beyond the linear,

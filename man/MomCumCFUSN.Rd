@@ -39,9 +39,13 @@ Springer 2021, Lemma 5.3 p.251
 \seealso{
 Other Moments and cumulants: 
 \code{\link{Cum2Mom}()},
+\code{\link{EVSKGenHyp}()},
 \code{\link{EVSKSkewNorm}()},
+\code{\link{EVSKSkewt}()},
 \code{\link{EVSKUniS}()},
 \code{\link{Mom2Cum}()},
+\code{\link{MomCumGenHyp}()},
+\code{\link{MomCumMVt}()},
 \code{\link{MomCumSkewNorm}()},
 \code{\link{MomCumUniS}()},
 \code{\link{MomCumZabs}()}
